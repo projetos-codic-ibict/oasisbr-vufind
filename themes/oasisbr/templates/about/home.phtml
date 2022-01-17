@@ -1,0 +1,134 @@
+<?php $this->headTitle($this->translate('About')); ?>
+<?php $this->layout()->searchbox = false; ?>
+
+<div class="logo-img-center">
+  <a href="<?= $this->url('home') ?>"><img class="img-responsive" src="<?= $this->imageLink('oasisbr.png'); ?>" alt="Logo do OasisBR" /></a>
+</div>
+<div class="about">
+  <div class="row">
+    <div class="col-md-5 flex-col-center">
+      <img class="img-responsive oasisbr-icon" src="<?= $this->imageLink('oasisbr-icon.png'); ?>" alt="Logo do OasisBR" />
+    </div>
+    <div class="col-md-7 description text-justify">
+      <p> O Oasisbr é o portal brasileiro que reúne a produção científica nacional em acesso aberto.</p>
+
+      <p>O portal permite, por meio de uma única interface, a pesquisa simultânea em repositórios digitais, teses e dissertações e periódicos científicos eletrônicos.</p>
+
+      <p> Por meio do Oasisbr é possível consultar e fazer o download do texto completo, sem nenhum custo, de artigos científicos, teses, dissertações, livros, capítulos de livros, trabalhos apresentados em eventos, entre outros documentos que se constituem a produção científica brasileira.</p>
+    </div>
+  </div>
+
+  <div class="row objectives">
+    <div class="col-md-12">
+      <div class="card">
+        <h2> <a data-toggle="collapse" class="btn-collapse" href="#objetivos" aria-expanded="true" aria-controls="footwear">Objetivos</a>
+        </h2>
+        <div class="collapse in" id="objetivos">
+          <ul>
+            <li>
+              Contribuir para o aumento da visibilidade da produção científica e brasileira e de seus pesquisadores nacional e internacionalmente;
+            </li>
+            <li>
+              Oferecer à comunidade científica brasileira, comunidade de cientistas da informação, bibliotecários, editores científicos, bibliotecas universitárias, instituições de ensino superior, associações científicas, agências de fomento, e sociedade como um todo, por meio de uma única interface, acesso facilitado, qualificado e rápido a toda informação científica brasileira disponível em arquivos digitais em acesso aberto;</li>
+            <li>
+              Contribuir para o aumento do intercâmbio entre pesquisadores em nível nacional e internacional;</li>
+            <li>
+              Estimular a criação de periódicos científicos, bibliotecas de teses e dissertações e repositórios digitais para a organização da produção científica brasileira baseados no modelo do acesso aberto;</li>
+            <li>
+              Fornecer informações para evitar a duplicação de esforços e recursos no desenvolvimento de pesquisas duplicadas;</li>
+            <li>
+              Atuar como provedor de serviços, ou seja, coletar metadados expostos por diferentes provedores de dados (periódicos, repositórios institucionais ou temáticos e teses e dissertações) e torná-los disponíveis e acessíveis, de maneira centralizada, a provedores de informação internacionais, para que desta maneira a produção científica nacional possa ser mais visível e consequentemente mais citada;
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <h2>Critérios para coleta</h2>
+        <h3> <a data-toggle="collapse" class="btn-collapse collapsed" href="#general" aria-expanded="false" aria-controls="footwear">Critérios Gerais (para todos os provedores de conteúdo) </a>
+        </h3>
+        <div class="collapse" id="general">
+          <ul>
+            <li>Fazer uso do protocolo OAI-PMH (Open Archives Initiative - Protocol for Metadata Harvesting) ou compatível;</li>
+            <li>
+              Gerenciar ou publicar informação de natureza científica e/ou tecnológica;</li>
+            <li>
+              Os recursos de informação devem estar disponíveis em texto completo disponível no próprio provedor de conteúdos;</li>
+            <li>
+              Adotar o esquema de metadados Dublin Core ou compatível;</li>
+            <li>
+              Manter conexão permanente com a Internet.</li>
+            <li>
+              Adoção de metadado que especifique o tipo de documento (por exemplo: dc:type), cujo preenchimento obedeça às orientações da equipe coordenadora (usar vocabulário controlado DRIVER);</li>
+            <li>
+              Para todos os provedores de conteúdos, exige-se um conjunto mínimo de metadados (título, autor, resumo, palavras-chave, ano da publicação – dc:issued / fechado, tipo de documento, idioma, avaliados ou não pelos pares);</li>
+          </ul>
+        </div>
+
+        <h3> <a data-toggle="collapse" class="btn-collapse collapsed" href="#specific" aria-expanded="false" aria-controls="footwear"> Critérios específicos para Periódicos Científicos</a>
+        </h3>
+        <div class="collapse" id="specific">
+          <ul>
+            <li>
+              Registrar políticas no <a href="https://diadorim.ibict.br/" target="_blank" rel="noopener noreferrer"> Diadorim</a>; e
+            </li>
+            <li>
+              Estar indexado na Seção Catálogo 2.0 do <a href="https://www.latindex.unam.mx/latindex/inicio" target="_blank" rel="noopener noreferrer"> Latindex </a> ou fazer parte da <a href="https://www.scielo.br/" target="_blank" rel="noopener noreferrer"> Coleção SciELO </a>.
+            </li>
+          </ul>
+        </div>
+
+        <h3> <a data-toggle="collapse" class="btn-collapse collapsed" href="#thesis" aria-expanded="false" aria-controls="footwear">Critérios para Teses e Dissertações Eletrônicas </a>
+        </h3>
+        <div class="collapse" id="thesis">
+          <ul>
+            <li>
+              Ser coletado pela Biblioteca Digital Brasileira de Teses e Dissertações (<a href="https://bdtd.ibict.br/vufind/" target="_blank" rel="noopener noreferrer">BDTD</a>).
+            </li>
+          </ul>
+        </div>
+
+        <h3> <a data-toggle="collapse" class="btn-collapse collapsed" href="#anais" aria-expanded="false" aria-controls="footwear"> Critérios para Repositórios de Conferências (anais eletrônicos) </a>
+        </h3>
+        <div class="collapse" id="anais">
+          <ul>
+            <li>O acesso aos trabalhos deve ser gratuito;</li>
+            <li>
+              O evento deve ser de natureza científica e/ou tecnológica;</li>
+            <li>
+              Adoção de arbitragem científica;</li>
+            <li>
+              Indicação explícita do conselho editorial ou similar e que este possua caráter exógeno/multinstitucional;</li>
+            <li>
+              O acesso aos artigos deve ser gratuito e irrestrito.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-md-12 network-flow" id="network-flow">
+    <div class="card">
+      <h2> <a data-toggle="collapse" class="btn-collapse" href="#fluxo" aria-expanded="true" aria-controls="footwear">Fluxo informacional Oasisbr</a>
+      </h2>
+      <div class="collapse in" id="fluxo">
+        <p>
+          Para agregar em um único portal a produção científica nacional em acesso aberto o Oasisbr utiliza uma plataforma coletora que realiza a coleta semanal dos conteúdos disponibilizados pelos provedores de conteúdo que integram o Oasisbr.</p>
+
+        <p>Os conteúdos agregados pelo Oasisbr são coletados pelo <a href="https://www.rcaap.pt" target="_blank">Repositório Científico de Acesso Aberto de Portugal (RCAAP)</a>, da mesma maneira, os conteúdos disponibilizados pelo RCAAP são coletados pelo Oasisbr e disponibilizados para a comunidade científica brasileira.</p>
+
+        <p>Os conteúdos agregados pelo Oasisbr são coletados, também, pela rede latinoamericana <a href="https://www.lareferencia.info/pt" target="_blank">LA Referencia</a> (Rede de repositorios de acceso abierto a la ciencia), que, por sua vez, é coletada pelo agregador europeu <a href="https://www.openaire.eu" target="_blank">OpenAIRE</a>.</p>
+
+        <p>Essa rede de coleta possibilita que o Oasisbr cumpra a sua missão, assim, a produção científica nacional em acesso aberto é disseminada internacionalmente, aumentando o impacto da ciência brasileira no mundo.</p>
+
+      </div>
+    </div>
+  </div>
+
+</div>

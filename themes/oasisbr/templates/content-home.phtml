@@ -1,0 +1,102 @@
+<?php $this->headScript()->appendFile("indicators-home.js"); ?>
+
+<section class="row indicators-data">
+  <h1><?= $this->transEsc("Documents Collected") ?></h1>
+
+  <div class="col-md-3 col-sm-6 col-xs-12 flex-col-center">
+    <a href="Search/Results?type=AllFields&filter%5B%5D=format%3A%22article%22">
+      <figure>
+        <img class="image-main" src="<?= $this->imageLink('ARTIGOS.png'); ?>" srcset="<?= $this->imageLink('ARTIGOS.png'); ?>">
+        <img class="image-hover" src="<?= $this->imageLink('ARTIGOS_HOVER.png'); ?>" srcset="<?= $this->imageLink('ARTIGOS_HOVER.png'); ?>">
+      </figure>
+      <h2 id="articles"></h2>
+      <h3><?= $this->transEsc("Articles") ?></h3>
+    </a>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12 flex-col-center">
+    <a href="Search/Results?join=AND&filter%5B%5D=%7Eformat%3A%22masterThesis%22&filter%5B%5D=%7Eformat%3A%22doctoralThesis">
+      <figure>
+        <img class="image-main" src="<?= $this->imageLink('TESES_E_DISSERTACOES.png'); ?>" srcset="<?= $this->imageLink('TESES_E_DISSERTACOES.png'); ?>">
+        <img class="image-hover" src="<?= $this->imageLink('TESES_E_DISSERTACOES_HOVER.png'); ?>" srcset="<?= $this->imageLink('TESES_E_DISSERTACOES_HOVER.png'); ?>">
+      </figure>
+      <h2 id="teses"></h2>
+      <h3><?= $this->transEsc("Theses") ?></h3>
+    </a>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12 flex-col-center">
+    <a href="Search/Results?type=AllFields&filter%5B%5D=format%3A%22dataset%22">
+      <figure>
+        <img class="image-main" src="<?= $this->imageLink('CONJUNTO_DE_DADOS_DE_PESQUISA.png'); ?>" srcset="<?= $this->imageLink('CONJUNTO_DE_DADOS_DE_PESQUISA.png'); ?>">
+        <img class="image-hover" src="<?= $this->imageLink('CONJUNTO_DE_DADOS_DE_PESQUISA_HOVER.png'); ?>" srcset="<?= $this->imageLink('CONJUNTO_DE_DADOS_DE_PESQUISA_HOVER.png'); ?>">
+      </figure>
+      <h2 id="datasets"></h2>
+      <h3><?= $this->transEsc("Datasets") ?></h3>
+    </a>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12 flex-col-center">
+    <a href="Search/Results?join=AND&filter%5B%5D=%7Eformat%3A%22book%22&filter%5B%5D=%7Eformat%3A%22bookPart">
+      <figure>
+        <img class="image-main" src="<?= $this->imageLink('LIVROS_E_CAPITULOS_DE_LIVROS.png'); ?>" srcset="<?= $this->imageLink('LIVROS_E_CAPITULOS_DE_LIVROS.png'); ?>">
+        <img class="image-hover" src="<?= $this->imageLink('LIVROS_E_CAPITULOS_DE_LIVROS_HOVER.png'); ?>" srcset="<?= $this->imageLink('LIVROS_E_CAPITULOS_DE_LIVROS_HOVER.png'); ?>">
+      </figure>
+      <h2 id="books"></h2>
+      <h3><?= $this->transEsc("Books and Book Chapters") ?></h3>
+    </a>
+  </div>
+</section>
+
+<section class="row">
+  <div class="col-md-6 col-sm-6 col-xs-12 flex-col-center">
+    <a href="about/home#network-flow">
+      <img class="img-responsive" src="<?= $this->imageLink('CONEXOES-OASISBR.png'); ?>" alt="CONEXOES OASISBR" />
+    </a>
+  </div>
+  <div class="col-md-6 col-sm-6 col-xs-12 flex-col-center">
+    <div class="section-connections">
+      <p>O Portal brasileiro de publicações e dados científicos em acesso aberto - Oasisbr é um mecanismo de busca multidisciplinar que permite o acesso gratuito à produção científica de autores vinculados a universidades e institutos de pesquisa brasileiros.</p>
+      <p>Por meio do Oasisbr é possível também realizar buscas em fontes de informação portuguesas.</p>
+
+      <p> Para mais informações, entre em
+        <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"> contato conosco.</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="row partners">
+  <div class="col-md-5 col-sm-5 col-xs-12">
+    <h1 class="text-center section-title"><?= $this->transEsc("Support") ?></h1>
+    <div class="section-partners">
+      <a href="http://www.finep.gov.br" target="_blank"> <img class="img-responsive finep" src="<?= $this->imageLink('partners/FINEP.png'); ?>" alt="Logo do FINEP" /></a>
+    </div>
+  </div>
+  <div class="col-md-7 col-sm-7 col-xs-12">
+    <h1 class="text-center section-title"><?= $this->transEsc("Our Partners") ?></h1>
+    <div class="section-partners">
+      <div class="section-partners-icons">
+        <div class="partner-icon">
+          <a href="https://www.rcaap.pt/" target="_blank"> <img class="img-responsive" src="<?= $this->imageLink('partners/RCAAP.png'); ?>" alt="Logo do RCAAP" /></a>
+        </div>
+        <div class="partner-icon">
+          <a href="https://www.lareferencia.info/pt/ " target="_blank"> <img class="img-responsive" src="<?= $this->imageLink('partners/LA_REFERENCIA.jpg'); ?>" alt="Logo do LA REFERENCIA" /></a>
+        </div>
+        <div class="partner-icon">
+          <a href="https://www.coar-repositories.org/" target="_blank"> <img class="img-responsive img-responsive-width" src="<?= $this->imageLink('partners/COAR.png'); ?>" alt="Logo do COAR" /></a>
+        </div>
+        <div class="partner-icon">
+          <a href="http://www.ndltd.org/ " target="_blank"> <img class="img-responsive img-responsive-width" src="<?= $this->imageLink('partners/NDLTD.jpg'); ?>" alt="Logo do NDLTD" /></a>
+        </div>
+        <div class="partner-icon">
+          <a href="https://www.cplp.org/" target="_blank"> <img class="img-responsive img-responsive-width" src="<?= $this->imageLink('partners/CPLP.png'); ?>" alt="Logo do CPLP" /></a>
+        </div>
+        <div class="partner-icon">
+          <a href="https://www.scielo.org" target="_blank"> <img class="img-responsive" src="<?= $this->imageLink('partners/SCIELO.png'); ?>" alt="Logo do SCIELO" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,74 @@
+<?php
+$source = $this->transEsc("Source");
+$name = $this->escapeHtml($name);
+$titleName = $source . " - " . $name;
+?>
+<?php $this->headTitle($titleName); ?>
+<?php $this->layout()->searchbox = false; ?>
+<?php $this->layout()->nocontainerclass = true; ?>
+<?php $this->headScript()->appendFile("datasource.js"); ?>
+
+<div class="logo-img-center">
+  <a href="<?= $this->url('home') ?>"><img src="<?= $this->imageLink('oasisbr.png'); ?>" alt="Logo do OasisBR" /></a>
+</div>
+
+<div class="page-title-bar <?= $this->escapeHtml($customClass) ?>">
+  <div class="container">
+    <h1><?= $this->transEsc("Data Sources") ?></h1>
+    <h4> Conheça os tipos de fontes coletadas pelo Oasisbr <h4>
+  </div>
+</div>
+
+<div class="container">
+  <table class="table table-striped" id="dataSource">
+    <tr>
+      <td><?= $this->transEsc("Source type") ?> :</td>
+      <td><?= $this->escapeHtml($sourceType) ?></td>
+    </tr>
+    <tr>
+      <td><?= $this->transEsc("Source") ?> :</td>
+      <td><?= $this->escapeHtml($name) ?></td>
+    </tr>
+    <tr>
+      <td>Instituição responsável:</td>
+      <td><?= $this->escapeHtml($institution) ?></td>
+    </tr>
+    <tr>
+      <td>URL: </td>
+      <td><?php if ($this->escapeHtml($sourceUrl) != 'null') : ?>
+          <a href="<?= $this->escapeHtml($sourceUrl) ?>" target="_blank" rel="noopener noreferrer">
+            <?= $this->escapeHtml($sourceUrl) ?>
+          </a>
+        <?php else : ?> - <?php endif; ?>
+      </td>
+    </tr>
+    <tr>
+      <td>E-mail da fonte: </td>
+      <td><?php if ($this->escapeHtml($email) != 'null') : ?>
+          <?= $this->escapeHtml($email) ?>
+        <?php else : ?> - <?php endif; ?> </td>
+    </tr>
+    <tr>
+      <td>Documentos coletados:</td>
+      <td>
+        <a href="<?= '../Search/Results?type=AllFields&filter%5B%5D=network_name_str%3A%22' . $name ?>">
+          <?= $this->escapeHtml($validSize) ?>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <?php if ($this->escapeHtml($sourceType) == 'Biblioteca Digital de Teses e Dissertações') : ?>
+          ID OpenDOAR:
+        <?php elseif ($this->escapeHtml($sourceType) == 'Repositório de Publicações') : ?>
+          ID OpenDOAR:
+        <?php elseif ($this->escapeHtml($sourceType) == 'Repositório de Dados') : ?>
+          ID re3data:
+        <?php else : ?> ISSN <?php endif; ?>
+      </td>
+      <td><?php if ($this->escapeHtml($issn) != 'null') : ?>
+          <?= $this->escapeHtml($issn) ?>
+        <?php else : ?> Não cadastrado <?php endif; ?></td>
+    </tr>
+  </table>
+</div>

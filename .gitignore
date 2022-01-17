@@ -1,0 +1,26 @@
+# GNU Emacs temporary files
+\#*
+.\#*
+*~
+
+.php_cs_cache
+.vagrant
+.vscode/*
+.DS_Store
+*.DS_Store
+/downloads
+/Gruntfile.local.js
+/solr/vendor
+/vendor
+ChangeLog
+TAGS
+composer.phar
+import/solrmarc.log*
+lessphp_*.list
+module/VuFind/tests/.phpunit.result.cache
+node_modules
+public/swagger-ui
+local/cache
+
+# local/config/vufind/config.ini
+# local/config/vufind/bulkexport.ini
