@@ -24,3 +24,5 @@ local/cache
 
 local/config/vufind/bulkexport.ini
 local/config/vufind/config.ini
+local/httpd-vufind.conf
+env.bat
