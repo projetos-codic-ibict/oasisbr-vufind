@@ -1,15 +1,16 @@
 const INDICATORS_FACETS =
   'search?type=AllFields&page=0&limit=0&sort=relevance&facet[]=author_facet&facet[]=dc.subject.por.fl_str_mv&facet[]=eu_rights_str_mv&facet[]=dc.publisher.program.fl_str_mv&facet[]=dc.subject.cnpq.fl_str_mv&facet[]=publishDate&facet[]=language&facet[]=format&facet[]=institution&facet[]=dc.contributor.advisor1.fl_str_mv'
 
-const API_BASE_URL =
-  window.location.hostname === 'localhost'
-    ? `http://${window.location.host}/vufind/api/v1`
-    : `https://${window.location.host}/vufind/api/v1`
+let API_BASE_URL;
+let REMOTE_API_URL;
 
-const REMOTE_API_URL =
-  window.location.hostname === 'localhost'
-    ? `http://${window.location.host}:3000/api/v1`
-    : `https://api-${window.location.host}/api/v1`
+if (window.location.hostname === 'oasisbr.ibict.br') {
+  API_BASE_URL = `https://${window.location.host}/vufind/api/v1`
+  REMOTE_API_URL = `https://api-${window.location.host}/api/v1`
+} else {
+  API_BASE_URL = `http://${window.location.host}/vufind/api/v1`
+  REMOTE_API_URL = `http://${window.location.host}:3000/api/v1`
+}
 
 async function getIndicatorsBy (filter) {
   try {
