@@ -116,17 +116,23 @@ forms:
     onlyForLoggedUsers: false
     #emailSubject: VuFind Feedback
     response: Thank you for your feedback.
-    senderEmailRequired: false
-    senderNameRequired: false
+    senderEmailRequired: true
+    senderNameRequired: true
 
     #help:
     #  pre: feedback_help_pre
     #  post: feedback_help_post
 
     fields:
+      - name: subject
+        type: text
+        label: Subject
+        required: true
+        settings:
+        # help: message_help
       - name: message
         type: textarea
-        label: Comments
+        label: Message
         required: true
         settings:
         # help: message_help
