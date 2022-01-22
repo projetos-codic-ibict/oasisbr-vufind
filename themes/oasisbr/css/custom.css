@@ -216,6 +216,7 @@ footer .footer{
 .nav-footer ul{
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .nav-footer ul li{
@@ -767,6 +768,19 @@ td span.format {
 
   .record table td {
     width: 60%;
+  }
+
+  .footer .flex-row-center{
+    flex-direction: column;
+  }
+
+  .icon-gov-links{
+    padding: 1rem;
+    max-width: 75%;
+    border-top: 1px solid;
+  }
+  .icon-gov-links:first-child{
+    border-top: none;
   }
 }
 
