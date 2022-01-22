@@ -1,43 +1,45 @@
 <footer class="hidden-print">
-  <div class="container">
-
-    <div class="row flex footer">
-      <div class="col-md-6 col-xs-12 flex">
-        <div class="col-md-6 flex-col-center row-gap-1 social-media">
-          <a href="https://www.facebook.com/IBICTbr/" target="_blank">
-            <img class="img-responsive" src="<?= $this->imageLink('facebook.png'); ?>" alt="Facebook Logo" />
-          </a>
-          <a href="https://twitter.com/ibictbr" target="_blank">
-            <img class="img-responsive" src="<?= $this->imageLink('twitter.png'); ?>" alt="Twitter Logo" />
-          </a>
-          <a href="https://www.youtube.com/user/IBICTbr/" target="_blank">
-            <img class="img-responsive" src="<?= $this->imageLink('youtube.png'); ?>" alt="Youtube Logo" />
-          </a>
-        </div>
-        <div class="col-md-6">
-          <nav class="nav-footer">
-            <ul>
-              <li>
-                <a href="#"><?= $this->transEsc("Home") ?></a>
-              </li>
-              <li>
-                <a href="<?= $this->url('about-home') ?>"><?= $this->transEsc("About") ?></a>
-              </li>
-              <li>
-                <a href="<?= $this->url('datasources-home') ?>"><?= $this->transEsc("Data Sources") ?></a>
-              </li>
-              <li>
-                <a href="<?= $this->url('indicators-home') ?>"><?= $this->transEsc("Indicators") ?></a>
-              </li>
-              <?php if ($this->feedback()->tabEnabled()) : ?>
-                <li>
-                  <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"><?= $this->transEsc("Contact") ?></a>
-                </li>
-              <?php endif; ?>
-            </ul>
-          </nav>
-        </div>
+  <div class="container-fluid social-media">
+    <div class="row">
+      <div class="col-md-12 flex-row-center col-gap-1">
+        <a href="https://www.youtube.com/user/IBICTbr/" target="_blank">
+          <img class="img-responsive" src="<?= $this->imageLink('youtube.png'); ?>" alt="Youtube Logo" />
+        </a>
+        <a href="https://www.facebook.com/IBICTbr/" target="_blank">
+          <img class="img-responsive" src="<?= $this->imageLink('facebook.png'); ?>" alt="Facebook Logo" />
+        </a>
+        <a href="https://twitter.com/ibictbr" target="_blank">
+          <img class="img-responsive" src="<?= $this->imageLink('twitter.png'); ?>" alt="Twitter Logo" />
+        </a>
       </div>
+    </div>
+  </div>
+  <div class="container-fuid footer">
+    <div class="row flex-row-center">
+      <div class="col-md-6">
+        <nav class="nav-footer">
+          <ul>
+            <li>
+              <a href="#"><?= $this->transEsc("Home") ?></a>
+            </li>
+            <li>
+              <a href="<?= $this->url('about-home') ?>"><?= $this->transEsc("About") ?></a>
+            </li>
+            <li>
+              <a href="<?= $this->url('datasources-home') ?>"><?= $this->transEsc("Data Sources") ?></a>
+            </li>
+            <li>
+              <a href="<?= $this->url('indicators-home') ?>"><?= $this->transEsc("Indicators") ?></a>
+            </li>
+            <?php if ($this->feedback()->tabEnabled()) : ?>
+              <li>
+                <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"><?= $this->transEsc("Contact") ?></a>
+              </li>
+            <?php endif; ?>
+          </ul>
+        </nav>
+      </div>
+
       <div class="col-md-6 col-xs-12 flex-row-center">
         <a href="https://www.gov.br/ibict" target="_blank" rel="noopener noreferrer"> <img class="img-responsive" src="<?= $this->imageLink('assinatura-gov-ibict.png'); ?>" alt="logo de assinatura do ibict" /></a>
         <a href="https://www.gov.br/mcti" target="_blank" rel="noopener noreferrer"><img class="img-responsive" src="<?= $this->imageLink('assinatura-gov-ministerio.png'); ?>" alt="logo de assinatura do ministério" /></a>
@@ -48,6 +50,5 @@
   <div class="poweredby">
     <?= $this->layout()->poweredBy ?>
   </div>
-
   <script defer="defer" src="https://barra.brasil.gov.br/barra_2.0.js" type="text/javascript"></script>
 </footer>

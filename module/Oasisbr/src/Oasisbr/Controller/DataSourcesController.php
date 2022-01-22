@@ -39,10 +39,16 @@ class DataSourcesController extends \VuFind\Controller\AbstractBase
         return "revista";
       case "Repositório de Publicações":
         return "repo-publicacoes";
-      case "Repositório de Dados":
+      case "Repositório de Dados de Pesquisa":
         return "repo-dados";
       case "Biblioteca Digital de Teses e Dissertações":
         return "biblioteca";
+      case "Biblioteca Digital de Monografias":
+        return "monografias";
+      case "Servidor de Preprints":
+        return "preprints";
+      case "Portal Agregador":
+        return "agregador";
       default:
         return "repo";
     }

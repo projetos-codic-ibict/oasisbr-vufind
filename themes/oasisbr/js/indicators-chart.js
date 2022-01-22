@@ -1,11 +1,11 @@
-function fillTotalDocuments(total) {
+function fillTotalDocuments (total) {
   const totalDocsElements = document.querySelectorAll('#total-docs')
   totalDocsElements.forEach(element => {
     element.textContent = formatNumber(total)
   })
 }
 
-async function createChartByYear(data) {
+async function createChartByYear (data) {
   let values = data.map((item) => {
     return { year: item.translated, count: item.count }
   })
@@ -38,15 +38,15 @@ async function createChartByYear(data) {
         }
       },
       tooltip: [
-        { field: 'year', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'year', type: 'nominal', title: 'Ano' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visYear', yourVlSpec, vegaOptions)
 }
 
-async function createChartByType(data) {
+async function createChartByType (data) {
   const values = data.map((item) => {
     return { type: getTranslatedText(item.translated), count: item.count }
   })
@@ -68,15 +68,15 @@ async function createChartByType(data) {
         }
       },
       tooltip: [
-        { field: 'type', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' },
+        { field: 'type', type: 'nominal', title: 'Tipo de documento' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' },
       ]
     }
   }
   vegaEmbed('#visType', yourVlSpec, vegaOptions)
 }
 
-async function createChartByInstitution(data) {
+async function createChartByInstitution (data) {
   let values = data.map((item) => {
     return { inst: item.translated, count: item.count }
   })
@@ -100,15 +100,15 @@ async function createChartByInstitution(data) {
       },
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 }, },
       tooltip: [
-        { field: 'inst', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'inst', type: 'nominal', title: 'Instituição' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visInst', yourVlSpec, vegaOptions)
 }
 
-async function createChartByLanguage(data) {
+async function createChartByLanguage (data) {
   let values = data.map((item) => {
     return {
       language: item.translated ? getTranslatedText(item.translated) : 'Others',
@@ -133,15 +133,15 @@ async function createChartByLanguage(data) {
         }
       },
       tooltip: [
-        { field: 'language', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'language', type: 'nominal', title: 'Idioma' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visLang', yourVlSpec, vegaOptions)
 }
 
-async function createChartByAuthor(data) {
+async function createChartByAuthor (data) {
   let values = data.map((item) => {
     return { author: item.translated, count: item.count }
   })
@@ -169,15 +169,15 @@ async function createChartByAuthor(data) {
       },
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
       tooltip: [
-        { field: 'author', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'author', type: 'nominal', title: 'Autor' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visAuthor', yourVlSpec, vegaOptions)
 }
 
-async function createChartByAdvisors(data) {
+async function createChartByAdvisors (data) {
   let values = data.map((item) => {
     return { advisor: item.translated, count: item.count }
   })
@@ -205,15 +205,15 @@ async function createChartByAdvisors(data) {
       },
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
       tooltip: [
-        { field: 'advisor', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'advisor', type: 'nominal', title: 'Orientador' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visAdv', yourVlSpec, vegaOptions)
 }
 
-async function createWordCloud(data) {
+async function createWordCloud (data) {
   // data = data.slice(0, 10)
 
   const values = []
@@ -250,6 +250,9 @@ async function createWordCloud(data) {
     weightFactor: 3,
     fontFamily: 'Lato, sans-serif',
     color: '#000',
+    click: function (item) {
+      window.location = `/vufind/Search/Results?type=AllFields&filter%5B%5D=dc.subject.por.fl_str_mv%3A%22${item[0]}%22`;
+    },
     hover: function (item, dimension) {
       tippyElement.setContent(item[0] + ': ' + formatNumber(item[1] * divisor))
       // tippyElement.setProps({
@@ -262,13 +265,13 @@ async function createWordCloud(data) {
       // })
       tippyElement.show()
     },
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   }
 
   WordCloud(visAuthor, options)
 }
 
-async function createChartByPpg(data) {
+async function createChartByPpg (data) {
   let values = data.map((item) => {
     return { PPG: item.translated, count: item.count }
   })
@@ -279,7 +282,6 @@ async function createChartByPpg(data) {
     },
     mark: { type: 'bar', tooltip: true },
     width: 460,
-    // height: 250,
     labelFontSize: 14,
     encoding: {
       x: {
@@ -290,12 +292,16 @@ async function createChartByPpg(data) {
         sort: { field: 'count', order: 'descending' }
       },
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } }
-    }
+    },
+    tooltip: [
+      { field: 'PPG', type: 'nominal', title: 'PPG' },
+      { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+    ]
   }
   vegaEmbed('#visPpg', yourVlSpec, vegaOptions)
 }
 
-async function createChartByRights(data) {
+async function createChartByRights (data) {
   const values = data.map((item) => {
     return {
       right: getTranslatedText(item.translated),
@@ -319,20 +325,20 @@ async function createChartByRights(data) {
         }
       },
       tooltip: [
-        { field: 'right', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'right', type: 'nominal', title: 'Tipo de acesso' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visRights', yourVlSpec, vegaOptions)
 }
 
-function cleanCNPqTag(fullTag) {
+function cleanCNPqTag (fullTag) {
   const split = fullTag.split('::')
   return split[split.length - 1]
 }
 
-async function createChartByCnpq(data) {
+async function createChartByCnpq (data) {
   let values = data.map((item) => {
     return { CNPq: cleanCNPqTag(item.translated), count: item.count }
   })
@@ -365,15 +371,15 @@ async function createChartByCnpq(data) {
         }
       },
       tooltip: [
-        { field: 'CNPq', type: 'nominal' },
-        { field: 'count', type: 'quantitative', format: ',.0f' }
+        { field: 'CNPq', type: 'nominal', title: 'Área do conhecimento' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
   vegaEmbed('#visCnpq', yourVlSpec, vegaOptions)
 }
 
-function filterFormListener() {
+function filterFormListener () {
   const form = document.querySelector('[data-form-filter]')
   if (form.attachEvent) {
     form.attachEvent('submit', processForm)
@@ -382,7 +388,7 @@ function filterFormListener() {
   }
 }
 
-function processForm(e) {
+function processForm (e) {
   if (e.preventDefault) e.preventDefault()
   loadData(this.elements.filter.value, this.elements.type.value)
   return false
@@ -393,7 +399,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadData(null, null)
 })
 
-async function loadData(lookfor, type) {
+async function loadData (lookfor, type) {
   const initTime = performance.now();
   const indicators = await getIndicatorsFromVufindApi(lookfor, type)
   const endTime = performance.now();
@@ -409,7 +415,7 @@ async function loadData(lookfor, type) {
   createChartByCnpq(indicators.facets['dc.subject.cnpq.fl_str_mv'])
   createChartByPpg(indicators.facets['dc.publisher.program.fl_str_mv'])
 }
-function fillSearchResults(lookfor, indicators, type, endTime, initTime) {
+function fillSearchResults (lookfor, indicators, type, endTime, initTime) {
   if (!lookfor) {
     // só pega o total sem filtro
     fillTotalDocuments(indicators.resultCount)

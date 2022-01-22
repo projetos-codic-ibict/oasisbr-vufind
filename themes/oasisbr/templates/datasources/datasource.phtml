@@ -58,13 +58,11 @@ $titleName = $source . " - " . $name;
     </tr>
     <tr>
       <td>
-        <?php if ($this->escapeHtml($sourceType) == 'Biblioteca Digital de Teses e Dissertações') : ?>
-          ID OpenDOAR:
-        <?php elseif ($this->escapeHtml($sourceType) == 'Repositório de Publicações') : ?>
-          ID OpenDOAR:
-        <?php elseif ($this->escapeHtml($sourceType) == 'Repositório de Dados') : ?>
+        <?php if ($this->escapeHtml($sourceType) == 'Revista Científica') : ?>
+          ISSN:
+        <?php elseif ($this->escapeHtml($sourceType) == 'Repositório de Dados de Pesquisa') : ?>
           ID re3data:
-        <?php else : ?> ISSN <?php endif; ?>
+        <?php else : ?> ID OpenDOAR <?php endif; ?>
       </td>
       <td><?php if ($this->escapeHtml($issn) != 'null') : ?>
           <?= $this->escapeHtml($issn) ?>
