@@ -213,7 +213,7 @@ async function createChartByAdvisors (data) {
   vegaEmbed('#visAdv', yourVlSpec, vegaOptions)
 }
 
-async function createWordCloud (data) {
+async function createWordCloud (data, lookfor, type) {
   // data = data.slice(0, 10)
 
   const values = []
@@ -251,7 +251,11 @@ async function createWordCloud (data) {
     fontFamily: 'Lato, sans-serif',
     color: '#000',
     click: function (item) {
-      window.location = `/vufind/Search/Results?type=AllFields&filter%5B%5D=dc.subject.por.fl_str_mv%3A%22${item[0]}%22`;
+      let search = `/vufind/Search/Results?type=AllFields&filter%5B%5D=dc.subject.por.fl_str_mv%3A%22${item[0]}%22`;
+      // if (lookfor && type === 'Author') {
+      //   search = search + `&filter%5B%5D=author_facet%3A%22${lookfor}%22&type=AllFields`
+      // }
+      window.location = search
     },
     hover: function (item, dimension) {
       tippyElement.setContent(item[0] + ': ' + formatNumber(item[1] * divisor))
@@ -400,6 +404,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 })
 
 async function loadData (lookfor, type) {
+  console.log(lookfor, type)
   const initTime = performance.now();
   const indicators = await getIndicatorsFromVufindApi(lookfor, type)
   const endTime = performance.now();
@@ -410,7 +415,7 @@ async function loadData (lookfor, type) {
   createChartByLanguage(indicators.facets.language)
   createChartByAuthor(indicators.facets.author_facet)
   createChartByAdvisors(indicators.facets['dc.contributor.advisor1.fl_str_mv'])
-  createWordCloud(indicators.facets['dc.subject.por.fl_str_mv'])
+  createWordCloud(indicators.facets['dc.subject.por.fl_str_mv'], lookfor, type)
   createChartByRights(indicators.facets.eu_rights_str_mv)
   createChartByCnpq(indicators.facets['dc.subject.cnpq.fl_str_mv'])
   createChartByPpg(indicators.facets['dc.publisher.program.fl_str_mv'])

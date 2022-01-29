@@ -1,11 +1,11 @@
-function getSiteLanguage() {
+function getSiteLanguage () {
   const urlParams = new URLSearchParams(window.location.search)
   const lng = urlParams.get('lng') || 'pt-br'
   return lng
 }
 const lng = getSiteLanguage()
 
-function getTranslatedText(key) {
+function getTranslatedText (key) {
   let text = ''
   switch (lng) {
     case 'en':
@@ -50,6 +50,8 @@ english.set('restrictedAccess', 'Restricted Access')
 english.set('Subject', 'Subject')
 english.set('Author', 'Author')
 english.set('Title', 'Title')
+english.set('Search among', 'Search among')
+english.set('documents', 'documents')
 
 const portuguese = new Map()
 // gráfico de idiomas
@@ -81,3 +83,6 @@ portuguese.set('restrictedAccess', 'Acesso restrito')
 portuguese.set('Subject', 'Assunto')
 portuguese.set('Author', 'Autor')
 portuguese.set('Title', 'Título')
+
+portuguese.set('Search among', 'Pesquise entre')
+portuguese.set('documents', 'documentos')

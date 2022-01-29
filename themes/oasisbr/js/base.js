@@ -58,9 +58,9 @@ async function getTotalOfDocuments () {
 function setPlaceholderInputSearch (totalDocuments) {
   const inputSearch = document.querySelector('[data-search]')
   if (inputSearch) {
-    inputSearch.placeholder = `Pesquise entre ${formatNumber(
+    inputSearch.placeholder = `${getTranslatedText('Search among')} ${formatNumber(
       totalDocuments
-    )} documentos`
+    )} ${getTranslatedText('documents')}`
   }
 }
 
