@@ -38,8 +38,8 @@ function fillDatanetworks (networks) {
     // Since there are no elements in the list, this will be used as template.
     item: `<li class="network-item">
       <h3><a href="" class="link name"></a></h3>
-      <p><b>Instituição responsável</b>: <span class="institution"></span></p>
-      <p><b>Número de documentos coletados</b>: <span class="validSize"></span></p>
+      <p><b>${getTranslatedText('Instituição responsável')}</b>: <span class="institution"></span></p>
+      <p><b>${getTranslatedText('Número de documentos coletados')}</b>: <span class="validSize"></span></p>
       </li>`,
     page: 10,
     pagination: [
@@ -88,7 +88,7 @@ function fillIndicatorsByDocumentType (indicators) {
     const item = `<a onclick="filterNetworks('${indicator.name
       }')"  class="facet js-facet-item facetAND">
     <span class="text">
-      <span class="facet-value">${indicator.name}</span>
+      <span class="facet-value">${getTranslatedText(indicator.name)}</span>
     </span>
     <span class="badge"> ${formatNumber(indicator.value)} </span>
   </a>`
@@ -130,7 +130,7 @@ function exportsCSV (networks) {
 
 function showTotalFind (total) {
   const totalLabel = document.querySelector('.networks-label')
-  totalLabel.innerHTML = `Retornaram ${formatNumber(total)} fontes`
+  totalLabel.innerHTML = `${getTranslatedText('Retornaram')} ${formatNumber(total)} ${getTranslatedText('fontes')}`
 }
 
 function showTotal (total) {

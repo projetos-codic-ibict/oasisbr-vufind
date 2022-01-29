@@ -53,6 +53,22 @@ english.set('Title', 'Title')
 english.set('Search among', 'Search among')
 english.set('documents', 'documents')
 
+// data sources page
+english.set('Todas as fontes', 'All sources')
+english.set('Revista Científica', 'Scientific Journals')
+english.set('Repositório de Publicações', 'Publications Repository')
+english.set('Biblioteca Digital de Teses e Dissertações', 'Digital Library of Theses and Dissertations')
+english.set('Repositório de Dados de Pesquisa', 'Research Data Repository')
+english.set('Portal Agregador', 'Aggregator Portal')
+english.set('Biblioteca Digital de Monografias', 'Digital Library of Monographs')
+english.set('Indefinido', 'Undefined')
+english.set('Retornaram', ' ')
+english.set('fontes', 'fonts returned')
+english.set('Instituição responsável', 'Responsible institution')
+english.set('Número de documentos coletados', 'Number of collected documents')
+
+
+
 const portuguese = new Map()
 // gráfico de idiomas
 portuguese.set('eng', 'Inglês')
@@ -86,3 +102,18 @@ portuguese.set('Title', 'Título')
 
 portuguese.set('Search among', 'Pesquise entre')
 portuguese.set('documents', 'documentos')
+// data sources page
+portuguese.set('Todas as fontes', 'Todas as fontes')
+portuguese.set('Revista Científica', 'Revista Científica')
+portuguese.set('Repositório de Publicações', 'Repositório de Publicações')
+portuguese.set('Biblioteca Digital de Teses e Dissertações', 'Biblioteca Digital de Teses e Dissertações')
+portuguese.set('Repositório de Dados de Pesquisa', 'Repositório de Dados de Pesquisa')
+portuguese.set('Portal Agregador', 'Portal Agregador')
+portuguese.set('Biblioteca Digital de Monografias', 'Biblioteca Digital de Monografias')
+portuguese.set('Indefinido', 'Indefinido')
+portuguese.set('Retornaram', 'Retornaram')
+portuguese.set('fontes', 'fontes')
+portuguese.set('Instituição responsável', 'Instituição responsável')
+portuguese.set('Número de documentos coletados', 'Número de documentos coletados')
+portuguese.set('', '')
+

@@ -7,7 +7,7 @@ return [
         'dataTables.bootstrap.min.css',
     ],
     'js' => [
-        'language.js',
+        'languages.js',
         'format.js',
         'base.js',
         'lib/axios.min.js',

@@ -15,7 +15,7 @@ $titleName = $source . " - " . $name;
 <div class="page-title-bar <?= $this->escapeHtml($customClass) ?>">
   <div class="container">
     <h1><?= $this->transEsc("Data Sources") ?></h1>
-    <h4> Conheça os tipos de fontes coletadas pelo Oasisbr <h4>
+    <h4><?= $this->transEsc("Data Sources Subtitle") ?> <h4>
   </div>
 </div>
 
@@ -30,7 +30,7 @@ $titleName = $source . " - " . $name;
       <td><?= $this->escapeHtml($name) ?></td>
     </tr>
     <tr>
-      <td>Instituição responsável:</td>
+      <td><?= $this->transEsc("Responsible institution") ?>:</td>
       <td><?= $this->escapeHtml($institution) ?></td>
     </tr>
     <tr>
@@ -43,13 +43,13 @@ $titleName = $source . " - " . $name;
       </td>
     </tr>
     <tr>
-      <td>E-mail da fonte: </td>
+      <td><?= $this->transEsc("Source email") ?>: </td>
       <td><?php if ($this->escapeHtml($email) != 'null') : ?>
           <?= $this->escapeHtml($email) ?>
         <?php else : ?> - <?php endif; ?> </td>
     </tr>
     <tr>
-      <td>Documentos coletados:</td>
+      <td><?= $this->transEsc("Documents collected") ?>:</td>
       <td>
         <a href="<?= '../Search/Results?type=AllFields&filter%5B%5D=network_name_str%3A%22' . $name ?>">
           <?= $this->escapeHtml($validSize) ?>
@@ -66,7 +66,7 @@ $titleName = $source . " - " . $name;
       </td>
       <td><?php if ($this->escapeHtml($issn) != 'null') : ?>
           <?= $this->escapeHtml($issn) ?>
-        <?php else : ?> Não cadastrado <?php endif; ?></td>
+        <?php else : ?> <?= $this->transEsc("Not registered") ?> <?php endif; ?></td>
     </tr>
   </table>
 </div>
