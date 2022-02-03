@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function fillSourceTypeNamesAndAbbreviationMap () {
     const tempMap = new Map()
     for (let index = 0; index < evolutionIndicators.length; index++) {
-      const sourceTypeName = evolutionIndicators[index].sourceType
+      const sourceTypeName = getTranslatedText(evolutionIndicators[index].sourceType)
       if (tempMap.get(sourceTypeName) != null) {
         break
       }
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return names.length === 1
       ? names[0]
       : names
-        .map((item) => (item.length > 2 ? item[0] : ''))
+        .map((item) => (item.length > 3 ? item[0] : ''))
         .join()
         .replaceAll(',', '')
   }
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const date = new Date(item.createdAt)
       return {
         date: truncateDateToDay(date),
-        sourceType: item.sourceType,
+        sourceType: getTranslatedText(item.sourceType),
         numberOfNetworks: item.numberOfNetworks
       }
     })
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           equal: 1,
           field: 'date',
           type: 'temporal',
-          title: 'Mês',
+          title: getTranslatedText('Month'),
           axis: {
             titleFontSize: 14,
             labelFontSize: 14,
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           aggregate: 'mean',
           field: 'numberOfNetworks',
           type: 'quantitative',
-          title: 'Fontes',
+          title: getTranslatedText('Fontes'),
           axis: {
             titleFontSize: 14,
             labelFontSize: 14
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         color: {
           field: 'sourceType',
           type: 'nominal',
-          title: 'Tipo de Fonte',
+          title: getTranslatedText('Tipo de fonte'),
           legend: {
             titleFontSize: 14,
             labelFontSize: 14,
@@ -177,14 +177,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             field: 'date',
             type: 'temporal',
             timeUnit: 'yearmonth',
-            title: 'Mês'
+            title: getTranslatedText('Month')
           },
-          { field: 'sourceType', type: 'nominal', title: 'Tipo de Fonte' },
+          { field: 'sourceType', type: 'nominal', title: getTranslatedText('Tipo de fonte') },
           {
             field: 'numberOfNetworks',
             type: 'quantitative',
             format: ',.0f',
-            title: 'Fontes'
+            title: getTranslatedText('Fontes')
           }
         ]
       }
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const date = new Date(item.createdAt)
       return {
         date: truncateDateToDay(date),
-        sourceType: item.sourceType,
+        sourceType: getTranslatedText(item.sourceType),
         numberOfDocuments: item.numberOfDocuments
       }
     })
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         x: {
           timeUnit: 'yearmonth',
           field: 'date',
-          title: 'Mês',
+          title: getTranslatedText('Month'),
           axis: {
             titleFontSize: 14,
             labelFontSize: 14,
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           aggregate: 'mean',
           field: 'numberOfDocuments',
           type: 'quantitative',
-          title: 'Documentos',
+          title: getTranslatedText('Documentos'),
           axis: {
             titleFontSize: 14,
             labelFontSize: 14
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         color: {
           field: 'sourceType',
           type: 'nominal',
-          title: 'Tipo de Fonte',
+          title: getTranslatedText('Tipo de fonte'),
           legend: {
             titleFontSize: 14,
             labelFontSize: 14,
@@ -265,18 +265,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             field: 'date',
             type: 'evolution',
             timeUnit: 'yearmonth',
-            title: 'Mês'
+            title: getTranslatedText('Month')
           },
-          { field: 'sourceType', type: 'nominal', title: 'Tipo de Fonte' },
+          { field: 'sourceType', type: 'nominal', title: getTranslatedText('Tipo de fonte') },
           {
             field: 'numberOfDocuments',
             type: 'quantitative',
             format: ',.0f',
-            title: 'Documentos'
+            title: getTranslatedText('Documentos')
           }
         ]
       }
     }
+    console.log('vegaOptions', vegaOptions)
     vegaEmbed('#visDocumentsByMonth', yourVlSpec, vegaOptions)
   }
 

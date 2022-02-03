@@ -404,7 +404,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 })
 
 async function loadData (lookfor, type) {
-  console.log(lookfor, type)
   const initTime = performance.now();
   const indicators = await getIndicatorsFromVufindApi(lookfor, type)
   const endTime = performance.now();

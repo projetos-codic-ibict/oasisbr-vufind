@@ -1,6 +1,7 @@
 function getSiteLanguage () {
   const urlParams = new URLSearchParams(window.location.search)
-  const lng = urlParams.get('lng') || 'pt-br'
+  const userLang = navigator.language || navigator.userLanguage;
+  const lng = urlParams.get('lng') || userLang
   return lng
 }
 const lng = getSiteLanguage()
@@ -11,11 +12,17 @@ function getTranslatedText (key) {
     case 'en':
       text = english.get(key)
       return text || key
+    case 'en-US':
+      text = english.get(key)
+      return text || key
     case 'pt-br':
       text = portuguese.get(key)
       return text || key
-    default:
+    case 'pt':
       text = portuguese.get(key)
+      return text || key
+    default:
+      text = english.get(key)
       return text || key
   }
 }
@@ -27,6 +34,13 @@ english.set('fra', 'French')
 english.set('ita', 'Italian')
 english.set('por', 'Portuguese')
 english.set('spa', 'Spanish')
+
+english.set('Inglês', 'English')
+english.set('Francês', 'French')
+english.set('Italiano', 'Italian')
+english.set('Português', 'Portuguese')
+english.set('Espanhol', 'Spanish')
+
 // tipos de documento
 english.set('article', 'Article')
 english.set('bachelorThesis', 'Bachelor Thesis')
@@ -52,6 +66,8 @@ english.set('Author', 'Author')
 english.set('Title', 'Title')
 english.set('Search among', 'Search among')
 english.set('documents', 'documents')
+english.set('Documentos', 'Documents')
+english.set('Tipo de fonte', 'Source type')
 
 // data sources page
 english.set('Todas as fontes', 'All sources')
@@ -66,7 +82,8 @@ english.set('Retornaram', ' ')
 english.set('fontes', 'fonts returned')
 english.set('Instituição responsável', 'Responsible institution')
 english.set('Número de documentos coletados', 'Number of collected documents')
-
+english.set('Fontes', 'Sources')
+english.set('Month', 'Month')
 
 
 const portuguese = new Map()
@@ -115,5 +132,7 @@ portuguese.set('Retornaram', 'Retornaram')
 portuguese.set('fontes', 'fontes')
 portuguese.set('Instituição responsável', 'Instituição responsável')
 portuguese.set('Número de documentos coletados', 'Número de documentos coletados')
-portuguese.set('', '')
-
+portuguese.set('Documentos', 'Documentos')
+portuguese.set('Tipo de fonte', 'Tipo de fonte')
+portuguese.set('Fontes', 'Fontes')
+portuguese.set('Month', 'Mês')
