@@ -23,7 +23,6 @@ function mountURL(link, network) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('working')
   const link = document.querySelector('[data-network-name]')
   const networkName = link.getAttribute('data-network-name');
   const network = await getANetworkByName(networkName)

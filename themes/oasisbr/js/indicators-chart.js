@@ -232,7 +232,7 @@ async function createWordCloud (data, lookfor, type) {
     divisor = 0.3
   }
   data.forEach((item) => {
-    values.push([item.translated, item.count / divisor])
+    values.push([item.translated, item.count / divisor, item.count])
   })
 
   // const tippyElement = tippy('#cloudTopic', {
@@ -251,14 +251,15 @@ async function createWordCloud (data, lookfor, type) {
     fontFamily: 'Lato, sans-serif',
     color: '#000',
     click: function (item) {
-      let search = `/vufind/Search/Results?type=AllFields&filter%5B%5D=dc.subject.por.fl_str_mv%3A%22${item[0]}%22`;
-      // if (lookfor && type === 'Author') {
-      //   search = search + `&filter%5B%5D=author_facet%3A%22${lookfor}%22&type=AllFields`
-      // }
+      let search = '/vufind/Search/Results?'
+      if (lookfor && type) {
+        search = search + `lookfor=${lookfor}&type=${type}&`
+      }
+      search = search + `filter%5B%5D=dc.subject.por.fl_str_mv%3A%22${item[0]}%22`
       window.location = search
     },
     hover: function (item, dimension) {
-      tippyElement.setContent(item[0] + ': ' + formatNumber(item[1] * divisor))
+      tippyElement.setContent(item[0] + ': ' + formatNumber(item[2]))
       // tippyElement.setProps({
       //   getReferenceClientRect: () => ({
       //     width: dimension.w,
