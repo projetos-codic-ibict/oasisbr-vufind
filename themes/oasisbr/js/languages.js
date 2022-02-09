@@ -1,8 +1,14 @@
 function getSiteLanguage () {
   const urlParams = new URLSearchParams(window.location.search)
-  const userLang = navigator.language || navigator.userLanguage;
-  const lng = urlParams.get('lng') || userLang
-  return lng
+  const browserLanguage = navigator.language || navigator.userLanguage;
+
+  const languageUserSelected = urlParams.get('lng');
+  if (languageUserSelected) {
+    localStorage.setItem('language', languageUserSelected)
+    return languageUserSelected
+  } else {
+    return localStorage.getItem('language') || browserLanguage
+  }
 }
 const lng = getSiteLanguage()
 
