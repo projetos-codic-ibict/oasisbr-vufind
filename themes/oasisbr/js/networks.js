@@ -145,9 +145,9 @@ function ConvertToCSV (objArray) {
   csv += '\r\n'
   array.forEach((item) => {
     let line =
-      item.name +
+      `"${item.name}"` +
       ',' +
-      item.institution +
+      `"${item.institution}"` +
       ',' +
       item.sourceType +
       ',' +

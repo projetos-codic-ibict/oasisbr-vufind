@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function fillSourceTypeNamesAndAbbreviationMap () {
     const tempMap = new Map()
     for (let index = 0; index < evolutionIndicators.length; index++) {
-      const sourceTypeName = getTranslatedText(evolutionIndicators[index].sourceType)
+      const sourceTypeName = getTranslatedText(evolutionIndicators[index].content.sourceType)
       if (tempMap.get(sourceTypeName) != null) {
         break
       }
@@ -108,11 +108,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function createChartSourcesByMonth (indicators, qtdOfMonths) {
     const values = indicators.map((item) => {
-      const date = new Date(item.createdAt)
+      const date = new Date(item.content.createdAt)
       return {
         date: truncateDateToDay(date),
-        sourceType: getTranslatedText(item.sourceType),
-        numberOfNetworks: item.numberOfNetworks
+        sourceType: getTranslatedText(item.content.sourceType),
+        numberOfNetworks: item.content.numberOfNetworks
       }
     })
     const width = qtdOfMonths * 50
@@ -194,11 +194,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function createChartDocumentsByMonth (indicators, qtdOfMonths) {
     const values = indicators.map((item) => {
-      const date = new Date(item.createdAt)
+      const date = new Date(item.content.createdAt)
       return {
         date: truncateDateToDay(date),
-        sourceType: getTranslatedText(item.sourceType),
-        numberOfDocuments: item.numberOfDocuments
+        sourceType: getTranslatedText(item.content.sourceType),
+        numberOfDocuments: item.content.numberOfDocuments
       }
     })
 

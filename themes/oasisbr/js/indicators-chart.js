@@ -88,7 +88,6 @@ async function createChartByInstitution (data) {
     },
     mark: { type: 'bar', tooltip: true },
     width: 460,
-    // height: 250,
     labelFontSize: 14,
     encoding: {
       x: {
@@ -296,7 +295,7 @@ async function createChartByPpg (data) {
         axis: { labelAngle: 45, labelFontSize: 14 },
         sort: { field: 'count', order: 'descending' }
       },
-      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } }
+      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 }, }
     },
     tooltip: [
       { field: 'PPG', type: 'nominal', title: 'PPG' },
