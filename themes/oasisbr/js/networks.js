@@ -98,6 +98,9 @@ function fillIndicatorsByDocumentType (indicators) {
 
 function filterNetworks (filter) {
   if (filter) {
+    if (filter === 'Indefinido') {
+      filter = null
+    }
     let foud = 0
     networksList.filter((item) => {
       if (item.values().sourceType === filter) {
@@ -119,7 +122,9 @@ function exportsCSV (networks) {
   btnExport.addEventListener('click', () => {
     let csvContent = 'data:text/csv;charset=utf-8,'
 
-    const jsonObject = JSON.stringify(networks)
+
+    const jsonObject = networksList.filtered ?
+      JSON.stringify(networksList.matchingItems.map(i => i._values)) : networks
 
     // Convert JSON to CSV & Display CSV
     csvContent = csvContent + ConvertToCSV(jsonObject)
@@ -153,7 +158,7 @@ function ConvertToCSV (objArray) {
       ',' +
       item.sourceUrl +
       ',' +
-      item.email +
+      `"${item.email}"` +
       ',' +
       item.issn +
       ',' +
