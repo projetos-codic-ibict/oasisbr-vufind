@@ -248,6 +248,9 @@ footer .footer{
 .col-gap-1 {
   column-gap: 1rem;
 }
+.col-gap-6 {
+  column-gap: 6rem;
+}
 
 .social-media{
   background-color: #33426a;
