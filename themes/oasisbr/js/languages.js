@@ -1,8 +1,8 @@
 function getSiteLanguage () {
   const urlParams = new URLSearchParams(window.location.search)
-  const browserLanguage = navigator.language || navigator.userLanguage;
+  const browserLanguage = navigator.language || navigator.userLanguage
 
-  const languageUserSelected = urlParams.get('lng');
+  const languageUserSelected = urlParams.get('lng')
   if (languageUserSelected) {
     localStorage.setItem('language', languageUserSelected)
     return languageUserSelected
@@ -88,9 +88,11 @@ english.set('Retornaram', ' ')
 english.set('fontes', 'sources returned')
 english.set('Instituição responsável', 'Responsible institution')
 english.set('Número de documentos coletados', 'Number of collected documents')
+english.set('Fonte', 'Source')
 english.set('Fontes', 'Sources')
 english.set('Month', 'Month')
-
+english.set('Source email', 'Source email')
+english.set('Collected documents', 'Collected documents')
 
 const portuguese = new Map()
 // gráfico de idiomas
@@ -140,5 +142,8 @@ portuguese.set('Instituição responsável', 'Instituição responsável')
 portuguese.set('Número de documentos coletados', 'Número de documentos coletados')
 portuguese.set('Documentos', 'Documentos')
 portuguese.set('Tipo de fonte', 'Tipo de fonte')
+portuguese.set('Fonte', 'Fonte')
 portuguese.set('Fontes', 'Fontes')
 portuguese.set('Month', 'Mês')
+portuguese.set('Source email', 'E-mail da fonte')
+portuguese.set('Collected documents', 'Documentos coletados')

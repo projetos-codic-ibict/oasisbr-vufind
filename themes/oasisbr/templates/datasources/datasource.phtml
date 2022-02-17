@@ -1,18 +1,18 @@
 <?php
 $source = $this->transEsc("Source");
-$name = $this->escapeHtml($name);
-$titleName = $source . " - " . $name;
+// $name = $this->escapeHtml($name);
+$titleName = $source;
 ?>
 <?php $this->headTitle($titleName); ?>
 <?php $this->layout()->searchbox = false; ?>
 <?php $this->layout()->nocontainerclass = true; ?>
-<?php $this->headScript()->appendFile("datasource.js"); ?>
+<?php $this->headScript()->appendFile("load-network.js"); ?>
 
 <div class="logo-img-center">
   <a href="<?= $this->url('home') ?>"><img src="<?= $this->imageLink('oasisbr.png'); ?>" alt="Logo do OasisBR" /></a>
 </div>
 
-<div class="page-title-bar <?= $this->escapeHtml($customClass) ?>">
+<div class="page-title-bar">
   <div class="container">
     <h1><?= $this->transEsc("Data Sources") ?></h1>
     <h4><?= $this->transEsc("Data Sources Subtitle") ?> <h4>
@@ -21,52 +21,6 @@ $titleName = $source . " - " . $name;
 
 <div class="container">
   <table class="table table-striped" id="dataSource">
-    <tr>
-      <td><?= $this->transEsc("Source type") ?> :</td>
-      <td><?= $this->escapeHtml($sourceType) ?></td>
-    </tr>
-    <tr>
-      <td><?= $this->transEsc("Source") ?> :</td>
-      <td><?= $this->escapeHtml($name) ?></td>
-    </tr>
-    <tr>
-      <td><?= $this->transEsc("Responsible institution") ?>:</td>
-      <td><?= $this->escapeHtml($institution) ?></td>
-    </tr>
-    <tr>
-      <td>URL: </td>
-      <td><?php if ($this->escapeHtml($sourceUrl) != 'null') : ?>
-          <a href="<?= $this->escapeHtml($sourceUrl) ?>" target="_blank" rel="noopener noreferrer">
-            <?= $this->escapeHtml($sourceUrl) ?>
-          </a>
-        <?php else : ?> - <?php endif; ?>
-      </td>
-    </tr>
-    <tr>
-      <td><?= $this->transEsc("Source email") ?>: </td>
-      <td><?php if ($this->escapeHtml($email) != 'null') : ?>
-          <?= $this->escapeHtml($email) ?>
-        <?php else : ?> - <?php endif; ?> </td>
-    </tr>
-    <tr>
-      <td><?= $this->transEsc("Documents collected") ?>:</td>
-      <td>
-        <a href="<?= '../Search/Results?type=AllFields&filter%5B%5D=network_name_str%3A%22' . $name ?>">
-          <?= $this->escapeHtml($validSize) ?>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <?php if ($this->escapeHtml($sourceType) == 'Revista Científica') : ?>
-          ISSN:
-        <?php elseif ($this->escapeHtml($sourceType) == 'Repositório de Dados de Pesquisa') : ?>
-          ID re3data:
-        <?php else : ?> ID OpenDOAR <?php endif; ?>
-      </td>
-      <td><?php if ($this->escapeHtml($issn) != 'null') : ?>
-          <?= $this->escapeHtml($issn) ?>
-        <?php else : ?> <?= $this->transEsc("Not registered") ?> <?php endif; ?></td>
-    </tr>
+
   </table>
 </div>

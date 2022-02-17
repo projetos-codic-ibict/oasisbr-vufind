@@ -336,7 +336,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         createChartSourcesByMonth(evolutionIndicators, diffOfMonths)
         removeMsgError(divMsg)
       }
-
     })
   }
 
@@ -375,13 +374,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // }
 
   function monthDiff (d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
+    let months
+    months = (d2.getFullYear() - d1.getFullYear()) * 12
+    months -= d1.getMonth()
+    months += d2.getMonth()
+    return months <= 0 ? 0 : months
   }
-
 
   function setSourceDatesInitialValues (sourceInitInput, sourceEndInput, inputType) {
     // os indicadores estão ordenados por data
@@ -471,8 +469,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   //   }
   //   createChartDocumentsByMonth(indicatorsFiltered)
   // }
-
-
 
   evolutionIndicators = await getIndicatorsFromRemoteApiBy(
     '/evolution-indicators'

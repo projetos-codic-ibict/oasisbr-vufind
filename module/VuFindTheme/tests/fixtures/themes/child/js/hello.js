@@ -1,1 +1,1 @@
-alert('hello child');
+alert('hello child')

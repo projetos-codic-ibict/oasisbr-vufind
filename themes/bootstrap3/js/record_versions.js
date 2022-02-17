@@ -1,22 +1,23 @@
-/*global Hunt, VuFind */
+/* global Hunt, VuFind */
 
-VuFind.register('recordVersions', function recordVersions() {
-  function checkRecordVersions(_container) {
-    var container = typeof _container === 'undefined' ? $(document) : $(_container);
+VuFind.register('recordVersions', function recordVersions () {
+  function checkRecordVersions (_container) {
+    const container = typeof _container === 'undefined' ? $(document) : $(_container)
 
-    var elements = container.hasClass('record-versions') && container.hasClass('ajax')
-      ? container : container.find('.record-versions.ajax');
-    elements.each(function checkVersions() {
-      var $elem = $(this);
+    const elements = container.hasClass('record-versions') && container.hasClass('ajax')
+      ? container
+      : container.find('.record-versions.ajax')
+    elements.each(function checkVersions () {
+      const $elem = $(this)
       if ($elem.hasClass('loaded')) {
-        return;
+        return
       }
-      $elem.addClass('loaded');
-      $elem.removeClass('hidden');
-      $elem.append('<span class="js-load">' + VuFind.translate('loading') + '...</span>');
-      var $item = $(this).parents('.result');
-      var id = $item.find('.hiddenId')[0].value;
-      var source = $item.find('.hiddenSource')[0].value;
+      $elem.addClass('loaded')
+      $elem.removeClass('hidden')
+      $elem.append('<span class="js-load">' + VuFind.translate('loading') + '...</span>')
+      const $item = $(this).parents('.result')
+      const id = $item.find('.hiddenId')[0].value
+      const source = $item.find('.hiddenSource')[0].value
       $.getJSON(
         VuFind.path + '/AJAX/JSON',
         {
@@ -25,33 +26,32 @@ VuFind.register('recordVersions', function recordVersions() {
           source: source
         }
       )
-        .done(function onGetVersionsDone(response) {
+        .done(function onGetVersionsDone (response) {
           if (response.data.length > 0) {
-            $elem.html(response.data);
+            $elem.html(response.data)
           } else {
-            $elem.text('');
+            $elem.text('')
           }
         })
-        .fail(function onGetVersionsFail() {
-          $elem.text(VuFind.translate('error_occurred'));
-        });
-    });
+        .fail(function onGetVersionsFail () {
+          $elem.text(VuFind.translate('error_occurred'))
+        })
+    })
   }
 
-  function init(_container) {
+  function init (_container) {
     if (typeof Hunt === 'undefined') {
-      checkRecordVersions(_container);
+      checkRecordVersions(_container)
     } else {
-      var container = typeof _container === 'undefined'
+      const container = typeof _container === 'undefined'
         ? document.body
-        : _container;
+        : _container
       new Hunt(
         $(container).find('.record-versions.ajax').toArray(),
         { enter: checkRecordVersions }
-      );
+      )
     }
   }
 
-  return { init: init, check: checkRecordVersions };
-});
-
+  return { init: init, check: checkRecordVersions }
+})

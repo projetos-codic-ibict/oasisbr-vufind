@@ -1,132 +1,132 @@
-/*global checkSaveStatuses, registerAjaxCommentRecord, registerTabEvents, syn_get_widget, VuFind */
-VuFind.register('embedded', function embedded() {
-  var _STORAGEKEY = 'vufind_search_open';
-  var _SEPERATOR = ':::';
-  var _DELIM = ',';
-  var _STATUS = {};
+/* global checkSaveStatuses, registerAjaxCommentRecord, registerTabEvents, syn_get_widget, VuFind */
+VuFind.register('embedded', function embedded () {
+  const _STORAGEKEY = 'vufind_search_open'
+  const _SEPERATOR = ':::'
+  const _DELIM = ','
+  const _STATUS = {}
 
-  function saveStatusToStorage() {
-    var storage = [];
-    var str;
+  function saveStatusToStorage () {
+    const storage = []
+    let str
     for (str in _STATUS) {
       if ({}.hasOwnProperty.call(_STATUS, str)) {
         if (_STATUS[str]) {
-          str += _SEPERATOR + _STATUS[str];
+          str += _SEPERATOR + _STATUS[str]
         }
-        storage.push(str);
+        storage.push(str)
       }
     }
-    sessionStorage.setItem(_STORAGEKEY, $.unique(storage).join(_DELIM));
+    sessionStorage.setItem(_STORAGEKEY, $.unique(storage).join(_DELIM))
   }
-  function addToStorage(id, tab) {
-    _STATUS[id] = tab;
-    saveStatusToStorage();
+  function addToStorage (id, tab) {
+    _STATUS[id] = tab
+    saveStatusToStorage()
   }
-  function removeFromStorage(id) {
+  function removeFromStorage (id) {
     if (delete _STATUS[id]) {
-      saveStatusToStorage();
+      saveStatusToStorage()
     }
   }
 
-  function ajaxLoadTab(tabid, _click) {
-    var click = _click || false;
-    var $tab = $('#' + tabid);
-    var $result = $tab.closest('.result');
+  function ajaxLoadTab (tabid, _click) {
+    const click = _click || false
+    const $tab = $('#' + tabid)
+    const $result = $tab.closest('.result')
     if ($result.length === 0) {
-      return true;
+      return true
     }
-    var id = $result.find('.hiddenId')[0].value;
-    var source = $result.find('.hiddenSource')[0].value;
+    const id = $result.find('.hiddenId')[0].value
+    const source = $result.find('.hiddenSource')[0].value
     if ($tab.parent().hasClass('noajax')) {
       if ($tab.is('a')) {
         // tab case:
-        window.location.href = $tab.attr('href');
+        window.location.href = $tab.attr('href')
       } else {
         // accordion case:
-        window.location.href = $tab.find('a').attr('data-href');
+        window.location.href = $tab.find('a').attr('data-href')
       }
-      return false;
+      return false
     }
-    var urlroot;
+    let urlroot
     if (source === VuFind.defaultSearchBackend) {
-      urlroot = 'Record';
+      urlroot = 'Record'
     } else {
-      urlroot = source.charAt(0).toUpperCase() + source.slice(1).toLowerCase() + 'Record';
+      urlroot = source.charAt(0).toUpperCase() + source.slice(1).toLowerCase() + 'Record'
     }
     if (!$tab.hasClass('loaded')) {
       $('#' + tabid + '-content').html(
         '<i class="fa fa-spinner fa-spin"></i> ' + VuFind.translate('loading') + '...'
-      );
-      var tab = tabid.split('_');
-      tab = tab[0];
+      )
+      let tab = tabid.split('_')
+      tab = tab[0]
       $.ajax({
         url: VuFind.path + '/' + urlroot + '/' + encodeURIComponent(id) + '/AjaxTab',
         type: 'POST',
         data: { tab: tab },
-        success: function ajaxTabSuccess(data) {
-          var html = data.trim();
+        success: function ajaxTabSuccess (data) {
+          const html = data.trim()
           if (html.length > 0) {
-            $('#' + tabid + '-content').html(html);
-            registerTabEvents();
+            $('#' + tabid + '-content').html(html)
+            registerTabEvents()
           } else {
-            $('#' + tabid + '-content').html(VuFind.translate('collection_empty'));
+            $('#' + tabid + '-content').html(VuFind.translate('collection_empty'))
           }
           if (typeof syn_get_widget === 'function') {
-            syn_get_widget();
+            syn_get_widget()
           }
-          $('#' + tabid).addClass('loaded');
+          $('#' + tabid).addClass('loaded')
         }
-      });
+      })
     }
     if (click && !$tab.parent().hasClass('default')) {
-      $tab.click();
+      $tab.click()
     }
-    return true;
+    return true
   }
 
-  function toggleDataView(_link, tabid) {
-    var $link = $(_link);
-    var viewType = $link.attr('data-view');
+  function toggleDataView (_link, tabid) {
+    const $link = $(_link)
+    const viewType = $link.attr('data-view')
     // If full, return true
     if (viewType === 'full') {
-      return true;
+      return true
     }
-    var result = $link.closest('.result');
-    var mediaBody = result.find('.media-body');
-    var shortNode = mediaBody.find('.result-body');
-    var linksNode = mediaBody.find('.result-links');
-    var longNode = mediaBody.find('.long-view');
+    const result = $link.closest('.result')
+    const mediaBody = result.find('.media-body')
+    const shortNode = mediaBody.find('.result-body')
+    const linksNode = mediaBody.find('.result-links')
+    let longNode = mediaBody.find('.long-view')
     // Insert new elements
     if (!$link.hasClass('js-setup')) {
-      $link.prependTo(mediaBody);
-      result.addClass('embedded');
-      shortNode.addClass('collapse');
-      linksNode.addClass('collapse');
-      longNode = $('<div class="long-view collapse"></div>');
+      $link.prependTo(mediaBody)
+      result.addClass('embedded')
+      shortNode.addClass('collapse')
+      linksNode.addClass('collapse')
+      longNode = $('<div class="long-view collapse"></div>')
       // Add loading status
       shortNode
-        .before('<div class="loading hidden"><i class="fa fa-spin fa-spinner"></i> '
-                + VuFind.translate('loading') + '...</div>')
-        .before(longNode);
-      longNode.on('show.bs.collapse', function embeddedExpand() {
-        $link.addClass('expanded');
-      });
-      longNode.on('hidden.bs.collapse', function embeddedCollapsed(e) {
+        .before('<div class="loading hidden"><i class="fa fa-spin fa-spinner"></i> ' +
+                VuFind.translate('loading') + '...</div>')
+        .before(longNode)
+      longNode.on('show.bs.collapse', function embeddedExpand () {
+        $link.addClass('expanded')
+      })
+      longNode.on('hidden.bs.collapse', function embeddedCollapsed (e) {
         if ($(e.target).hasClass('long-view')) {
-          $link.removeClass('expanded');
+          $link.removeClass('expanded')
         }
-      });
-      $link.addClass('expanded js-setup');
+      })
+      $link.addClass('expanded js-setup')
     }
     // Gather information
-    var divID = result.find('.hiddenId')[0].value;
+    const divID = result.find('.hiddenId')[0].value
     // Toggle visibility
     if (!longNode.is(':visible')) {
       // AJAX for information
       if (longNode.is(':empty')) {
-        var loadingNode = mediaBody.find('.loading');
-        loadingNode.removeClass('hidden');
-        $link.addClass('expanded');
+        const loadingNode = mediaBody.find('.loading')
+        loadingNode.removeClass('hidden')
+        $link.addClass('expanded')
         $.ajax({
           dataType: 'json',
           url: VuFind.path + '/AJAX/JSON?' + $.param({
@@ -135,103 +135,103 @@ VuFind.register('embedded', function embedded() {
             type: viewType,
             source: result.find('.hiddenSource')[0].value
           }),
-          success: function getRecordDetailsSuccess(response) {
+          success: function getRecordDetailsSuccess (response) {
             // Insert tabs html
-            longNode.html(response.data.html);
+            longNode.html(response.data.html)
             // Hide loading
-            loadingNode.addClass('hidden');
-            longNode.collapse('show');
+            loadingNode.addClass('hidden')
+            longNode.collapse('show')
             // Load first tab
             if (tabid) {
-              ajaxLoadTab(tabid, true);
+              ajaxLoadTab(tabid, true)
             } else {
-              var $firstTab = $(longNode).find('.list-tab-toggle.active');
+              let $firstTab = $(longNode).find('.list-tab-toggle.active')
               if ($firstTab.length === 0) {
-                $firstTab = $(longNode).find('.list-tab-toggle:eq(0)');
+                $firstTab = $(longNode).find('.list-tab-toggle:eq(0)')
               }
-              ajaxLoadTab($firstTab.attr('id'), true);
+              ajaxLoadTab($firstTab.attr('id'), true)
             }
             // Bind tab clicks
-            longNode.find('.list-tab-toggle').click(function embeddedTabLoad() {
+            longNode.find('.list-tab-toggle').click(function embeddedTabLoad () {
               if (!$(this).parent().hasClass('noajax')) {
-                addToStorage(divID, this.id);
+                addToStorage(divID, this.id)
               }
-              return ajaxLoadTab(this.id);
-            });
+              return ajaxLoadTab(this.id)
+            })
             longNode.find('[id^=usercomment]').find('input[type=submit]').unbind('click').click(
-              function embeddedComments() {
-                return registerAjaxCommentRecord(longNode);
+              function embeddedComments () {
+                return registerAjaxCommentRecord(longNode)
               }
-            );
-            longNode.find('[data-background]').each(function setupEmbeddedBackgroundTabs(index, el) {
-              ajaxLoadTab(el.id, false);
-            });
+            )
+            longNode.find('[data-background]').each(function setupEmbeddedBackgroundTabs (index, el) {
+              ajaxLoadTab(el.id, false)
+            })
             // Add events to record toolbar
-            VuFind.lightbox.bind(longNode);
-            if (typeof checkSaveStatuses == 'function') {
-              checkSaveStatuses(longNode);
+            VuFind.lightbox.bind(longNode)
+            if (typeof checkSaveStatuses === 'function') {
+              checkSaveStatuses(longNode)
             }
           }
-        });
+        })
       } else {
-        longNode.collapse('show');
+        longNode.collapse('show')
       }
-      shortNode.collapse('hide');
-      linksNode.collapse('hide');
+      shortNode.collapse('hide')
+      linksNode.collapse('hide')
       if (!$link.hasClass('auto')) {
-        addToStorage(divID, $(longNode).find('.list-tab-toggle.active').attr('id'));
+        addToStorage(divID, $(longNode).find('.list-tab-toggle.active').attr('id'))
       } else {
-        $link.removeClass('auto');
+        $link.removeClass('auto')
       }
     } else {
-      shortNode.collapse('show');
-      linksNode.collapse('show');
-      longNode.collapse('hide');
-      removeFromStorage(divID);
+      shortNode.collapse('show')
+      linksNode.collapse('show')
+      longNode.collapse('hide')
+      removeFromStorage(divID)
     }
-    return false;
+    return false
   }
 
-  function loadStorage() {
-    var storage = sessionStorage.getItem(_STORAGEKEY);
+  function loadStorage () {
+    const storage = sessionStorage.getItem(_STORAGEKEY)
     if (!storage) {
-      return;
+      return
     }
-    var items = storage.split(_DELIM);
-    var doomed = [];
-    var hiddenIds;
-    var parts;
-    var result;
-    var i;
-    var j;
-    hiddenIds = $('.hiddenId');
+    const items = storage.split(_DELIM)
+    const doomed = []
+    let hiddenIds
+    let parts
+    let result
+    let i
+    let j
+    hiddenIds = $('.hiddenId')
     for (i = 0; i < items.length; i++) {
-      parts = items[i].split(_SEPERATOR);
-      _STATUS[parts[0]] = parts[1] || null;
-      result = null;
+      parts = items[i].split(_SEPERATOR)
+      _STATUS[parts[0]] = parts[1] || null
+      result = null
       for (j = 0; j < hiddenIds.length; j++) {
         if (hiddenIds[j].value === parts[0]) {
-          result = $(hiddenIds[j]).closest('.result');
-          break;
+          result = $(hiddenIds[j]).closest('.result')
+          break
         }
       }
       if (result === null) {
-        doomed.push(parts[0]);
-        continue;
+        doomed.push(parts[0])
+        continue
       }
-      var $link = result.find('.getFull');
-      $link.addClass('auto expanded');
-      toggleDataView($link, parts[1]);
+      const $link = result.find('.getFull')
+      $link.addClass('auto expanded')
+      toggleDataView($link, parts[1])
     }
     for (i = 0; i < doomed.length; i++) {
-      removeFromStorage(doomed[i]);
+      removeFromStorage(doomed[i])
     }
   }
 
-  function init() {
-    $('.getFull').click(function linkToggle() { return toggleDataView(this); });
-    loadStorage();
+  function init () {
+    $('.getFull').click(function linkToggle () { return toggleDataView(this) })
+    loadStorage()
   }
 
-  return { init: init };
-});
+  return { init: init }
+})

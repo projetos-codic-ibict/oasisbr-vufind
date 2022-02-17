@@ -15,7 +15,6 @@
  */
 
 (function (window, document, undefined) {
-
     // Change - lmgonzales - 2018-10-26
     // Commenting out the original code because browser throws deprecated function warnings.
     // L.LatLngGraticule = L.Layer.extend({
@@ -28,23 +27,23 @@
             weight: 0.8,
             color: '#aaa',
             font: '12px Verdana',
-            dashArray: [0,0],
+            dashArray: [0, 0],
             lngLineCurved: 0,
             latLineCurved: 0,
             zoomInterval: [
-                {start: 2, end: 2, interval: 40},
-                {start: 3, end: 3, interval: 20},
-                {start: 4, end: 4, interval: 10},
-                {start: 5, end: 7, interval: 5},
-                {start: 8, end: 20, interval: 1}
+                { start: 2, end: 2, interval: 40 },
+                { start: 3, end: 3, interval: 20 },
+                { start: 4, end: 4, interval: 10 },
+                { start: 5, end: 7, interval: 5 },
+                { start: 8, end: 20, interval: 1 }
             ]
         },
 
         initialize: function (options) {
             L.setOptions(this, options);
 
-            var defaultFontName = 'Verdana';
-            var _ff = this.options.font.split(' ');
+            const defaultFontName = 'Verdana';
+            const _ff = this.options.font.split(' ');
             if (_ff.length < 2) {
                 this.options.font += ' ' + defaultFontName;
             }
@@ -120,15 +119,15 @@
 
         bringToFront: function () {
             if (this._canvas) {
-                //this._map._panes.overlayPane.appendChild(this._canvas);
+                // this._map._panes.overlayPane.appendChild(this._canvas);
             }
             return this;
         },
 
         bringToBack: function () {
-            var pane = this._map._panes.overlayPane;
+            const pane = this._map._panes.overlayPane;
             if (this._canvas) {
-                //pane.insertBefore(this._canvas, pane.firstChild);
+                // pane.insertBefore(this._canvas, pane.firstChild);
             }
             return this;
         },
@@ -138,7 +137,6 @@
         },
 
         _initCanvas: function () {
-
             this._canvas = L.DomUtil.create('canvas', '');
 
             if (this._map.options.zoomAnimation && L.Browser.any3d) {
@@ -149,7 +147,6 @@
 
             this._updateOpacity();
 
-
             L.extend(this._canvas, {
                 onselectstart: L.Util.falseFn,
                 onmousemove: L.Util.falseFn,
@@ -158,28 +155,28 @@
         },
 
         _animateZoom: function (e) {
-            var map = this._map,
-                canvas = this._canvas,
-                scale = map.getZoomScale(e.zoom),
-                nw = map.containerPointToLatLng([0, 0]),
-                se = map.containerPointToLatLng([canvas.width, canvas.height]),
-                topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
-                size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
-                origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
+            const map = this._map;
+                const canvas = this._canvas;
+                const scale = map.getZoomScale(e.zoom);
+                const nw = map.containerPointToLatLng([0, 0]);
+                const se = map.containerPointToLatLng([canvas.width, canvas.height]);
+                const topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center);
+                const size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft);
+                const origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
 
             L.DomUtil.setTransform(canvas, origin, scale);
         },
 
         _reset: function () {
-            var canvas = this._canvas,
-                size = this._map.getSize(),
-                lt = this._map.containerPointToLayerPoint([0, 0]);
+            const canvas = this._canvas;
+                const size = this._map.getSize();
+                const lt = this._map.containerPointToLayerPoint([0, 0]);
 
             L.DomUtil.setPosition(canvas, lt);
 
-            canvas.width  = size.x;
+            canvas.width = size.x;
             canvas.height = size.y;
-            canvas.style.width  = size.x + 'px';
+            canvas.style.width = size.x + 'px';
             canvas.style.height = size.y + 'px';
 
             this.__calcInterval();
@@ -195,22 +192,21 @@
             L.DomUtil.setOpacity(this._canvas, this.options.opacity);
         },
 
-        __format_lat: function(lat) {
+        __format_lat: function (lat) {
             if (this.options.latFormatTickLabel) {
                 return this.options.latFormatTickLabel(lat);
             }
 
             // todo: format type of float
             if (lat < 0) {
-                return '' + (lat*-1) + 'S';
-            }
-            else if (lat > 0) {
+                return '' + (lat * -1) + 'S';
+            } else if (lat > 0) {
                 return '' + lat + 'N';
             }
             return '' + lat;
         },
 
-        __format_lng: function(lng) {
+        __format_lng: function (lng) {
             if (this.options.lngFormatTickLabel) {
                 return this.options.lngFormatTickLabel(lng);
             }
@@ -218,31 +214,27 @@
             // todo: format type of float
             if (lng > 180) {
                 return '' + (360 - lng) + 'W';
-            }
-            else if (lng > 0 && lng < 180) {
+            } else if (lng > 0 && lng < 180) {
                 return '' + lng + 'E';
-            }
-            else if (lng < 0 && lng > -180) {
-                return '' + (lng*-1) + 'W';
-            }
-            else if (lng == -180) {
-                return '' + (lng*-1);
-            }
-            else if (lng < -180) {
+            } else if (lng < 0 && lng > -180) {
+                return '' + (lng * -1) + 'W';
+            } else if (lng == -180) {
+                return '' + (lng * -1);
+            } else if (lng < -180) {
                 return '' + (360 + lng) + 'W';
             }
             return '' + lng;
         },
 
-        __calcInterval: function() {
-            var zoom = this._map.getZoom();
+        __calcInterval: function () {
+            const zoom = this._map.getZoom();
             if (this._currZoom != zoom) {
                 this._currLngInterval = 0;
                 this._currLatInterval = 0;
                 this._currZoom = zoom;
             }
 
-            var interv;
+            let interv;
 
             if (!this._currLngInterval) {
                 try {
@@ -255,8 +247,7 @@
                             }
                         }
                     }
-                }
-                catch(e) {
+                } catch (e) {
                     this._currLngInterval = 0;
                 }
             }
@@ -272,42 +263,40 @@
                             }
                         }
                     }
-                }
-                catch(e) {
+                } catch (e) {
                     this._currLatInterval = 0;
                 }
             }
         },
 
-        __draw: function(label) {
-            function _parse_px_to_int(txt) {
+        __draw: function (label) {
+            function _parse_px_to_int (txt) {
                 if (txt.length > 2) {
-                    if (txt.charAt(txt.length-2) == 'p') {
-                        txt = txt.substr(0, txt.length-2);
+                    if (txt.charAt(txt.length - 2) == 'p') {
+                        txt = txt.substr(0, txt.length - 2);
                     }
                 }
                 try {
                     return parseInt(txt, 10);
-                }
-                catch(e) {}
+                } catch (e) {}
                 return 0;
             };
 
-            var self = this,
-                canvas = this._canvas,
-                map = this._map,
-                curvedLon = this.options.lngLineCurved,
-                curvedLat = this.options.latLineCurved;
+            const self = this;
+                const canvas = this._canvas;
+                const map = this._map;
+                const curvedLon = this.options.lngLineCurved;
+                const curvedLat = this.options.latLineCurved;
 
             if (L.Browser.canvas && map) {
                 if (!this._currLngInterval || !this._currLatInterval) {
                     this.__calcInterval();
                 }
 
-                var latInterval = this._currLatInterval,
-                    lngInterval = this._currLngInterval;
+                const latInterval = this._currLatInterval;
+                    const lngInterval = this._currLngInterval;
 
-                var ctx = canvas.getContext('2d');
+                const ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.lineWidth = this.options.weight;
                 ctx.strokeStyle = this.options.color;
@@ -317,27 +306,26 @@
                 if (this.options.font) {
                     ctx.font = this.options.font;
                 }
-                var txtWidth = ctx.measureText('0').width;
-                var txtHeight = 12;
+                let txtWidth = ctx.measureText('0').width;
+                let txtHeight = 12;
                 try {
-                    var _font_size = ctx.font.split(' ')[0];
+                    const _font_size = ctx.font.split(' ')[0];
                     txtHeight = _parse_px_to_int(_font_size);
-                }
-                catch(e) {}
+                } catch (e) {}
 
-                var ww = canvas.width,
-                    hh = canvas.height;
+                const ww = canvas.width;
+                    const hh = canvas.height;
 
-                var lt = map.containerPointToLatLng(L.point(0, 0));
-                var rt = map.containerPointToLatLng(L.point(ww, 0));
-                var rb = map.containerPointToLatLng(L.point(ww, hh));
+                const lt = map.containerPointToLatLng(L.point(0, 0));
+                const rt = map.containerPointToLatLng(L.point(ww, 0));
+                const rb = map.containerPointToLatLng(L.point(ww, hh));
 
-                var _lat_b = rb.lat,
-                    _lat_t = lt.lat;
-                var _lon_l = lt.lng,
-                    _lon_r = rt.lng;
+                let _lat_b = rb.lat;
+                    let _lat_t = lt.lat;
+                let _lon_l = lt.lng;
+                    let _lon_r = rt.lng;
 
-                var _point_per_lat = (_lat_t - _lat_b) / (hh * 0.2);
+                let _point_per_lat = (_lat_t - _lat_b) / (hh * 0.2);
                 if (isNaN(_point_per_lat)) {
                     return;
                 }
@@ -345,19 +333,17 @@
                 if (_point_per_lat < 1) { _point_per_lat = 1; }
                 if (_lat_b < -90) {
                     _lat_b = -90;
-                }
-                else {
+                } else {
                     _lat_b = parseInt(_lat_b - _point_per_lat, 10);
                 }
 
                 if (_lat_t > 90) {
                     _lat_t = 90;
-                }
-                else {
+                } else {
                     _lat_t = parseInt(_lat_t + _point_per_lat, 10);
                 }
 
-                var _point_per_lon = (_lon_r - _lon_l) / (ww * 0.2);
+                let _point_per_lon = (_lon_r - _lon_l) / (ww * 0.2);
                 if (_point_per_lon < 1) { _point_per_lon = 1; }
                 if (_lon_l > 0 && _lon_r < 0) {
                     _lon_r += 360;
@@ -365,18 +351,18 @@
                 _lon_r = parseInt(_lon_r + _point_per_lon, 10);
                 _lon_l = parseInt(_lon_l - _point_per_lon, 10);
 
-                var ll, latstr, lngstr, _lon_delta = 0.5;
-                function __draw_lat_line(self, lat_tick) {
+                let ll; let latstr; let lngstr; let _lon_delta = 0.5;
+                function __draw_lat_line (self, lat_tick) {
                     ll = self._latLngToCanvasPoint(L.latLng(lat_tick, _lon_l));
                     latstr = self.__format_lat(lat_tick);
                     txtWidth = ctx.measureText(latstr).width;
 
                     if (curvedLat) {
-                        if (typeof(curvedLat) == 'number') {
+                        if (typeof (curvedLat) === 'number') {
                             _lon_delta = curvedLat;
                         }
 
-                        var __lon_left = _lon_l, __lon_right = _lon_r;
+                        var __lon_left = _lon_l; var __lon_right = _lon_r;
                         if (ll.x > 0) {
                             var __lon_left = map.containerPointToLatLng(L.point(0, ll.y));
                             __lon_left = __lon_left.lng - _point_per_lon;
@@ -393,8 +379,8 @@
 
                         ctx.beginPath();
                         ctx.moveTo(ll.x, ll.y);
-                        var _prev_p = null;
-                        for (var j=__lon_left; j<=__lon_right; j+=_lon_delta) {
+                        let _prev_p = null;
+                        for (let j = __lon_left; j <= __lon_right; j += _lon_delta) {
                             rr = self._latLngToCanvasPoint(L.latLng(lat_tick, j));
                             ctx.lineTo(rr.x, rr.y);
 
@@ -402,20 +388,18 @@
                                 if (_prev_p.x < 0 && rr.x >= 0) {
                                     var _s = (rr.x - 0) / (rr.x - _prev_p.x);
                                     var _y = rr.y - ((rr.y - _prev_p.y) * _s);
-                                    ctx.fillText(latstr, 0, _y + (txtHeight/2));
-                                }
-                                else if (_prev_p.x <= (ww-txtWidth) && rr.x > (ww-txtWidth)) {
+                                    ctx.fillText(latstr, 0, _y + (txtHeight / 2));
+                                } else if (_prev_p.x <= (ww - txtWidth) && rr.x > (ww - txtWidth)) {
                                     var _s = (rr.x - ww) / (rr.x - _prev_p.x);
                                     var _y = rr.y - ((rr.y - _prev_p.y) * _s);
-                                    ctx.fillText(latstr, ww-txtWidth, _y + (txtHeight/2)-2);
+                                    ctx.fillText(latstr, ww - txtWidth, _y + (txtHeight / 2) - 2);
                                 }
                             }
 
-                            _prev_p = {x:rr.x, y:rr.y, lon:j, lat:i};
+                            _prev_p = { x: rr.x, y: rr.y, lon: j, lat: i };
                         }
                         ctx.stroke();
-                    }
-                    else {
+                    } else {
                         var __lon_right = _lon_r;
                         var rr = self._latLngToCanvasPoint(L.latLng(lat_tick, __lon_right));
                         if (curvedLon) {
@@ -429,62 +413,60 @@
                         }
 
                         ctx.beginPath();
-                        ctx.moveTo(ll.x+1, ll.y);
-                        ctx.lineTo(rr.x-1, rr.y);
+                        ctx.moveTo(ll.x + 1, ll.y);
+                        ctx.lineTo(rr.x - 1, rr.y);
                         ctx.stroke();
                         if (self.options.showLabel && label) {
-                            var _yy = ll.y + (txtHeight/2)-2;
+                            const _yy = ll.y + (txtHeight / 2) - 2;
                             ctx.fillText(latstr, 0, _yy);
-                            ctx.fillText(latstr, ww-txtWidth, _yy);
+                            ctx.fillText(latstr, ww - txtWidth, _yy);
                         }
                     }
                 };
 
                 if (latInterval > 0) {
-                    for (var i=latInterval; i<=_lat_t; i+=latInterval) {
+                    for (var i = latInterval; i <= _lat_t; i += latInterval) {
                         if (i >= _lat_b) {
                             __draw_lat_line(this, i);
                         }
                     }
-                    for (var i=0; i>=_lat_b; i-=latInterval) {
+                    for (var i = 0; i >= _lat_b; i -= latInterval) {
                         if (i <= _lat_t) {
                             __draw_lat_line(this, i);
                         }
                     }
                 }
 
-                function __draw_lon_line(self, lon_tick) {
+                function __draw_lon_line (self, lon_tick) {
                     lngstr = self.__format_lng(lon_tick);
                     txtWidth = ctx.measureText(lngstr).width;
-                    var bb = self._latLngToCanvasPoint(L.latLng(_lat_b, lon_tick));
+                    let bb = self._latLngToCanvasPoint(L.latLng(_lat_b, lon_tick));
 
                     if (curvedLon) {
-                        if (typeof(curvedLon) == 'number') {
+                        if (typeof (curvedLon) === 'number') {
                             _lat_delta = curvedLon;
                         }
 
                         ctx.beginPath();
                         ctx.moveTo(bb.x, bb.y);
-                        var _prev_p = null;
-                        for (var j=_lat_b; j<_lat_t; j+=_lat_delta) {
+                        let _prev_p = null;
+                        for (let j = _lat_b; j < _lat_t; j += _lat_delta) {
                             var tt = self._latLngToCanvasPoint(L.latLng(j, lon_tick));
                             ctx.lineTo(tt.x, tt.y);
 
                             if (self.options.showLabel && label && _prev_p != null) {
                                 if (_prev_p.y > 8 && tt.y <= 8) {
-                                    ctx.fillText(lngstr, tt.x - (txtWidth/2), txtHeight);
-                                }
-                                else if (_prev_p.y >= hh && tt.y < hh) {
-                                    ctx.fillText(lngstr, tt.x - (txtWidth/2), hh-2);
+                                    ctx.fillText(lngstr, tt.x - (txtWidth / 2), txtHeight);
+                                } else if (_prev_p.y >= hh && tt.y < hh) {
+                                    ctx.fillText(lngstr, tt.x - (txtWidth / 2), hh - 2);
                                 }
                             }
 
-                            _prev_p = {x:tt.x, y:tt.y, lon:lon_tick, lat:j};
+                            _prev_p = { x: tt.x, y: tt.y, lon: lon_tick, lat: j };
                         }
                         ctx.stroke();
-                    }
-                    else {
-                        var __lat_top = _lat_t;
+                    } else {
+                        let __lat_top = _lat_t;
                         var tt = self._latLngToCanvasPoint(L.latLng(__lat_top, lon_tick));
                         if (curvedLat) {
                             __lat_top = map.containerPointToLatLng(L.point(tt.x, 0));
@@ -492,31 +474,31 @@
                             if (__lat_top > 90) { __lat_top = 90; }
                             tt = self._latLngToCanvasPoint(L.latLng(__lat_top, lon_tick));
 
-                            var __lat_bottom = map.containerPointToLatLng(L.point(bb.x, hh));
+                            let __lat_bottom = map.containerPointToLatLng(L.point(bb.x, hh));
                             __lat_bottom = __lat_bottom.lat;
                             if (__lat_bottom < -90) { __lat_bottom = -90; }
                             bb = self._latLngToCanvasPoint(L.latLng(__lat_bottom, lon_tick));
                         }
 
                         ctx.beginPath();
-                        ctx.moveTo(tt.x, tt.y+1);
-                        ctx.lineTo(bb.x, bb.y-1);
+                        ctx.moveTo(tt.x, tt.y + 1);
+                        ctx.lineTo(bb.x, bb.y - 1);
                         ctx.stroke();
 
                         if (self.options.showLabel && label) {
-                            ctx.fillText(lngstr, tt.x - (txtWidth/2), txtHeight+1);
-                            ctx.fillText(lngstr, bb.x - (txtWidth/2), hh-3);
+                            ctx.fillText(lngstr, tt.x - (txtWidth / 2), txtHeight + 1);
+                            ctx.fillText(lngstr, bb.x - (txtWidth / 2), hh - 3);
                         }
                     }
                 };
 
                 if (lngInterval > 0) {
-                    for (var i=lngInterval; i<=_lon_r; i+=lngInterval) {
+                    for (var i = lngInterval; i <= _lon_r; i += lngInterval) {
                         if (i >= _lon_l) {
                             __draw_lon_line(this, i);
                         }
                     }
-                    for (var i=0; i>=_lon_l; i-=lngInterval) {
+                    for (var i = 0; i >= _lon_l; i -= lngInterval) {
                         if (i <= _lon_r) {
                             __draw_lon_line(this, i);
                         }
@@ -525,9 +507,9 @@
             }
         },
 
-        _latLngToCanvasPoint: function(latlng) {
-            var map = this._map;
-            var projectedPoint = map.project(L.latLng(latlng));
+        _latLngToCanvasPoint: function (latlng) {
+            const map = this._map;
+            const projectedPoint = map.project(L.latLng(latlng));
             projectedPoint._subtract(map.getPixelOrigin());
             return L.point(projectedPoint).add(map._getMapPanePos());
         }
@@ -537,7 +519,4 @@
     L.latlngGraticule = function (options) {
         return new L.LatLngGraticule(options);
     };
-
-
     }(this, document));
-

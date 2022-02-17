@@ -5,16 +5,14 @@ const numberPortugueseFormat = {
   thousands: '.',
   grouping: [3],
   currency: ['R$', '']
-};
-
+}
 
 const numberEnglishFormat = {
   decimal: '.',
   thousands: ',',
   grouping: [3],
   currency: ['$', '']
-};
-
+}
 
 const datePortugueseFormat = {
   dateTime: '%A, %e de %B de %Y. %X',
@@ -59,7 +57,7 @@ const datePortugueseFormat = {
     'Nov',
     'Dez'
   ]
-};
+}
 
 const dateEnglishFormat = {
   dateTime: '%x, %X',

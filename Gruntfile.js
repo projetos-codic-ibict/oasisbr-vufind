@@ -1,56 +1,56 @@
-module.exports = function(grunt) {
-  const fs = require("fs");
+module.exports = function (grunt) {
+  const fs = require('fs')
 
   // Local custom tasks
-  if (fs.existsSync("./Gruntfile.local.js")) {
-    require("./Gruntfile.local.js")(grunt);
+  if (fs.existsSync('./Gruntfile.local.js')) {
+    require('./Gruntfile.local.js')(grunt)
   }
 
-  require('jit-grunt')(grunt); // Just in time library loading
+  require('jit-grunt')(grunt) // Just in time library loading
 
-  function getLoadPaths(file) {
-    var config;
-    var parts = file.split('/');
-    parts.pop(); // eliminate filename
+  function getLoadPaths (file) {
+    let config
+    const parts = file.split('/')
+    parts.pop() // eliminate filename
 
     // initialize search path with directory containing LESS file
-    var retVal = [];
-    retVal.push(parts.join('/'));
+    const retVal = []
+    retVal.push(parts.join('/'))
 
     // Iterate through theme.config.php files collecting parent themes in search path:
-    while (config = fs.readFileSync("themes/" + parts[1] + "/theme.config.php", "UTF-8")) {
+    while (config = fs.readFileSync('themes/' + parts[1] + '/theme.config.php', 'UTF-8')) {
       // First identify mixins:
-      var mixinMatches = config.match(/["']mixins["']\s*=>\s*\[([^\]]+)\]/);
+      const mixinMatches = config.match(/["']mixins["']\s*=>\s*\[([^\]]+)\]/)
       if (mixinMatches !== null) {
-        var mixinParts = mixinMatches[1].split(',');
-        for (var i = 0; i < mixinParts.length; i++) {
-          parts[1] = mixinParts[i].trim().replace(/['"]/g, '');
-          retVal.push(parts.join('/') + '/');
+        const mixinParts = mixinMatches[1].split(',')
+        for (let i = 0; i < mixinParts.length; i++) {
+          parts[1] = mixinParts[i].trim().replace(/['"]/g, '')
+          retVal.push(parts.join('/') + '/')
         }
       }
 
       // Now move up to parent theme:
-      var matches = config.match(/["']extends["']\s*=>\s*['"](\w+)['"]/);
+      const matches = config.match(/["']extends["']\s*=>\s*['"](\w+)['"]/)
 
       // "extends" set to "false" or missing entirely? We've hit the end of the line:
       if (matches === null || matches[1] === 'false') {
-        break;
+        break
       }
 
-      parts[1] = matches[1];
-      retVal.push(parts.join('/') + '/');
+      parts[1] = matches[1]
+      retVal.push(parts.join('/') + '/')
     }
-    return retVal;
+    return retVal
   }
 
-  var fontAwesomePath = '"../../bootstrap3/css/fonts"';
-  var lessFileSettings = [{
+  const fontAwesomePath = '"../../bootstrap3/css/fonts"'
+  const lessFileSettings = [{
     expand: true,
-    src: "themes/*/less/compiled.less",
+    src: 'themes/*/less/compiled.less',
     rename: function (dest, src) {
-      return src.replace('/less/', '/css/').replace('.less', '.css');
+      return src.replace('/less/', '/css/').replace('.less', '.css')
     }
-  }];
+  }]
 
   grunt.initConfig({
     // LESS compilation
@@ -111,36 +111,36 @@ module.exports = function(grunt) {
             // Activate SCSS
             {
               pattern: /\/\* #SCSS>/gi,
-              replacement: "/* #SCSS> */",
+              replacement: '/* #SCSS> */',
               order: -1 // Do before anything else
             },
             {
               pattern: /<#SCSS \*\//gi,
-              replacement: "/* <#SCSS */",
+              replacement: '/* <#SCSS */',
               order: -1
             },
             // Deactivate LESS
             {
               pattern: /\/\* #LESS> \*\//gi,
-              replacement: "/* #LESS>",
+              replacement: '/* #LESS>',
               order: -1
             },
             {
               pattern: /\/\* <#LESS \*\//gi,
-              replacement: "<#LESS */",
+              replacement: '<#LESS */',
               order: -1
             },
             { // Change separator in @include statements
               pattern: /@include ([^\(]+)\(([^\)]+)\);/gi,
-              replacement: function mixinCommas(match, $1, $2) {
-                return '@include ' + $1 + '(' + $2.replace(/;/g, ',') + ');';
+              replacement: function mixinCommas (match, $1, $2) {
+                return '@include ' + $1 + '(' + $2.replace(/;/g, ',') + ');'
               },
               order: 4 // after defaults included in less-to-sass
             },
             { // Remove unquote
               pattern: /unquote\("([^"]+)"\)/gi,
-              replacement: function ununquote(match, $1) {
-                return $1;
+              replacement: function ununquote (match, $1) {
+                return $1
               },
               order: 4
             },
@@ -151,8 +151,8 @@ module.exports = function(grunt) {
             },
             { // Wrap variables in calcs with #{}
               pattern: /calc\([^;]+/gi,
-              replacement: function calcVariables(match) {
-                return match.replace(/(\$[^ ]+)/gi, '#{$1}');
+              replacement: function calcVariables (match) {
+                return match.replace(/(\$[^ ]+)/gi, '#{$1}')
               },
               order: 4
             },
@@ -183,9 +183,9 @@ module.exports = function(grunt) {
         tasks: ['scss']
       }
     }
-  });
+  })
 
-  grunt.registerMultiTask('lessdev', function lessWithMaps() {
+  grunt.registerMultiTask('lessdev', function lessWithMaps () {
     grunt.config.set('less', {
       dev: {
         files: lessFileSettings,
@@ -198,19 +198,19 @@ module.exports = function(grunt) {
           }
         }
       }
-    });
-    grunt.task.run('less');
-  });
+    })
+    grunt.task.run('less')
+  })
 
-  grunt.registerMultiTask('scss', function sassScan() {
-    var sassConfig = {},
-      path = require('path'),
-      themeList = fs.readdirSync(path.resolve('themes')).filter(function (theme) {
-        return fs.existsSync(path.resolve('themes/' + theme + '/scss/compiled.scss'));
-      });
+  grunt.registerMultiTask('scss', function sassScan () {
+    const sassConfig = {}
+    const path = require('path')
+    const themeList = fs.readdirSync(path.resolve('themes')).filter(function (theme) {
+      return fs.existsSync(path.resolve('themes/' + theme + '/scss/compiled.scss'))
+    })
 
-    for (var i in themeList) {
-      var config = {
+    for (const i in themeList) {
+      const config = {
         options: {
           outputStyle: 'compressed'
         },
@@ -221,20 +221,20 @@ module.exports = function(grunt) {
           dest: path.join('themes', themeList[i], 'css'),
           ext: '.css'
         }]
-      };
-      for (var key in this.data.options) {
-        config.options[key] = this.data.options[key] + '';
       }
-      config.options.includePaths = getLoadPaths('themes/' + themeList[i] + '/scss/compiled.scss');
+      for (const key in this.data.options) {
+        config.options[key] = this.data.options[key] + ''
+      }
+      config.options.includePaths = getLoadPaths('themes/' + themeList[i] + '/scss/compiled.scss')
 
-      sassConfig[themeList[i]] = config;
+      sassConfig[themeList[i]] = config
     }
 
-    grunt.config.set('sass', sassConfig);
-    grunt.task.run('sass');
-  });
+    grunt.config.set('sass', sassConfig)
+    grunt.task.run('sass')
+  })
 
-  grunt.registerTask('default', function help() {
+  grunt.registerTask('default', function help () {
     grunt.log.writeln(`\nHello! Here are your grunt command options:
 
     - grunt less        = compile and compress all themes' LESS files to css.
@@ -244,6 +244,6 @@ module.exports = function(grunt) {
     - grunt watch:less
     - grunt watch:scss
     - grunt watch:lessdev
-    - grunt lessToSass  = transpile all LESS files to SASS.`);
-  });
-};
+    - grunt lessToSass  = transpile all LESS files to SASS.`)
+  })
+}

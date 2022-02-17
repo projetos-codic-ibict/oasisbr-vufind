@@ -69,7 +69,7 @@ async function createChartByType (data) {
       },
       tooltip: [
         { field: 'type', type: 'nominal', title: 'Tipo de documento' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
       ]
     }
   }
@@ -97,7 +97,7 @@ async function createChartByInstitution (data) {
         axis: { labelAngle: 45, labelFontSize: 14 },
         sort: { field: 'count', order: 'descending' }
       },
-      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 }, },
+      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
       tooltip: [
         { field: 'inst', type: 'nominal', title: 'Instituição' },
         { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
@@ -269,7 +269,7 @@ async function createWordCloud (data, lookfor, type) {
       // })
       tippyElement.show()
     },
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFF'
   }
 
   WordCloud(visAuthor, options)
@@ -295,7 +295,7 @@ async function createChartByPpg (data) {
         axis: { labelAngle: 45, labelFontSize: 14 },
         sort: { field: 'count', order: 'descending' }
       },
-      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 }, }
+      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } }
     },
     tooltip: [
       { field: 'PPG', type: 'nominal', title: 'PPG' },
@@ -404,9 +404,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 })
 
 async function loadData (lookfor, type) {
-  const initTime = performance.now();
+  const initTime = performance.now()
   const indicators = await getIndicatorsFromVufindApi(lookfor, type)
-  const endTime = performance.now();
+  const endTime = performance.now()
   fillSearchResults(lookfor, indicators, type, endTime, initTime)
   createChartByYear(indicators.facets.publishDate)
   createChartByType(indicators.facets.format)
@@ -442,4 +442,3 @@ function fillSearchResults (lookfor, indicators, type, endTime, initTime) {
     timeSearch.textContent = `${formatNumber((endTime - initTime) / 1000)}s`
   }
 }
-

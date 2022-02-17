@@ -10,28 +10,19 @@ async function getAllNetworks () {
 
 let networksList = null
 
-function convertObjetcToQueryString (params) {
-  const queryString = Object.keys(params)
-    .map((key) => `${key}=${params[key]}`)
-    .join('&')
-  return queryString
-}
-
 function fillDatanetworks (networks) {
   // remover referência para o array original, tem alterações aqui que só faz
   // sentido para este item
   networks = JSON.parse(JSON.stringify(networks))
   networks.forEach((item) => {
-    // adiciona os dados do item como parâmetros de URL para serem exeibidos na
-    // página de detalhes da fonte
-    item.link = `datasource?${convertObjetcToQueryString(item)}`
+    item.link = `datasource?id=${item.id}`
   })
   const options = {
     valueNames: [
       'name',
       'institution',
       'validSize',
-      { data: ['_id'] },
+      { data: ['id'] },
       { attr: 'href', name: 'link' }
     ],
 
@@ -122,9 +113,9 @@ function exportsCSV (networks) {
   btnExport.addEventListener('click', () => {
     let csvContent = 'data:text/csv;charset=utf-8,'
 
-
-    const jsonObject = networksList.filtered ?
-      JSON.stringify(networksList.matchingItems.map(i => i._values)) : networks
+    const jsonObject = networksList.filtered
+      ? JSON.stringify(networksList.matchingItems.map(i => i._values))
+      : networks
 
     // Convert JSON to CSV & Display CSV
     csvContent = csvContent + ConvertToCSV(jsonObject)
