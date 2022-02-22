@@ -277,7 +277,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         ]
       }
     }
-    console.log('vegaOptions', vegaOptions)
     vegaEmbed('#visDocumentsByMonth', yourVlSpec, vegaOptions)
   }
 

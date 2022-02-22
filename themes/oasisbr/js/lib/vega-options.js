@@ -71,7 +71,6 @@ const dateEnglishFormat = {
 }
 
 const language = getSiteLanguage()
-console.log()
 const vegaOptions = {
   formatLocale: language === 'pt' || language === 'pt-br' ? numberPortugueseFormat : numberEnglishFormat,
   timeFormatLocale: language === 'pt' || language === 'pt-br' ? datePortugueseFormat : dateEnglishFormat,
