@@ -74,6 +74,7 @@ english.set('Search among', 'Search among')
 english.set('documents', 'documents')
 english.set('Documentos', 'Documents')
 english.set('Tipo de fonte', 'Source type')
+english.set('Count', 'Count')
 
 // data sources page
 english.set('Todas as fontes', 'All sources')
@@ -147,3 +148,4 @@ portuguese.set('Fontes', 'Fontes')
 portuguese.set('Month', 'Mês')
 portuguese.set('Source email', 'E-mail da fonte')
 portuguese.set('Collected documents', 'Documentos coletados')
+portuguese.set('Count', 'Quantidade')

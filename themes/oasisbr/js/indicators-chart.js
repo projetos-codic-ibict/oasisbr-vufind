@@ -39,7 +39,7 @@ async function createChartByYear (data) {
       },
       tooltip: [
         { field: 'year', type: 'nominal', title: 'Ano' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -69,7 +69,7 @@ async function createChartByType (data) {
       },
       tooltip: [
         { field: 'type', type: 'nominal', title: 'Tipo de documento' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -100,7 +100,7 @@ async function createChartByInstitution (data) {
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
       tooltip: [
         { field: 'inst', type: 'nominal', title: 'Instituição' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -133,7 +133,7 @@ async function createChartByLanguage (data) {
       },
       tooltip: [
         { field: 'language', type: 'nominal', title: 'Idioma' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -169,7 +169,7 @@ async function createChartByAuthor (data) {
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
       tooltip: [
         { field: 'author', type: 'nominal', title: 'Autor' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -205,7 +205,7 @@ async function createChartByAdvisors (data) {
       y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
       tooltip: [
         { field: 'advisor', type: 'nominal', title: 'Orientador' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -295,12 +295,12 @@ async function createChartByPpg (data) {
         axis: { labelAngle: 45, labelFontSize: 14 },
         sort: { field: 'count', order: 'descending' }
       },
-      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } }
-    },
-    tooltip: [
-      { field: 'PPG', type: 'nominal', title: 'PPG' },
-      { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
-    ]
+      y: { field: 'count', type: 'quantitative', title: null, axis: { labelFontSize: 14 } },
+      tooltip: [
+        { field: 'PPG', type: 'nominal', title: 'PPG' },
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
+      ]
+    }
   }
   vegaEmbed('#visPpg', yourVlSpec, vegaOptions)
 }
@@ -330,7 +330,7 @@ async function createChartByRights (data) {
       },
       tooltip: [
         { field: 'right', type: 'nominal', title: 'Tipo de acesso' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
@@ -376,7 +376,7 @@ async function createChartByCnpq (data) {
       },
       tooltip: [
         { field: 'CNPq', type: 'nominal', title: 'Área do conhecimento' },
-        { field: 'count', type: 'quantitative', format: ',.0f', title: 'Quantidade' }
+        { field: 'count', type: 'quantitative', format: ',.0f', title: getTranslatedText('Count') }
       ]
     }
   }
