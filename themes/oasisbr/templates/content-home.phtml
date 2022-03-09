@@ -56,11 +56,10 @@
   </div>
   <div class="col-md-6 col-sm-6 col-xs-12 flex-col-center">
     <div class="section-connections">
-      <p>O Portal brasileiro de publicações e dados científicos em acesso aberto - Oasisbr é um mecanismo de busca multidisciplinar que permite o acesso gratuito à produção científica de autores vinculados a universidades e institutos de pesquisa brasileiros.</p>
-      <p>Por meio do Oasisbr é possível também realizar buscas em fontes de informação portuguesas.</p>
-
-      <p> Para mais informações, entre em
-        <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"> contato conosco.</a>
+      <p><?= $this->transEsc("Oasisbr textp1") ?></p>
+      <p><?= $this->transEsc("Oasisbr textp2") ?></p>
+      <p> <?= $this->transEsc("Oasisbr textp3") ?>
+        <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"> <?= $this->transEsc("contact us") ?>.</a>
       </p>
     </div>
   </div>
