@@ -620,17 +620,9 @@ li.language a {
   content: '\f077';
 }
 
-.objectives {
-  margin: 3rem 0 2rem 0;
-}
-
-.network-flow {
-  margin-top: 2rem;
-}
 
 .about .row {
-  margin-right: 0;
-  margin-left: 0;
+  margin: 2rem 0;
 }
 
 .about li {
