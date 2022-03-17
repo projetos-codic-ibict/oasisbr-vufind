@@ -297,4 +297,15 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
     }
     return [];
   }
+
+  // LA Referencia Estatísticas 
+  public function getIdentifierOAI()
+  {
+    return $this->getFieldValue("oai_identifier_str");
+  }
+  // LA Referencia Estatísticas 
+  public function getRepositoryID()
+  {
+    return $this->getFieldValue("repository_id_str");
+  }
 }

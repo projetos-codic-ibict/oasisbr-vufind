@@ -16,5 +16,8 @@ return [
     'helpers' => ['factories' => [
         'VuFind\View\Helper\Root\RecordDataFormatter' => 'Oasisbr\View\Helper\Root\RecordDataFormatterFactory',
     ]],
+    'aliases' => [
+        'piwik' => 'Oasisbr\View\Helper\Root\Piwik',
+    ]
 
 ];
