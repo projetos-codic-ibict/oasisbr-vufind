@@ -1,4 +1,4 @@
-function getSiteLanguage () {
+function getSiteLanguage() {
   const urlParams = new URLSearchParams(window.location.search)
   const browserLanguage = navigator.language || navigator.userLanguage
 
@@ -12,7 +12,7 @@ function getSiteLanguage () {
 }
 const lng = getSiteLanguage()
 
-function getTranslatedText (key) {
+function getTranslatedText(key) {
   let text = ''
   switch (lng) {
     case 'en':
@@ -84,6 +84,7 @@ english.set('Biblioteca Digital de Teses e Dissertações', 'Digital Library of 
 english.set('Repositório de Dados de Pesquisa', 'Research Data Repository')
 english.set('Portal Agregador', 'Aggregator Portal')
 english.set('Biblioteca Digital de Monografias', 'Digital Library of Monographs')
+english.set('Biblioteca Digital de Monografia', 'Digital Library of Monograph')
 english.set('Indefinido', 'Undefined')
 english.set('Retornaram', ' ')
 english.set('fontes', 'sources returned')
@@ -136,6 +137,7 @@ portuguese.set('Biblioteca Digital de Teses e Dissertações', 'Biblioteca Digit
 portuguese.set('Repositório de Dados de Pesquisa', 'Repositório de Dados de Pesquisa')
 portuguese.set('Portal Agregador', 'Portal Agregador')
 portuguese.set('Biblioteca Digital de Monografias', 'Biblioteca Digital de Monografias')
+portuguese.set('Biblioteca Digital de Monografia', 'Biblioteca Digital de Monografia')
 portuguese.set('Indefinido', 'Indefinido')
 portuguese.set('Retornaram', 'Retornaram')
 portuguese.set('fontes', 'fontes')

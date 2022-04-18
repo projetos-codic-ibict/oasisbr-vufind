@@ -1,6 +1,6 @@
 
 
-async function getANetworkByName (networkId) {
+async function getANetworkByName(networkId) {
   try {
     const response = await axios.get(`${REMOTE_API_URL}/networks/${networkId}`)
     const network = response.data
@@ -10,7 +10,7 @@ async function getANetworkByName (networkId) {
   }
 }
 
-function fillDatasource (network) {
+function fillDatasource(network) {
   const table = document.querySelector('#dataSource')
   table.innerHTML =
     `<tr>
@@ -54,7 +54,7 @@ function fillDatasource (network) {
     </tr >`
 }
 
-function setCustomColor (sourceType) {
+function setCustomColor(sourceType) {
   const titleBar = document.querySelector('.page-title-bar')
   titleBar.classList.remove('revista', 'repo-publicacoes',
     'repo-dados', 'biblioteca', 'monografias',
@@ -73,6 +73,9 @@ function setCustomColor (sourceType) {
       titleBar.classList.add('biblioteca')
       break
     case 'Biblioteca Digital de Monografias':
+      titleBar.classList.add('monografias')
+      break
+    case 'Biblioteca Digital de Monografia':
       titleBar.classList.add('monografias')
       break
     case 'Servidor de Preprints':
