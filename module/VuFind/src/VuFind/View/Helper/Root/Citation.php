@@ -118,7 +118,6 @@ implements TranslatorAwareInterface
         $pubDates = $driver->tryMethod('getPublicationDates');
         $pubPlaces = $driver->tryMethod('getPlacesOfPublication');
         $edition = $driver->tryMethod('getEdition');
-        $abntCitation = $driver->tryMethod('getABNTCitation');
 
         // Store everything:
         $this->driver = $driver;
@@ -130,7 +129,6 @@ implements TranslatorAwareInterface
             'pubDate' => $pubDates[0] ?? null,
             'edition' => empty($edition) ? [] : [$edition],
             'journal' => $driver->tryMethod('getContainerTitle'),
-            'abntCitation' => $abntCitation[0] ?? null
         ];
 
         return $this;
@@ -230,16 +228,6 @@ implements TranslatorAwareInterface
             }
             return $partial('Citation/apa-article.phtml', $apa);
         }
-    }
-
-    public function getCitationABNT()
-    {
-        $abnt = [
-            'text' => $this->details['abntCitation']
-        ];
-
-        $partial = $this->getView()->plugin('partial');
-        return $partial('Citation/abnt.phtml', $abnt);
     }
 
     /**

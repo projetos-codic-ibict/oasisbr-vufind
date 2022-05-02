@@ -5,15 +5,6 @@ namespace Oasisbr\RecordDriver;
 
 class DefaultRecord extends \VuFind\RecordDriver\DefaultRecord
 {
-    /**
-     * Get the abtn citation of the record.
-     *
-     * @return array
-     */
-    public function getABNTCitation()
-    {
-        return $this->fields['identifier_str_mv'];
-    }
 
     /**
      * Get the item's source.
@@ -35,6 +26,6 @@ class DefaultRecord extends \VuFind\RecordDriver\DefaultRecord
      */
     protected function getSupportedCitationFormats()
     {
-        return ['ABNT', 'APA', 'Chicago', 'MLA'];
+        return ['APA', 'Chicago', 'MLA'];
     }
 }

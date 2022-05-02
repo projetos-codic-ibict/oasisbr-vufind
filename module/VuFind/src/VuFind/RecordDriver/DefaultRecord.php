@@ -1150,10 +1150,6 @@ class DefaultRecord extends AbstractBase
         return $this->fields['reponame_str'];
     }
 
-    public function getABNTCitation()
-    {
-        return $this->fields['dc.identifier.citation.fl_str_mv']  ?? '';
-    }
 
     /**
      * Get the subtitle of the record.
@@ -1516,7 +1512,7 @@ class DefaultRecord extends AbstractBase
      */
     protected function getSupportedCitationFormats()
     {
-        return ['ABNT', 'APA', 'Chicago', 'MLA'];
+        return ['APA', 'Chicago', 'MLA'];
     }
 
     /**
