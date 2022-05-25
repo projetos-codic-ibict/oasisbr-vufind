@@ -39,7 +39,7 @@ function fillDatasource(network) {
     <tr>
       <td>${getTranslatedText("Documents collected")}:</td>
       <td>
-        <a href="../Search/Results?type=AllFields&filter%5B%5D=network_name_str%3A%22"+${network.name}>
+        <a href="../Search/Results?type=AllFields&filter%5B%5D=network_name_str%3A%22+${network.name}">
           ${network.validSize}
         </a>
       </td>
