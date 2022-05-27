@@ -7,10 +7,16 @@ let REMOTE_API_URL
 let loader = ''
 
 function showLoader() {
-  loader.style.display = 'block'
+  try {
+    loader.style.display = 'block'
+  } catch (error) {
+  }
 }
 function hideLoader() {
-  loader.style.display = 'none'
+  try {
+    loader.style.display = 'none'
+  } catch (error) {
+  }
 }
 
 if (window.location.hostname === 'oasisbr.ibict.br') {

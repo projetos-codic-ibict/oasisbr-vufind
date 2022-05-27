@@ -1,11 +1,11 @@
 <?php
 $source = $this->transEsc("Source");
-// $name = $this->escapeHtml($name);
 $titleName = $source;
 ?>
 <?php $this->headTitle($titleName); ?>
 <?php $this->layout()->searchbox = false; ?>
 <?php $this->layout()->nocontainerclass = true; ?>
+<?php $this->headLink()->appendStylesheet('loader.css'); ?>
 <?php $this->headScript()->appendFile("load-network.js"); ?>
 
 <div class="logo-img-center">
