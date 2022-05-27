@@ -2,10 +2,13 @@
 
 async function getANetworkByName(networkId) {
   try {
+    showLoader()
     const response = await axios.get(`${REMOTE_API_URL}/networks/${networkId}`)
+    hideLoader()
     const network = response.data
     return network
   } catch (errors) {
+    hideLoader()
     console.error(errors)
   }
 }

@@ -1,6 +1,7 @@
 <?php $this->headTitle($this->translate('Data Sources')); ?>
 <?php $this->layout()->searchbox = false; ?>
 <?php $this->layout()->nocontainerclass = true; ?>
+<?php $this->headLink()->appendStylesheet('loader.css'); ?>
 <?php $this->headScript()->appendFile("lib/list.min.js"); ?>
 <?php $this->headScript()->appendFile("networks.js"); ?>
 
@@ -53,6 +54,7 @@
     </div>
 
     <div id="networks">
+      <div class="loader">Loading...</div>
       <div class="flex flex-space-between">
         <input class="search form-control" placeholder=<?= $this->transEsc("Search") ?>>
         <div class="networks-sort flex">

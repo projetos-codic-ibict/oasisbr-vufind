@@ -1,16 +1,19 @@
-async function getAllNetworks () {
+async function getAllNetworks() {
   try {
+    showLoader()
     const response = await axios.get(`${REMOTE_API_URL}/networks`)
+    hideLoader()
     const networks = response.data
     return networks
   } catch (errors) {
+    hideLoader()
     console.error(errors)
   }
 }
 
 let networksList = null
 
-function fillDatanetworks (networks) {
+function fillDatanetworks(networks) {
   // remover referência para o array original, tem alterações aqui que só faz
   // sentido para este item
   networks = JSON.parse(JSON.stringify(networks))
@@ -43,7 +46,7 @@ function fillDatanetworks (networks) {
   networksList = new List('networks', options, networks)
 }
 
-function sortDatanetworks () {
+function sortDatanetworks() {
   const sortSelectElement = document.querySelector('#sort-select')
   let sortOrder = 'asc'
   sortSelectElement.addEventListener('change', (e) => {
@@ -54,26 +57,29 @@ function sortDatanetworks () {
   })
 }
 
-function watchingUpdateOnList () {
+function watchingUpdateOnList() {
   const list = document.querySelector('.list')
   networksList.on('updated', (element) => {
     list.style.counterReset = `item ${element.i - 1}`
   })
 }
 
-async function getIndicatorsByDocumentType () {
+async function getIndicatorsByDocumentType() {
   try {
+    showLoader()
     const response = await axios.get(
       `${REMOTE_API_URL}/indicators?type=sourceType`
     )
+    hideLoader()
     const indicators = response.data
     return indicators
   } catch (errors) {
+    hideLoader()
     console.error(errors)
   }
 }
 
-function fillIndicatorsByDocumentType (indicators) {
+function fillIndicatorsByDocumentType(indicators) {
   const sidebarElement = document.querySelector('#side-collapse-format')
   indicators.forEach((indicator) => {
     const item = `<a onclick="filterNetworks('${indicator.name
@@ -87,7 +93,7 @@ function fillIndicatorsByDocumentType (indicators) {
   })
 }
 
-function filterNetworks (filter) {
+function filterNetworks(filter) {
   if (filter) {
     if (filter === 'Indefinido') {
       filter = null
@@ -108,7 +114,7 @@ function filterNetworks (filter) {
   }
 }
 
-function exportsCSV (networks) {
+function exportsCSV(networks) {
   const btnExport = document.querySelector('.btn-export-csv')
   btnExport.addEventListener('click', () => {
     let csvContent = 'data:text/csv;charset=utf-8,'
@@ -124,18 +130,18 @@ function exportsCSV (networks) {
   })
 }
 
-function showTotalFind (total) {
+function showTotalFind(total) {
   const totalLabel = document.querySelector('.networks-label')
   totalLabel.innerHTML = `${getTranslatedText('Retornaram')} ${formatNumber(total)} ${getTranslatedText('fontes')}`
 }
 
-function showTotal (total) {
+function showTotal(total) {
   const badgeTotal = document.querySelector('.badge-total')
   badgeTotal.innerHTML = formatNumber(total)
   showTotalFind(total)
 }
 
-function ConvertToCSV (objArray) {
+function ConvertToCSV(objArray) {
   const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray
   let csv = 'Nome,Instituição,Tipo de fonte,URL,Email,ISSN,Quantidade de itens'
   csv += '\r\n'
@@ -160,7 +166,7 @@ function ConvertToCSV (objArray) {
   return csv
 }
 
-function listenerListAllNetworks () {
+function listenerListAllNetworks() {
   const listAll = document.querySelector('#list-all')
   listAll.addEventListener('click', () => {
     filterNetworks()

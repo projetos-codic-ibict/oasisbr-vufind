@@ -4,6 +4,15 @@ const INDICATORS_FACETS =
 let API_BASE_URL
 let REMOTE_API_URL
 
+let loader = ''
+
+function showLoader() {
+  loader.style.display = 'block'
+}
+function hideLoader() {
+  loader.style.display = 'none'
+}
+
 if (window.location.hostname === 'oasisbr.ibict.br') {
   API_BASE_URL = `https://${window.location.host}/vufind/api/v1`
   REMOTE_API_URL = `https://api-${window.location.host}/api/v1`
@@ -12,16 +21,19 @@ if (window.location.hostname === 'oasisbr.ibict.br') {
   REMOTE_API_URL = `http://${window.location.host}:3000/api/v1`
 }
 
-async function getIndicatorsBy (filter) {
+async function getIndicatorsBy(filter) {
   try {
+    showLoader()
     const response = await axios.get(`${API_BASE_URL}/${filter}`)
+    hideLoader()
     return response.data
   } catch (errors) {
+    hideLoader()
     console.error(errors)
   }
 }
 
-async function getIndicatorsFromVufindApi (lookfor, type) {
+async function getIndicatorsFromVufindApi(lookfor, type) {
   try {
     let URL = `${API_BASE_URL}/${INDICATORS_FACETS}`
     if (lookfor) {
@@ -30,24 +42,30 @@ async function getIndicatorsFromVufindApi (lookfor, type) {
     if (type) {
       URL = URL + `&type=${type}`
     }
+    showLoader()
     const response = await axios.get(URL)
+    hideLoader()
     return response.data
   } catch (errors) {
+    hideLoader()
     console.error(errors)
   }
 }
 
-async function getIndicatorsFromRemoteApiBy (filter) {
+async function getIndicatorsFromRemoteApiBy(filter) {
   try {
+    showLoader()
     const response = await axios.get(`${REMOTE_API_URL}${filter}`)
+    hideLoader()
     const indicators = response.data
     return indicators
   } catch (errors) {
+    hideLoader()
     console.error(errors)
   }
 }
 
-async function getTotalOfDocuments () {
+async function getTotalOfDocuments() {
   const resp = await getIndicatorsBy(
     'search?limit=0'
   )
@@ -55,7 +73,7 @@ async function getTotalOfDocuments () {
   return resp.resultCount
 }
 
-function setPlaceholderInputSearch (totalDocuments) {
+function setPlaceholderInputSearch(totalDocuments) {
   const inputSearch = document.querySelector('[data-search]')
   if (inputSearch) {
     inputSearch.placeholder = `${getTranslatedText('Search among')} ${formatNumber(
@@ -66,4 +84,5 @@ function setPlaceholderInputSearch (totalDocuments) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   getTotalOfDocuments()
+  loader = document.querySelector('.loader ')
 })
