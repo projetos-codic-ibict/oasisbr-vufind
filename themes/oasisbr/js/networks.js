@@ -95,9 +95,9 @@ function fillIndicatorsByDocumentType(indicators) {
 
 function filterNetworks(filter) {
   if (filter) {
-    if (filter === 'Indefinido') {
-      filter = null
-    }
+    // if (filter === 'Indefinido') {
+    //   filter = null
+    // }
     let foud = 0
     networksList.filter((item) => {
       if (item.values().sourceType === filter) {
