@@ -67,7 +67,7 @@ header.hidden-print {
   display: flex;
   align-items: center;
   height: 90px;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 /* Ajustes no Menu */
