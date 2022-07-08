@@ -1,14 +1,14 @@
-function getCustomClass (dataSourceType) {
+function getCustomClass(dataSourceType) {
   switch (dataSourceType) {
     case 'Revista':
-      return 'revista'
+      return 'revista';
     case 'Repositório de Publicações':
-      return 'repo-publicacoes'
+      return 'repo-publicacoes';
     case 'Repositório de Dados':
-      return 'repo-dados'
+      return 'repo-dados';
     case 'Biblioteca Digital de Teses e Dissertações':
-      return 'biblioteca'
+      return 'biblioteca';
     default:
-      return 'repo'
+      return 'repo';
   }
 }
