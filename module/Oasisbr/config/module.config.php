@@ -6,6 +6,7 @@ return array(
     'factories' =>
     array(
       'Oasisbr\\Controller\\AboutController' => 'VuFind\\Controller\\AbstractBaseFactory',
+      'Oasisbr\\Controller\\FaqController' => 'VuFind\\Controller\\AbstractBaseFactory',
       'Oasisbr\\Controller\\DataSourcesController' => 'VuFind\\Controller\\AbstractBaseFactory',
       'Oasisbr\\Controller\\IndicatorsController' => 'VuFind\\Controller\\AbstractBaseFactory',
       'Oasisbr\\Controller\\BulkExportController' => 'VuFind\\Controller\\AbstractBaseFactory',
@@ -14,6 +15,8 @@ return array(
     array(
       'About' => 'Oasisbr\\Controller\\AboutController',
       'about' => 'Oasisbr\\Controller\\AboutController',
+      'Faq' => 'Oasisbr\\Controller\\FaqController',
+      'faq' => 'Oasisbr\\Controller\\FaqController',
       'DataSources' => 'Oasisbr\\Controller\\DataSourcesController',
       'datasources' => 'Oasisbr\\Controller\\DataSourcesController',
       'Indicators' => 'Oasisbr\\Controller\\IndicatorsController',
@@ -35,6 +38,19 @@ return array(
           'defaults' =>
           array(
             'controller' => 'About',
+            'action' => 'Home',
+          ),
+        ),
+      ),
+      'faq-home' =>
+      array(
+        'type' => 'Laminas\\Router\\Http\\Literal',
+        'options' =>
+        array(
+          'route' => '/faq/home',
+          'defaults' =>
+          array(
+            'controller' => 'Faq',
             'action' => 'Home',
           ),
         ),

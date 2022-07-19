@@ -818,3 +818,7 @@ td span.format {
 #cloudTopic{
   cursor: pointer;
 }
+
+.faq .card div{
+  padding-left: 3rem;
+}

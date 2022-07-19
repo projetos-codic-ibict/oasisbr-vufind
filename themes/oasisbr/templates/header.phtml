@@ -38,6 +38,9 @@
               <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"><?= $this->transEsc("Contact") ?></a>
             </li>
           <?php endif; ?>
+          <li>
+            <a href="<?= $this->url('faq-home') ?>"><?= $this->transEsc("Faq") ?></a>
+          </li>
           <?php $cart = $this->cart();
           if ($cart->isActive()) : ?>
             <li id="cartSummary">
