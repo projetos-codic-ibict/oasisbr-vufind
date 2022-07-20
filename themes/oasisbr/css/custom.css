@@ -575,7 +575,7 @@ li.language a {
   margin-bottom: 1rem;
 }
 
-.about {
+.about, .faq {
   color: #808080;
   font-size: 1.3rem;
   font-family: 'Lato', Helvetica, Arial, sans-serif;
