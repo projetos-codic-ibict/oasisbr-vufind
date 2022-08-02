@@ -22,7 +22,8 @@ node_modules
 public/swagger-ui
 local/cache
 
-local/config/vufind/bulkexport.ini
-local/config/vufind/config.ini
+local/config/vufind/**
+public/sitemap/**
 local/httpd-vufind.conf
 env.bat
+

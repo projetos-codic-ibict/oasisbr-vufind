@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Metadata vocabulary implementation for Dublin Core
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
+
 namespace VuFind\MetadataVocabulary;
 
 /**
@@ -55,5 +57,6 @@ class DublinCore extends AbstractBase
         'DC.publisher' => 'publisher',
         'DC.relation.ispartof' => 'container_title',
         'DC.title' => 'title',
+        'DC.description' => 'description',
     ];
 }
