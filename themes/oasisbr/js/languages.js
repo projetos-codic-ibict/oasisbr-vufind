@@ -86,6 +86,7 @@ english.set(
 );
 english.set('Repositório de Dados de Pesquisa', 'Research Data Repository');
 english.set('Portal Agregador', 'Aggregator Portal');
+english.set('Portal de Livros', 'Book Portal');
 english.set(
   'Biblioteca Digital de Monografias',
   'Digital Library of Monographs'
@@ -152,6 +153,7 @@ portuguese.set(
   'Repositório de Dados de Pesquisa'
 );
 portuguese.set('Portal Agregador', 'Portal Agregador');
+portuguese.set('Portal de Livros', 'Portal de Livros');
 portuguese.set(
   'Biblioteca Digital de Monografias',
   'Biblioteca Digital de Monografias'
