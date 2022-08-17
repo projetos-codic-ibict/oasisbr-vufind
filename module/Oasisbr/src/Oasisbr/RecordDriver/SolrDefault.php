@@ -13,45 +13,41 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
 
 
 
-  /**
-   * Get all field occurrences
-   *
-   * @param array $fields to compile and return
-   * @return array
-   */
-  public function getFieldsValues($fields, $suffix = self::SUFFIX_STR)
+  public function getFieldsValues($fields)
   {
     $values = [];
 
     foreach ($fields as $field) {
-      if (isset($this->fields[$field . $suffix])) {
-        $values = array_merge($values, $this->fields[$field . $suffix]);
+      if (isset($this->fields[$field])) {
+        $field_value = $this->fields[$field];
+        if (!is_array($field_value))
+          $field_value = array($field_value);
+
+        $values = array_merge($values, $field_value);
       }
     }
 
     return array_unique($values);
   }
 
-  /**
-   * Get single value field value
-   *
-   * @param array $fields to compile and return
-   * @return string
-   */
-  public function getFieldValue($field, $suffix = self::SUFFIX_STR)
+
+  public function getFieldValue($field)
   {
     $value = null;
+    $onlyField = array($field);
 
-    if (isset($this->fields[$field . $suffix])) {
-      $value = $this->fields[$field . $suffix];
+    $value = $this->getFieldsValues($onlyField);
 
-      if (is_array($value))
+    if (is_array($value)) {
+      if (count($value) > 0)
+
         $value = $value[0];
+      else
+        return "";
     }
 
     return $value;
   }
-
 
 
   /**
