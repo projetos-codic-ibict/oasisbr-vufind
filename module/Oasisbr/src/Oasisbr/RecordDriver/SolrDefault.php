@@ -128,6 +128,16 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
   }
 
   /**
+   * Get the item's source.
+   *
+   * @return string
+   */
+  public function getSource()
+  {
+    return $this->fields['reponame_str'];
+  }
+
+  /**
    * Referee
    */
   public function getRefereeAuthors()

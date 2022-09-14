@@ -1139,17 +1139,6 @@ class DefaultRecord extends AbstractBase
         return $this->fields['title_short'] ?? '';
     }
 
-    /**
-     * Get the item's source.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        // Not supported in base class:
-        return $this->fields['reponame_str'];
-    }
-
 
     /**
      * Get the subtitle of the record.

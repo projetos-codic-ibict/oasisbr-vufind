@@ -148,7 +148,6 @@ return array(
         'aliases' =>
         array(
           'VuFind\\RecordDriver\\SolrDefault' => 'Oasisbr\\RecordDriver\\SolrDefault',
-          'VuFind\\RecordDriver\\DefaultRecord' => 'Oasisbr\\RecordDriver\\DefaultRecord',
         ),
       ),
     ),
