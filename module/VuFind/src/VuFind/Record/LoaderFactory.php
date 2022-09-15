@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Record loader factory.
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development Wiki
  */
+
 namespace VuFind\Record;
 
 use Interop\Container\ContainerInterface;
@@ -58,7 +60,9 @@ class LoaderFactory implements FactoryInterface
      * creating a service.
      * @throws ContainerException if any other error occurs
      */
-    public function __invoke(ContainerInterface $container, $requestedName,
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
         array $options = null
     ) {
         if (!empty($options)) {
@@ -68,7 +72,8 @@ class LoaderFactory implements FactoryInterface
             $container->get(\VuFindSearch\Service::class),
             $container->get(\VuFind\RecordDriver\PluginManager::class),
             $container->get(\VuFind\Record\Cache::class),
-            $container->get(\VuFind\Record\FallbackLoader\PluginManager::class)
+            $container->get(\VuFind\Record\FallbackLoader\PluginManager::class),
+            $container->get(\VuFind\Config\PluginManager::class)->get('Apis'),
         );
     }
 }

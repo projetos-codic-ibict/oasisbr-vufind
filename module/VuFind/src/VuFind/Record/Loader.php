@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Record loader
  *
@@ -27,6 +28,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
+
 namespace VuFind\Record;
 
 use VuFind\Exception\RecordMissing as RecordMissingException;
@@ -35,6 +37,7 @@ use VuFind\RecordDriver\PluginManager as RecordFactory;
 use VuFindSearch\Backend\Exception\BackendException;
 use VuFindSearch\ParamBag;
 use VuFindSearch\Service as SearchService;
+use Laminas\Config\Config as Config;
 
 /**
  * Record loader
@@ -78,6 +81,8 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
      */
     protected $fallbackLoader;
 
+    protected $config;
+
     /**
      * Constructor
      *
@@ -86,14 +91,18 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
      * @param Cache          $recordCache    Record Cache
      * @param FallbackLoader $fallbackLoader Fallback record loader
      */
-    public function __construct(SearchService $searchService,
-        RecordFactory $recordFactory, Cache $recordCache = null,
-        FallbackLoader $fallbackLoader = null
+    public function __construct(
+        SearchService $searchService,
+        RecordFactory $recordFactory,
+        Cache $recordCache = null,
+        FallbackLoader $fallbackLoader = null,
+        Config $config
     ) {
         $this->searchService = $searchService;
         $this->recordFactory = $recordFactory;
         $this->recordCache = $recordCache;
         $this->fallbackLoader = $fallbackLoader;
+        $this->config = $config;
     }
 
     /**
@@ -108,12 +117,16 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
      * @throws \Exception
      * @return \VuFind\RecordDriver\AbstractBase
      */
-    public function load($id, $source = DEFAULT_SEARCH_BACKEND,
-        $tolerateMissing = false, ParamBag $params = null
+    public function load(
+        $id,
+        $source = DEFAULT_SEARCH_BACKEND,
+        $tolerateMissing = false,
+        ParamBag $params = null
     ) {
         if (null !== $id && '' !== $id) {
             $results = [];
-            if (null !== $this->recordCache
+            if (
+                null !== $this->recordCache
                 && $this->recordCache->isPrimary($source)
             ) {
                 $results = $this->recordCache->lookup($id, $source);
@@ -128,7 +141,8 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
                     }
                 }
             }
-            if (empty($results) && null !== $this->recordCache
+            if (
+                empty($results) && null !== $this->recordCache
                 && $this->recordCache->isFallback($source)
             ) {
                 $results = $this->recordCache->lookup($id, $source);
@@ -138,7 +152,8 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
                 return $results[0];
             }
 
-            if ($this->fallbackLoader
+            if (
+                $this->fallbackLoader
                 && $this->fallbackLoader->has($source)
             ) {
                 try {
@@ -162,9 +177,39 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
             $record->setSourceIdentifier($source);
             return $record;
         }
+        $newId = $this->loadFromAPI($id);
+        if ($newId) {
+            return $this->load($newId);
+        }
         throw new RecordMissingException(
             'Record ' . $source . ':' . $id . ' does not exist.'
         );
+    }
+
+    public function loadFromAPI($id)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->config->Oasisbr->oasisbr_api . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        $response = json_decode($response, true); //because of true, it's in an array
+        if ($response) {
+            return $response["target"];
+        }
+        return null;
     }
 
     /**
@@ -181,8 +226,11 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
      * @throws \Exception
      * @return array
      */
-    public function loadBatchForSource($ids, $source = DEFAULT_SEARCH_BACKEND,
-        $tolerateBackendExceptions = false, ParamBag $params = null
+    public function loadBatchForSource(
+        $ids,
+        $source = DEFAULT_SEARCH_BACKEND,
+        $tolerateBackendExceptions = false,
+        ParamBag $params = null
     ) {
         $list = new Checklist($ids);
         $cachedRecords = [];
@@ -208,7 +256,7 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
                 }
                 $this->logWarning(
                     "Exception when trying to retrieve records from $source: "
-                    . $e->getMessage()
+                        . $e->getMessage()
                 );
             }
 
@@ -218,7 +266,8 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
         }
 
         $retVal = $genuineRecords;
-        if ($list->hasUnchecked() && $this->fallbackLoader
+        if (
+            $list->hasUnchecked() && $this->fallbackLoader
             && $this->fallbackLoader->has($source)
         ) {
             try {
@@ -231,7 +280,7 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
                 $fallbackRecords = [];
                 $this->logWarning(
                     'Exception when trying to retrieve fallback records from '
-                    . $source . ': ' . $e->getMessage()
+                        . $source . ': ' . $e->getMessage()
                 );
             }
             foreach ($fallbackRecords as $record) {
@@ -242,7 +291,8 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
             }
         }
 
-        if ($list->hasUnchecked() && null !== $this->recordCache
+        if (
+            $list->hasUnchecked() && null !== $this->recordCache
             && $this->recordCache->isFallback($source)
         ) {
             // Try to load missing records from cache if source is cachable
@@ -296,7 +346,9 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
      * @return array     Array of record drivers
      */
     public function loadBatch(
-        $ids, $tolerateBackendExceptions = false, $params = []
+        $ids,
+        $tolerateBackendExceptions = false,
+        $params = []
     ) {
         // Create a SourceAndIdList object to help sort the IDs by source:
         $list = new SourceAndIdList($ids);
@@ -306,7 +358,10 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
         foreach ($list->getIdsBySource() as $source => $currentIds) {
             $sourceParams = $params[$source] ?? null;
             $records = $this->loadBatchForSource(
-                $currentIds, $source, $tolerateBackendExceptions, $sourceParams
+                $currentIds,
+                $source,
+                $tolerateBackendExceptions,
+                $sourceParams
             );
             foreach ($records as $current) {
                 $position = $list->getRecordPosition($current);
