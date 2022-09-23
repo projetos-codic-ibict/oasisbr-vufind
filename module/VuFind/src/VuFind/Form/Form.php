@@ -650,12 +650,16 @@ class Form extends \Laminas\Form\Form implements
      */
     public function getEmailSubject($postParams)
     {
-        $subject = 'VuFind Feedback';
 
-        if (!empty($this->formConfig['emailSubject'])) {
-            $subject = $this->formConfig['emailSubject'];
-        } elseif (!empty($this->defaultFormConfig['email_subject'])) {
-            $subject = $this->defaultFormConfig['email_subject'];
+        $el = $this->getElements()[0];
+        $subject = $postParams[$el['name']] ?? null;
+
+        if (!empty($subject)) {
+            if (!empty($this->formConfig['emailSubject'])) {
+                $subject = $this->formConfig['emailSubject'];
+            } elseif (!empty($this->defaultFormConfig['email_subject'])) {
+                $subject = $this->defaultFormConfig['email_subject'];
+            }
         }
 
         $translated = [];
