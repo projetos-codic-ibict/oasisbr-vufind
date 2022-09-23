@@ -114,6 +114,8 @@ class FeedbackController extends AbstractBase
         $recipients = $form->getRecipient($params->fromPost());
 
         $emailSubject = $form->getEmailSubject($params->fromPost());
+        
+        $emailSubject = $params->fromPost()["subject"];
 
         $sendSuccess = true;
         foreach ($recipients as $recipient) {
