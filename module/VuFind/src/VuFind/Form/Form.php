@@ -650,27 +650,23 @@ class Form extends \Laminas\Form\Form implements
      */
     public function getEmailSubject($postParams)
     {
-        $subject = $postParams["subject"] || null;
+        $subject = 'VuFind Feedback';
 
-        if (!empty($subject)) {
-            if (!empty($this->formConfig['emailSubject'])) {
-                $subject = $this->formConfig['emailSubject'];
-            } elseif (!empty($this->defaultFormConfig['email_subject'])) {
-                $subject = $this->defaultFormConfig['email_subject'];
-            }
+        if (!empty($this->formConfig['emailSubject'])) {
+            $subject = $this->formConfig['emailSubject'];
+        } elseif (!empty($this->defaultFormConfig['email_subject'])) {
+            $subject = $this->defaultFormConfig['email_subject'];
         }
 
-        return $subject;
+        $translated = [];
+        foreach ($postParams as $key => $val) {
+            $translatedVals = array_map([$this, 'translate'], (array)$val);
+            $translated["%%{$key}%%"] = implode(', ', $translatedVals);
+        }
 
-        // $translated = [];
-        // foreach ($postParams as $key => $val) {
-        //     $translatedVals = array_map([$this, 'translate'], (array)$val);
-        //     $translated["%%{$key}%%"] = implode(', ', $translatedVals);
-        // }
-
-        // return str_replace(
-        //     array_keys($translated), array_values($translated), $subject
-        // );
+        return str_replace(
+            array_keys($translated), array_values($translated), $subject
+        );
     }
 
     /**
@@ -717,7 +713,7 @@ class Form extends \Laminas\Form\Form implements
             $params[] = ['type' => $type, 'value' => $value, 'label' => $label];
         }
 
-        return [$praams, 'Email/form.phtml'];
+        return [$params, 'Email/form.phtml'];
     }
 
     /**
