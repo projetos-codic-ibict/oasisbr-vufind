@@ -650,23 +650,27 @@ class Form extends \Laminas\Form\Form implements
      */
     public function getEmailSubject($postParams)
     {
-        $subject = 'VuFind Feedback';
+        $subject = $postParams["subject"] || null;
 
-        // if (!empty($this->formConfig['emailSubject'])) {
-        //     $subject = $this->formConfig['emailSubject'];
-        // } elseif (!empty($this->defaultFormConfig['email_subject'])) {
-        //     $subject = $this->defaultFormConfig['email_subject'];
-        // }
-
-        $translated = [];
-        foreach ($postParams as $key => $val) {
-            $translatedVals = array_map([$this, 'translate'], (array)$val);
-            $translated["%%{$key}%%"] = implode(', ', $translatedVals);
+        if (!empty($subject)) {
+            if (!empty($this->formConfig['emailSubject'])) {
+                $subject = $this->formConfig['emailSubject'];
+            } elseif (!empty($this->defaultFormConfig['email_subject'])) {
+                $subject = $this->defaultFormConfig['email_subject'];
+            }
         }
 
-        return str_replace(
-            array_keys($translated), array_values($translated), $subject
-        );
+        return $subject;
+
+        // $translated = [];
+        // foreach ($postParams as $key => $val) {
+        //     $translatedVals = array_map([$this, 'translate'], (array)$val);
+        //     $translated["%%{$key}%%"] = implode(', ', $translatedVals);
+        // }
+
+        // return str_replace(
+        //     array_keys($translated), array_values($translated), $subject
+        // );
     }
 
     /**
