@@ -38,6 +38,7 @@ use VuFindSearch\Backend\Exception\BackendException;
 use VuFindSearch\ParamBag;
 use VuFindSearch\Service as SearchService;
 use Laminas\Config\Config as Config;
+use Oasisbr\RecordDriver\SolrDefault;
 
 /**
  * Record loader
@@ -117,18 +118,11 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
      * @throws \Exception
      * @return \VuFind\RecordDriver\AbstractBase
      */
-    public function load(
-        $id,
-        $source = DEFAULT_SEARCH_BACKEND,
-        $tolerateMissing = false,
-        ParamBag $params = null
-    ) {
+    public function load($id, $source = DEFAULT_SEARCH_BACKEND, $tolerateMissing = false, ParamBag $params = null)
+    {
         if (null !== $id && '' !== $id) {
             $results = [];
-            if (
-                null !== $this->recordCache
-                && $this->recordCache->isPrimary($source)
-            ) {
+            if (null !== $this->recordCache && $this->recordCache->isPrimary($source)) {
                 $results = $this->recordCache->lookup($id, $source);
             }
             if (empty($results)) {
@@ -141,10 +135,7 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
                     }
                 }
             }
-            if (
-                empty($results) && null !== $this->recordCache
-                && $this->recordCache->isFallback($source)
-            ) {
+            if (empty($results) && null !== $this->recordCache && $this->recordCache->isFallback($source)) {
                 $results = $this->recordCache->lookup($id, $source);
             }
 
@@ -152,10 +143,7 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
                 return $results[0];
             }
 
-            if (
-                $this->fallbackLoader
-                && $this->fallbackLoader->has($source)
-            ) {
+            if ($this->fallbackLoader && $this->fallbackLoader->has($source)) {
                 try {
                     $fallbackRecords = $this->fallbackLoader->get($source)
                         ->load([$id]);
@@ -177,20 +165,29 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
             $record->setSourceIdentifier($source);
             return $record;
         }
-        $newId = $this->loadFromAPI($id);
+        $newId = $this->loadNewIdFromAPI($id);
         if ($newId) {
             return $this->load($newId);
+        }else{
+            $record = $this->loadMissedFromAPI($id);
+            if($record){
+                $fields = json_decode(json_encode($record), true);
+                $solrDefault = new SolrDefault();
+                $solrDefault->setRawData($fields);
+                return $solrDefault;
+            }
         }
         throw new RecordMissingException(
             'Record ' . $source . ':' . $id . ' does not exist.'
         );
     }
 
-    public function loadFromAPI($id)
+    // Se o id mudou vamos procurar o novo id na API externa
+    public function loadNewIdFromAPI($id)
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->config->Oasisbr->oasisbr_api . $id,
+            CURLOPT_URL => $this->config->Oasisbr->oasisbr_api ."ids/". $id,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
@@ -211,6 +208,36 @@ class Loader implements \Laminas\Log\LoggerAwareInterface
         }
         return null;
     }
+
+    // Se o item foi removido do Oasisbr vamos procurar o backup dele na API externa
+    public function loadMissedFromAPI($id)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->config->Oasisbr->oasisbr_api ."records/". $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        $response = json_decode($response); //because of true, it's in an array
+       
+        if ($response) {
+            $record = $response->record;
+            return $record;
+        }
+        return null;
+    }
+
 
     /**
      * Given an array of IDs and a record source, load a batch of records for
