@@ -822,3 +822,8 @@ td span.format {
 .faq .card div{
   padding-left: 3rem;
 }
+
+.record-tabs .details a{
+  color: #555;
+  font-size: 0.9rem;
+}
