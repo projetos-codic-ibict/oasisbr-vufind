@@ -56,6 +56,10 @@ header.hidden-print {
 
 .navbar-brand {
   height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 400px;
 }
 
 .logo-img {
@@ -354,6 +358,11 @@ li.language a {
 
   .nav-main {
     height: auto;
+  }
+  .navbar-brand {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
   }
 }
 
