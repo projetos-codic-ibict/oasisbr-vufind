@@ -34,8 +34,8 @@
     </div>
   <?php endif; ?>
   <div class="media-body">
-
-    <h1 property="name"><?= $this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection()) ?></h1>
+    <!-- Os itens excluidos do solr são consultados em uma API externa e nela não tem o campo shortTitle  -->
+    <h1 property="name"><?= $this->escapeHtml(($this->driver->getShortTitle() != null ? $this->driver->getShortTitle() : $this->driver->getTitle()) . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection()) ?></h1>
 
     <?php if (!empty($this->extraControls)) : ?>
       <?= $this->extraControls['actionControls'] ?? '' ?>
