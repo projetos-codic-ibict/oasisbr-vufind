@@ -62,6 +62,10 @@ header.hidden-print {
   max-width: 400px;
 }
 
+.ibict-name{
+  text-transform: none;
+}
+
 .logo-img {
   max-height: 50px;
   margin-top: 5px;
@@ -835,4 +839,12 @@ td span.format {
 .record-tabs .details a{
   color: #555;
   font-size: 0.9rem;
+}
+
+.card h3 .btn-collapse::before{
+  font-size: 1rem;
+}
+
+.card h3 a.btn-collapse{
+  margin-left: 1rem;
 }
