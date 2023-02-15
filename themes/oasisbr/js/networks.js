@@ -19,7 +19,7 @@ function fillDatanetworks(networks) {
   // sentido para este item
   networks = JSON.parse(JSON.stringify(networks));
   networks.forEach((item) => {
-    item.link = `datasource?id=${item.id}`;
+    item.link = `datasource?name=${item.name}`;
   });
   const options = {
     valueNames: [
