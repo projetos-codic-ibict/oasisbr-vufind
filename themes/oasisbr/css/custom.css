@@ -694,6 +694,7 @@ td span.format {
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 768px) {
