@@ -59,8 +59,14 @@
       <p><?= $this->transEsc("Oasisbr textp1") ?></p>
       <p><?= $this->transEsc("Oasisbr textp2") ?></p>
       <p> <?= $this->transEsc("Oasisbr textp3") ?>
-        <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"> <?= $this->transEsc("contact us") ?>.</a>
+        <a id="feedbackLink" data-lightbox href="<?= $this->url('feedback-home') ?>"> <?= $this->transEsc("form") ?>
+        </a>
+        <?= $this->transEsc("or by") ?>
+        <a href="https://api.whatsapp.com/send?phone=556132176449" target="_blank">
+          Whatsapp <img style="max-width: 40px;" src="<?= $this->imageLink('whatsapp.png'); ?>" alt="Whatsapp Logo" />
+        </a>
       </p>
+
     </div>
   </div>
 </section>

@@ -334,7 +334,7 @@ figure:hover img.image-hover {
   color: #4D4D4D;
   font-weight: 300;
   margin-left: 3rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .section-title {
@@ -388,7 +388,7 @@ li.language a {
   .section-connections {
     padding: 1rem;
     margin-top: 3rem;
-    margin-left: 0rem;
+    margin-left: 0;
   }
 
   .section-partners {
@@ -690,7 +690,6 @@ td span.format {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #fff;
   text-align: center;
   white-space: nowrap;
   border-radius: 5px;
