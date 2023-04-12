@@ -9,7 +9,7 @@ async function getAllNetworks() {
     return networks;
   } catch (errors) {
     hideLoader();
-    showMessageError('#networks-page');
+    showMessageError("#networks-page");
     console.error(errors);
   }
 }
@@ -23,21 +23,21 @@ function fillDatanetworks(networks) {
   });
   const options = {
     valueNames: [
-      'name',
-      'institution',
-      'validSize',
-      { data: ['id'] },
-      { attr: 'href', name: 'link' },
+      "name",
+      "institution",
+      "validSize",
+      { data: ["id"] },
+      { attr: "href", name: "link" },
     ],
 
     // Since there are no elements in the list, this will be used as template.
     item: `<li class="network-item">
       <h3><a href="" class="link name"></a></h3>
       <p><b>${getTranslatedText(
-        'Instituição responsável'
+        "Instituição responsável"
       )}</b>: <span class="institution"></span></p>
       <p><b>${getTranslatedText(
-        'Número de documentos coletados'
+        "Número de documentos coletados"
       )}</b>: <span class="validSize"></span></p>
       </li>`,
     page: 10,
@@ -48,23 +48,23 @@ function fillDatanetworks(networks) {
     ],
   };
 
-  networksList = new List('networks', options, networks);
+  networksList = new List("networks", options, networks);
 }
 
 function sortDatanetworks() {
-  const sortSelectElement = document.querySelector('#sort-select');
-  let sortOrder = 'asc';
-  sortSelectElement.addEventListener('change', (e) => {
+  const sortSelectElement = document.querySelector("#sort-select");
+  let sortOrder = "asc";
+  sortSelectElement.addEventListener("change", (e) => {
     if (sortOrder != sortSelectElement.value) {
-      networksList.sort('name', { order: sortSelectElement.value });
+      networksList.sort("name", { order: sortSelectElement.value });
       sortOrder = sortSelectElement.value;
     }
   });
 }
 
 function watchingUpdateOnList() {
-  const list = document.querySelector('.list');
-  networksList.on('updated', (element) => {
+  const list = document.querySelector(".list");
+  networksList.on("updated", (element) => {
     list.style.counterReset = `item ${element.i - 1}`;
   });
 }
@@ -84,12 +84,27 @@ async function getIndicatorsByDocumentType() {
   }
 }
 
-function fillIndicatorsByDocumentType(indicators) {
-  const sidebarElement = document.querySelector('#side-collapse-format');
+function getAllInstitutions(networks) {
+  const institutions = networks.map((network) => network.institution);
+  const counts = {};
+  institutions.forEach((x) => {
+    counts[x] = (counts[x] || 0) + 1;
+  });
+  const institutionsIndicators = [];
+  for (item in counts) {
+    institutionsIndicators.push({ name: item, value: counts[item] });
+  }
+  institutionsIndicators.sort((a, b) => b.value - a.value);
+  console.log("institutionsIndicators: ", institutionsIndicators);
+  return institutionsIndicators;
+}
+
+function fillIndicatorsByDocumentInstitution(indicators) {
+  const sidebarElement = document.querySelector("#side-collapse-institution");
   indicators.forEach((indicator) => {
     const item = `<a onclick="filterNetworks('${
       indicator.name
-    }')"  class="facet js-facet-item facetAND">
+    }', 'institution')"  class="facet js-facet-item facetAND">
     <span class="text">
       <span class="facet-value">${getTranslatedText(indicator.name)}</span>
     </span>
@@ -99,20 +114,43 @@ function fillIndicatorsByDocumentType(indicators) {
   });
 }
 
-function filterNetworks(filter) {
+function fillIndicatorsByDocumentType(indicators) {
+  const sidebarElement = document.querySelector("#side-collapse-format");
+  indicators.forEach((indicator) => {
+    const item = `<a onclick="filterNetworks('${
+      indicator.name
+    }', 'format')"  class="facet js-facet-item facetAND">
+    <span class="text">
+      <span class="facet-value">${getTranslatedText(indicator.name)}</span>
+    </span>
+    <span class="badge"> ${formatNumber(indicator.value)} </span>
+  </a>`;
+    sidebarElement.innerHTML = sidebarElement.innerHTML + item;
+  });
+}
+
+function filterNetworks(filter, filterType) {
   if (filter) {
-    // if (filter === 'Indefinido') {
-    //   filter = null
-    // }
     let foud = 0;
-    networksList.filter((item) => {
-      if (item.values().sourceType === filter) {
-        foud += 1;
-        return true;
-      } else {
-        return false;
-      }
-    });
+    if (filterType == "format") {
+      networksList.filter((item) => {
+        if (item.values().sourceType === filter) {
+          foud += 1;
+          return true;
+        } else {
+          return false;
+        }
+      });
+    } else if (filterType == "institution") {
+      networksList.filter((item) => {
+        if (item.values().institution === filter) {
+          foud += 1;
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
     showTotalFind(foud);
   } else {
     showTotalFind(networksList.size());
@@ -121,9 +159,9 @@ function filterNetworks(filter) {
 }
 
 function exportsCSV(networks) {
-  const btnExport = document.querySelector('.btn-export-csv');
-  btnExport.addEventListener('click', () => {
-    let csvContent = 'data:text/csv;charset=utf-8,';
+  const btnExport = document.querySelector(".btn-export-csv");
+  btnExport.addEventListener("click", () => {
+    let csvContent = "data:text/csv;charset=utf-8,";
 
     const jsonObject = networksList.filtered
       ? JSON.stringify(networksList.matchingItems.map((i) => i._values))
@@ -137,54 +175,57 @@ function exportsCSV(networks) {
 }
 
 function showTotalFind(total) {
-  const totalLabel = document.querySelector('.networks-label');
-  totalLabel.innerHTML = `${getTranslatedText('Retornaram')} ${formatNumber(
+  const totalLabel = document.querySelector(".networks-label");
+  totalLabel.innerHTML = `${getTranslatedText("Retornaram")} ${formatNumber(
     total
-  )} ${getTranslatedText('fontes')}`;
+  )} ${getTranslatedText("fontes")}`;
 }
 
 function showTotal(total) {
-  const badgeTotal = document.querySelector('.badge-total');
-  badgeTotal.innerHTML = formatNumber(total);
+  const badgesTotal = document.querySelectorAll(".badge-total");
+  badgesTotal.forEach(
+    (badgeTotal) => (badgeTotal.innerHTML = formatNumber(total))
+  );
   showTotalFind(total);
 }
 
 function ConvertToCSV(objArray) {
-  const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
-  let csv = 'Nome,Instituição,Tipo de fonte,URL,Email,ISSN,Quantidade de itens';
-  csv += '\r\n';
+  const array = typeof objArray !== "object" ? JSON.parse(objArray) : objArray;
+  let csv = "Nome,Instituição,Tipo de fonte,URL,Email,ISSN,Quantidade de itens";
+  csv += "\r\n";
   array.forEach((item) => {
     let line =
       `"${item.name}"` +
-      ',' +
+      "," +
       `"${item.institution}"` +
-      ',' +
+      "," +
       item.sourceType +
-      ',' +
+      "," +
       item.sourceUrl +
-      ',' +
+      "," +
       `"${item.email}"` +
-      ',' +
+      "," +
       item.issn +
-      ',' +
+      "," +
       item.validSize;
-    line = line.replaceAll('#', '%23');
-    csv += line + '\r\n';
+    line = line.replaceAll("#", "%23");
+    csv += line + "\r\n";
   });
   return csv;
 }
 
 function listenerListAllNetworks() {
-  const listAll = document.querySelector('#list-all');
-  listAll.addEventListener('click', () => {
+  const listAll = document.querySelector("#list-all");
+  listAll.addEventListener("click", () => {
     filterNetworks();
   });
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const allNetworks = await getAllNetworks();
   const indicators = await getIndicatorsByDocumentType();
   fillIndicatorsByDocumentType(indicators);
+  fillIndicatorsByDocumentInstitution(getAllInstitutions(allNetworks));
   showTotal(allNetworks.length);
   fillDatanetworks(allNetworks);
   sortDatanetworks();

@@ -530,6 +530,15 @@ li.language a {
   font-size: 1.3rem;
 }
 
+#side-collapse-institution {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.facet-group a {
+  text-decoration: none;
+}
+
 .panel-body::before,
 .panel-body::after {
   display: none;
