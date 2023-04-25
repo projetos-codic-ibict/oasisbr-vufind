@@ -716,6 +716,10 @@ td span.format {
   flex-wrap: wrap;
 }
 
+a.link-simple {
+  text-decoration: none;
+}
+
 @media (min-width: 768px) {
   .result-body {
     width: 100%;
