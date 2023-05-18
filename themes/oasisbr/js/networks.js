@@ -101,6 +101,7 @@ function getAllInstitutions(networks) {
 
 function fillIndicatorsByDocumentInstitution(indicators) {
   const sidebarElement = document.querySelector("#side-collapse-institution");
+  indicators.sort((a, b) => b.value - a.value);
   indicators.forEach((indicator) => {
     const item = `<a onclick="filterNetworks('${
       indicator.name
@@ -116,6 +117,7 @@ function fillIndicatorsByDocumentInstitution(indicators) {
 
 function fillIndicatorsByDocumentType(indicators) {
   const sidebarElement = document.querySelector("#side-collapse-format");
+  indicators.sort((a, b) => b.value - a.value);
   indicators.forEach((indicator) => {
     const item = `<a onclick="filterNetworks('${
       indicator.name
