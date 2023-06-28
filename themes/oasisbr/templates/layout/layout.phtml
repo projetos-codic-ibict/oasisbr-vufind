@@ -144,6 +144,18 @@ JS;
   }
   ?>
   <?= $this->headScript() ?>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V8YFC4NWSB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V8YFC4NWSB');
+  </script>
 </head>
 
 <body class="template-dir-<?= $this->templateDir ?> template-name-<?= $this->templateName ?> <?= $this->layoutClass('offcanvas-row') ?><?php if ($this->layout()->rtl) : ?> rtl<?php endif; ?>">
