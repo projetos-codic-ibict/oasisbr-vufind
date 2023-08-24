@@ -1,5 +1,39 @@
 let networksList = null;
 
+function obterRegiaoPorUF(uf) {
+  const regioesPorUF = {
+    AC: 'Norte',
+    AL: 'Nordeste',
+    AP: 'Norte',
+    AM: 'Norte',
+    BA: 'Nordeste',
+    CE: 'Nordeste',
+    DF: 'Centro-Oeste',
+    ES: 'Sudeste',
+    GO: 'Centro-Oeste',
+    MA: 'Nordeste',
+    MT: 'Centro-Oeste',
+    MS: 'Centro-Oeste',
+    MG: 'Sudeste',
+    PA: 'Norte',
+    PB: 'Nordeste',
+    PR: 'Sul',
+    PE: 'Nordeste',
+    PI: 'Nordeste',
+    RJ: 'Sudeste',
+    RN: 'Nordeste',
+    RS: 'Sul',
+    RO: 'Norte',
+    RR: 'Norte',
+    SC: 'Sul',
+    SP: 'Sudeste',
+    SE: 'Nordeste',
+    TO: 'Norte',
+  };
+
+  return regioesPorUF[uf] || 'Região não encontrada';
+}
+
 async function getAllNetworks() {
   try {
     showLoader();
@@ -107,11 +141,26 @@ function getAllUfs(networks) {
   });
   const ufsIndicators = [];
   for (item in counts) {
-    ufsIndicators.push({ name: item, value: counts[item] });
+    ufsIndicators.push({ name: item || 'Indefinido', value: counts[item] });
   }
   ufsIndicators.sort((a, b) => b.value - a.value);
   console.log('ufsIndicators: ', ufsIndicators);
   return ufsIndicators;
+}
+
+function getAllRegions(networks) {
+  const regions = networks.map((network) => obterRegiaoPorUF(network.uf));
+  const counts = {};
+  regions.forEach((x) => {
+    counts[x] = (counts[x] || 0) + 1;
+  });
+  const regionsIndicators = [];
+  for (item in counts) {
+    regionsIndicators.push({ name: item || 'Indefinido', value: counts[item] });
+  }
+  regionsIndicators.sort((a, b) => b.value - a.value);
+  console.log('regionsIndicators: ', regionsIndicators);
+  return regionsIndicators;
 }
 
 function fillIndicatorsByDocumentInstitution(indicators) {
@@ -137,6 +186,22 @@ function fillIndicatorsByUf(indicators) {
     const item = `<a onclick="filterNetworks('${
       indicator.name
     }', 'uf')"  class="facet js-facet-item facetAND">
+    <span class="text">
+      <span class="facet-value">${getTranslatedText(indicator.name)}</span>
+    </span>
+    <span class="badge"> ${formatNumber(indicator.value)} </span>
+  </a>`;
+    sidebarElement.innerHTML = sidebarElement.innerHTML + item;
+  });
+}
+
+function fillIndicatorsByRegion(indicators) {
+  const sidebarElement = document.querySelector('#side-collapse-region');
+  indicators.sort((a, b) => b.value - a.value);
+  indicators.forEach((indicator) => {
+    const item = `<a onclick="filterNetworks('${
+      indicator.name
+    }', 'region')"  class="facet js-facet-item facetAND">
     <span class="text">
       <span class="facet-value">${getTranslatedText(indicator.name)}</span>
     </span>
@@ -186,6 +251,15 @@ function filterNetworks(filter, filterType) {
     } else if (filterType == 'uf') {
       networksList.filter((item) => {
         if (item.values().uf === filter) {
+          foud += 1;
+          return true;
+        } else {
+          return false;
+        }
+      });
+    } else if (filterType == 'region') {
+      networksList.filter((item) => {
+        if (obterRegiaoPorUF(item.values().uf) === filter) {
           foud += 1;
           return true;
         } else {
@@ -269,6 +343,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   fillIndicatorsByDocumentType(indicators);
   fillIndicatorsByDocumentInstitution(getAllInstitutions(allNetworks));
   fillIndicatorsByUf(getAllUfs(allNetworks));
+  fillIndicatorsByRegion(getAllRegions(allNetworks));
   showTotal(allNetworks.length);
   fillDatanetworks(allNetworks);
   sortDatanetworks();
