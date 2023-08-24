@@ -12,17 +12,17 @@ async function getANetworkByName(networkId) {
 }
 
 function fillDatasource(network) {
-  const table = document.querySelector("#dataSource");
+  const table = document.querySelector('#dataSource');
   table.innerHTML = `<tr>
-      <td>${getTranslatedText("Tipo de fonte")}:</td >
+      <td>${getTranslatedText('Tipo de fonte')}:</td >
         <td>${network.sourceType}</td>
     </tr >
     <tr>
-      <td>${getTranslatedText("Fonte")}:</td>
+      <td>${getTranslatedText('Fonte')}:</td>
       <td>${network.name}</td>
     </tr>
     <tr>
-      <td>${getTranslatedText("Instituição responsável")}:</td>
+      <td>${getTranslatedText('Instituição responsável')}:</td>
       <td>${network.institution}</td>
     </tr>
     <tr>
@@ -33,17 +33,17 @@ function fillDatasource(network) {
             network.sourceUrl +
             '" target="_blank" rel="noopener noreferrer">' +
             network.sourceUrl +
-            "</a >"
-          : "-"
+            '</a >'
+          : '-'
       }
       </td>
     </tr>
     <tr>
-      <td>${getTranslatedText("Source email")}: </td>
-      <td>${network.email != null ? network.email : "-"}</td >
+      <td>${getTranslatedText('Source email')}: </td>
+      <td>${network.email != null ? network.email : '-'}</td >
     </tr>
     <tr>
-      <td>${getTranslatedText("Documents collected")}:</td>
+      <td>${getTranslatedText('Documents collected')}:</td>
       <td>
         <a href="../Search/Results?type=AllFields&filter%5B%5D=network_name_str%3A%22+${
           network.name
@@ -55,66 +55,70 @@ function fillDatasource(network) {
     <tr>
       <td>
         ${
-          network.sourceType === "Revista Científica"
-            ? "ISSN:"
-            : network.sourceType === "Repositório de Dados de Pesquisa"
-            ? "ID re3data:"
-            : "ID OpenDOAR:"
+          network.sourceType === 'Revista Científica'
+            ? 'ISSN:'
+            : network.sourceType === 'Repositório de Dados de Pesquisa'
+            ? 'ID re3data:'
+            : 'ID OpenDOAR:'
         }
       </td >
       <td>${
-        network.issn != "null"
+        network.issn != 'null'
           ? network.issn
-          : getTranslatedText("Not registered")
+          : getTranslatedText('Not registered')
       } 
     </tr >`;
 }
 
 function setCustomColor(sourceType) {
-  const titleBar = document.querySelector(".page-title-bar");
+  const titleBar = document.querySelector('.page-title-bar');
   titleBar.classList.remove(
-    "revista",
-    "repo-publicacoes",
-    "repo-dados",
-    "biblioteca",
-    "monografias",
-    "preprints",
-    "agregador",
-    "repo"
+    'revista',
+    'repo-publicacoes',
+    'repo-dados',
+    'biblioteca',
+    'monografias',
+    'preprints',
+    'agregador',
+    'repo'
   );
   switch (sourceType) {
-    case "Revista Científica":
-      titleBar.classList.add("revista");
+    case 'Revista Científica':
+      titleBar.classList.add('revista');
       break;
-    case "Repositório de Publicações":
-      titleBar.classList.add("repo-publicacoes");
+    case 'Repositório de Publicações':
+      titleBar.classList.add('repo-publicacoes');
       break;
-    case "Repositório de Dados de Pesquisa":
-      titleBar.classList.add("repo-dados");
+    case 'Repositório de Dados de Pesquisa':
+      titleBar.classList.add('repo-dados');
       break;
-    case "Biblioteca Digital de Teses e Dissertações":
-      titleBar.classList.add("biblioteca");
+    case 'Biblioteca Digital de Teses e Dissertações':
+      titleBar.classList.add('biblioteca');
       break;
-    case "Biblioteca Digital de Monografias":
-      titleBar.classList.add("monografias");
+    case 'Biblioteca Digital de Monografias':
+      titleBar.classList.add('monografias');
       break;
-    case "Biblioteca Digital de Monografia":
-      titleBar.classList.add("monografias");
+    case 'Biblioteca Digital de Monografia':
+      titleBar.classList.add('monografias');
       break;
-    case "Servidor de Preprints":
-      titleBar.classList.add("preprints");
+    case 'Servidor de Preprints':
+      titleBar.classList.add('preprints');
       break;
-    case "Portal Agregador":
-      titleBar.classList.add("agregador");
+    case 'Portal Agregador':
+      titleBar.classList.add('agregador');
       break;
     default:
-      titleBar.classList.add("repo");
+      titleBar.classList.add('repo');
   }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const networkName = urlParams.get("name");
+document.addEventListener('DOMContentLoaded', async () => {
+  const queryStrings = window.location.search.split('=');
+  const queryString = `${queryStrings[0]}=${encodeURIComponent(
+    queryStrings[1]
+  )}`;
+  const urlParams = new URLSearchParams(queryString);
+  const networkName = decodeURIComponent(urlParams.get('name'));
   const network = await getANetworkByName(networkName);
   setCustomColor(network.sourceType);
   fillDatasource(network);

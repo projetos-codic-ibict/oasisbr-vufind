@@ -129,7 +129,6 @@ function getAllInstitutions(networks) {
     institutionsIndicators.push({ name: item, value: counts[item] });
   }
   institutionsIndicators.sort((a, b) => b.value - a.value);
-  console.log('institutionsIndicators: ', institutionsIndicators);
   return institutionsIndicators;
 }
 
@@ -144,7 +143,6 @@ function getAllUfs(networks) {
     ufsIndicators.push({ name: item || 'Indefinido', value: counts[item] });
   }
   ufsIndicators.sort((a, b) => b.value - a.value);
-  console.log('ufsIndicators: ', ufsIndicators);
   return ufsIndicators;
 }
 
@@ -159,7 +157,6 @@ function getAllRegions(networks) {
     regionsIndicators.push({ name: item || 'Indefinido', value: counts[item] });
   }
   regionsIndicators.sort((a, b) => b.value - a.value);
-  console.log('regionsIndicators: ', regionsIndicators);
   return regionsIndicators;
 }
 
