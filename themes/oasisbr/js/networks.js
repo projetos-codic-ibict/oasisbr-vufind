@@ -212,9 +212,8 @@ function fillIndicatorsByDocumentType(indicators) {
   const sidebarElement = document.querySelector('#side-collapse-format');
   indicators.sort((a, b) => b.value - a.value);
   indicators.forEach((indicator) => {
-    const item = `<a onclick="filterNetworks('${
-      indicator.name
-    }', 'format')"  class="facet js-facet-item facetAND">
+    const item = `<a onclick="filterNetworks('${indicator.name}', 'format')"  
+    class="facet js-facet-item facetAND">
     <span class="text">
       <span class="facet-value">${getTranslatedText(indicator.name)}</span>
     </span>
@@ -334,6 +333,29 @@ function listenerListAllNetworks() {
   });
 }
 
+function activeSelectedItem() {
+  const itens = document.querySelectorAll('.js-facet-item');
+  itens.forEach((item) => {
+    item.addEventListener('click', () => {
+      itens.forEach((item) => {
+        item.classList.remove('active');
+      });
+      item.classList.add('active');
+    });
+  });
+}
+
+function collapseFilter() {
+  const btnTitles = document.querySelectorAll('.title');
+  btnTitles.forEach((btnTitle) => {
+    btnTitle.addEventListener('click', () => {
+      btnTitle.classList.toggle('collapsed');
+      btnTitle['area-expanded'] = !btnTitle['area-expanded'];
+      btnTitle.nextElementSibling.classList.toggle('in');
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const allNetworks = await getAllNetworks();
   const indicators = await getIndicatorsByDocumentType();
@@ -347,4 +369,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   watchingUpdateOnList();
   listenerListAllNetworks();
   exportsCSV(allNetworks);
+  activeSelectedItem();
+  collapseFilter();
 });

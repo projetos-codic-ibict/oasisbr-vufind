@@ -16,15 +16,14 @@
   </div>
 </div>
 
-<div class="container" id="networks-page">
+<div class="container" id="networks-page" class="networks-page">
   <div class="sidebar left hidden-print" id="search-sidebar">
     <div class="facet-group" id="side-panel-format">
-      <button class="title" aria-expanded="true">
+      <button class="title" aria-expanded="true" data-toggle="collapse">
         <?= $this->transEsc("Source type") ?> </button>
       <div id="side-collapse-format" class="collapse in" aria-expanded="true">
         <a id="list-all" class="facet js-facet-item facetAND">
           <span class="text">
-
             <span class="facet-value"><?= $this->transEsc("All sources") ?></span>
           </span>
           <span class="badge badge-total"> </span>
@@ -32,7 +31,7 @@
       </div>
     </div>
     <div class="facet-group" id="side-panel-institution">
-      <button class="title" aria-expanded="true">
+      <button class="title" aria-expanded="true" data-toggle="collapse">
         <?= $this->transEsc("Institution") ?> </button>
       <div id="side-collapse-institution" class="collapse in" aria-expanded="true">
         <a id="list-all" class="facet js-facet-item facetAND">
@@ -45,10 +44,10 @@
       </div>
     </div>
 
-    <div class="facet-group" id="side-panel-uf">
-      <button class="title" aria-expanded="true">
-        <?= $this->transEsc("State") ?> </button>
-      <div id="side-collapse-uf" class="collapse in" aria-expanded="true">
+    <div class="facet-group" id="side-panel-region">
+      <button class="title" aria-expanded="true" data-toggle="collapse">
+        <?= $this->transEsc("Region") ?> </button>
+      <div id="side-collapse-region" class="collapse in" aria-expanded="true">
         <a id="list-all" class="facet js-facet-item facetAND">
           <span class="text">
 
@@ -59,10 +58,10 @@
       </div>
     </div>
 
-    <div class="facet-group" id="side-panel-region">
-      <button class="title" aria-expanded="true">
-        <?= $this->transEsc("Region") ?> </button>
-      <div id="side-collapse-region" class="collapse in" aria-expanded="true">
+    <div class="facet-group" id="side-panel-uf">
+      <button class="title" aria-expanded="true" data-toggle="collapse">
+        <?= $this->transEsc("State") ?> </button>
+      <div id="side-collapse-uf" class="collapse in" aria-expanded="true">
         <a id="list-all" class="facet js-facet-item facetAND">
           <span class="text">
 

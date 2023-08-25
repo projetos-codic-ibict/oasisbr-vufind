@@ -530,9 +530,10 @@ li.language a {
   font-size: 1.3rem;
 }
 
-#side-collapse-institution {
-  max-height: 500px;
+#networks-page .collapse {
+  max-height: 400px;
   overflow: auto;
+  border-bottom: 1px solid #eee;
 }
 
 .facet-group a {
