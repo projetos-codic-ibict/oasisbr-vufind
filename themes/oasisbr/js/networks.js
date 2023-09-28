@@ -1,4 +1,6 @@
+let allNetworks = null;
 let networksList = null;
+let filters = new Map();
 
 function obterRegiaoPorUF(uf) {
   const regioesPorUF = {
@@ -103,117 +105,120 @@ function watchingUpdateOnList() {
   });
 }
 
-async function getIndicatorsByDocumentType() {
-  try {
-    showLoader();
-    const response = await axios.get(
-      `${REMOTE_API_URL}/indicators?type=sourceType`
-    );
-    hideLoader();
-    const indicators = response.data;
-    return indicators;
-  } catch (errors) {
-    hideLoader();
-    console.error(errors);
+function getIndicators(networks) {
+  let sourceTypes = [];
+  let institutions = [];
+  let ufs = [];
+  let regions = [];
+  if (filters.size > 0) {
+    const { sourceType, institution, uf, region } = getFiltersByType();
+    networks.forEach((network) => {
+      if (
+        (sourceType ? network.sourceType === sourceType : true) &&
+        (institution ? network.institution === institution : true) &&
+        (uf ? network.uf === uf : true) &&
+        (region ? obterRegiaoPorUF(network.uf) === region : true)
+      ) {
+        sourceTypes.push(network.sourceType);
+        institutions.push(network.institution);
+        ufs.push(network.uf);
+        regions.push(obterRegiaoPorUF(network.uf));
+      }
+    });
+  } else {
+    sourceTypes = networks.map((network) => network.sourceType);
+    institutions = networks.map((network) => network.institution);
+    ufs = networks.map((network) => network.uf);
+    regions = networks.map((network) => obterRegiaoPorUF(network.uf));
+  }
+  const sourceTypesIndicadors = getSourceTypesIndicators();
+  const institutionsIndicadors = getInstitutionsIndicators();
+  const ufsIndicadors = getUfsIndicators();
+  const regionsIndicadors = getRegionsIndicators();
+
+  return {
+    sourceTypesIndicadors,
+    institutionsIndicadors,
+    ufsIndicadors,
+    regionsIndicadors,
+  };
+
+  function getSourceTypesIndicators() {
+    const sourceTypesCounts = {};
+    sourceTypes.forEach((x) => {
+      sourceTypesCounts[x] = (sourceTypesCounts[x] || 0) + 1;
+    });
+    const sourceTypesIndicadors = [];
+    for (item in sourceTypesCounts) {
+      sourceTypesIndicadors.push({
+        name: item || getTranslatedText('Indefinido'),
+        value: sourceTypesCounts[item],
+      });
+    }
+    sourceTypesIndicadors.sort((a, b) => b.value - a.value);
+    return sourceTypesIndicadors;
+  }
+
+  function getInstitutionsIndicators() {
+    const institutionsCounts = {};
+    institutions.forEach((x) => {
+      institutionsCounts[x] = (institutionsCounts[x] || 0) + 1;
+    });
+    const institutionsIndicadors = [];
+    for (item in institutionsCounts) {
+      institutionsIndicadors.push({
+        name: item || getTranslatedText('Indefinido'),
+        value: institutionsCounts[item],
+      });
+    }
+    institutionsIndicadors.sort((a, b) => b.value - a.value);
+    return institutionsIndicadors;
+  }
+
+  function getUfsIndicators() {
+    const ufsCounts = {};
+    ufs.forEach((x) => {
+      ufsCounts[x] = (ufsCounts[x] || 0) + 1;
+    });
+    const ufsIndicators = [];
+    for (item in ufsCounts) {
+      ufsIndicators.push({
+        name: item || getTranslatedText('Indefinido'),
+        value: ufsCounts[item],
+      });
+    }
+    ufsIndicators.sort((a, b) => b.value - a.value);
+    return ufsIndicators;
+  }
+
+  function getRegionsIndicators() {
+    const regionsCounts = {};
+    regions.forEach((x) => {
+      regionsCounts[x] = (regionsCounts[x] || 0) + 1;
+    });
+    const regionsIndicators = [];
+    for (item in regionsCounts) {
+      regionsIndicators.push({
+        name: item || getTranslatedText('Indefinido'),
+        value: regionsCounts[item],
+      });
+    }
+    regionsIndicators.sort((a, b) => b.value - a.value);
+    return regionsIndicators;
   }
 }
 
-function getAllInstitutions(networks) {
-  const institutions = networks.map((network) => network.institution);
-  const counts = {};
-  institutions.forEach((x) => {
-    counts[x] = (counts[x] || 0) + 1;
-  });
-  const institutionsIndicators = [];
-  for (item in counts) {
-    institutionsIndicators.push({ name: item, value: counts[item] });
-  }
-  institutionsIndicators.sort((a, b) => b.value - a.value);
-  return institutionsIndicators;
-}
+function fillIndicators(indicators, querySelector, indicatorType) {
+  const sidebarElement = document.querySelector(querySelector);
+  sidebarElement.innerHTML = sidebarElement.firstElementChild;
 
-function getAllUfs(networks) {
-  const ufs = networks.map((network) => network.uf);
-  const counts = {};
-  ufs.forEach((x) => {
-    counts[x] = (counts[x] || 0) + 1;
-  });
-  const ufsIndicators = [];
-  for (item in counts) {
-    ufsIndicators.push({ name: item || 'Indefinido', value: counts[item] });
-  }
-  ufsIndicators.sort((a, b) => b.value - a.value);
-  return ufsIndicators;
-}
-
-function getAllRegions(networks) {
-  const regions = networks.map((network) => obterRegiaoPorUF(network.uf));
-  const counts = {};
-  regions.forEach((x) => {
-    counts[x] = (counts[x] || 0) + 1;
-  });
-  const regionsIndicators = [];
-  for (item in counts) {
-    regionsIndicators.push({ name: item || 'Indefinido', value: counts[item] });
-  }
-  regionsIndicators.sort((a, b) => b.value - a.value);
-  return regionsIndicators;
-}
-
-function fillIndicatorsByDocumentInstitution(indicators) {
-  const sidebarElement = document.querySelector('#side-collapse-institution');
   indicators.sort((a, b) => b.value - a.value);
   indicators.forEach((indicator) => {
     const item = `<a onclick="filterNetworks('${
       indicator.name
-    }', 'institution')"  class="facet js-facet-item facetAND">
-    <span class="text">
-      <span class="facet-value">${getTranslatedText(indicator.name)}</span>
-    </span>
-    <span class="badge"> ${formatNumber(indicator.value)} </span>
-  </a>`;
-    sidebarElement.innerHTML = sidebarElement.innerHTML + item;
-  });
-}
-
-function fillIndicatorsByUf(indicators) {
-  const sidebarElement = document.querySelector('#side-collapse-uf');
-  indicators.sort((a, b) => b.value - a.value);
-  indicators.forEach((indicator) => {
-    const item = `<a onclick="filterNetworks('${
-      indicator.name
-    }', 'uf')"  class="facet js-facet-item facetAND">
-    <span class="text">
-      <span class="facet-value">${getTranslatedText(indicator.name)}</span>
-    </span>
-    <span class="badge"> ${formatNumber(indicator.value)} </span>
-  </a>`;
-    sidebarElement.innerHTML = sidebarElement.innerHTML + item;
-  });
-}
-
-function fillIndicatorsByRegion(indicators) {
-  const sidebarElement = document.querySelector('#side-collapse-region');
-  indicators.sort((a, b) => b.value - a.value);
-  indicators.forEach((indicator) => {
-    const item = `<a onclick="filterNetworks('${
-      indicator.name
-    }', 'region')"  class="facet js-facet-item facetAND">
-    <span class="text">
-      <span class="facet-value">${getTranslatedText(indicator.name)}</span>
-    </span>
-    <span class="badge"> ${formatNumber(indicator.value)} </span>
-  </a>`;
-    sidebarElement.innerHTML = sidebarElement.innerHTML + item;
-  });
-}
-
-function fillIndicatorsByDocumentType(indicators) {
-  const sidebarElement = document.querySelector('#side-collapse-format');
-  indicators.sort((a, b) => b.value - a.value);
-  indicators.forEach((indicator) => {
-    const item = `<a onclick="filterNetworks('${indicator.name}', 'format')"  
-    class="facet js-facet-item facetAND">
+    }', '${indicatorType}')" title="${getTranslatedText(
+      'Select filter'
+    )}"  class="facet js-facet-item facetAND">
     <span class="text">
       <span class="facet-value">${getTranslatedText(indicator.name)}</span>
     </span>
@@ -224,38 +229,26 @@ function fillIndicatorsByDocumentType(indicators) {
 }
 
 function filterNetworks(filter, filterType) {
-  if (filter) {
+  try {
+    showLoader();
+    if (filters.get(filterType) == filter) {
+      filters.delete(filterType);
+    } else {
+      filters.set(filterType, filter);
+    }
     let foud = 0;
-    if (filterType == 'format') {
+    const { sourceType, institution, uf, region } = getFiltersByType();
+    if (filters.size == 0) {
+      foud = networksList.size();
+      networksList.filter();
+    } else {
       networksList.filter((item) => {
-        if (item.values().sourceType === filter) {
-          foud += 1;
-          return true;
-        } else {
-          return false;
-        }
-      });
-    } else if (filterType == 'institution') {
-      networksList.filter((item) => {
-        if (item.values().institution === filter) {
-          foud += 1;
-          return true;
-        } else {
-          return false;
-        }
-      });
-    } else if (filterType == 'uf') {
-      networksList.filter((item) => {
-        if (item.values().uf === filter) {
-          foud += 1;
-          return true;
-        } else {
-          return false;
-        }
-      });
-    } else if (filterType == 'region') {
-      networksList.filter((item) => {
-        if (obterRegiaoPorUF(item.values().uf) === filter) {
+        if (
+          (sourceType ? item.values().sourceType === sourceType : true) &&
+          (institution ? item.values().institution === institution : true) &&
+          (uf ? item.values().uf === uf : true) &&
+          (region ? obterRegiaoPorUF(item.values().uf) === region : true)
+        ) {
           foud += 1;
           return true;
         } else {
@@ -263,11 +256,20 @@ function filterNetworks(filter, filterType) {
         }
       });
     }
+    fillIndicatorsSidebar(allNetworks);
+    activeSelectedItem();
     showTotalFind(foud);
-  } else {
-    showTotalFind(networksList.size());
-    networksList.filter();
+  } finally {
+    hideLoader();
   }
+}
+
+function getFiltersByType() {
+  const sourceType = filters.get('sourceType');
+  const institution = filters.get('institution');
+  const uf = filters.get('uf');
+  const region = filters.get('region');
+  return { sourceType, institution, uf, region };
 }
 
 function exportsCSV(networks) {
@@ -336,12 +338,14 @@ function listenerListAllNetworks() {
 function activeSelectedItem() {
   const itens = document.querySelectorAll('.js-facet-item');
   itens.forEach((item) => {
-    item.addEventListener('click', () => {
-      itens.forEach((item) => {
-        item.classList.remove('active');
-      });
+    if (
+      Array.from(filters.values()).includes(
+        item.firstElementChild.firstElementChild.textContent
+      )
+    ) {
       item.classList.add('active');
-    });
+      item.title = getTranslatedText('Remove filter');
+    }
   });
 }
 
@@ -356,19 +360,32 @@ function collapseFilter() {
   });
 }
 
+function fillIndicatorsSidebar(allNetworks) {
+  const {
+    sourceTypesIndicadors,
+    institutionsIndicadors,
+    ufsIndicadors,
+    regionsIndicadors,
+  } = getIndicators(allNetworks);
+  fillIndicators(sourceTypesIndicadors, '#side-collapse-format', 'sourceType');
+  fillIndicators(
+    institutionsIndicadors,
+    '#side-collapse-institution',
+    'institution'
+  );
+  fillIndicators(ufsIndicadors, '#side-collapse-uf', 'uf');
+  fillIndicators(regionsIndicadors, '#side-collapse-region', 'region');
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
-  const allNetworks = await getAllNetworks();
-  const indicators = await getIndicatorsByDocumentType();
-  fillIndicatorsByDocumentType(indicators);
-  fillIndicatorsByDocumentInstitution(getAllInstitutions(allNetworks));
-  fillIndicatorsByUf(getAllUfs(allNetworks));
-  fillIndicatorsByRegion(getAllRegions(allNetworks));
+  allNetworks = await getAllNetworks();
+  fillIndicatorsSidebar(allNetworks);
   showTotal(allNetworks.length);
   fillDatanetworks(allNetworks);
   sortDatanetworks();
   watchingUpdateOnList();
   listenerListAllNetworks();
   exportsCSV(allNetworks);
-  activeSelectedItem();
+  // activeSelectedItem();
   collapseFilter();
 });

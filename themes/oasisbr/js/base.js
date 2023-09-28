@@ -7,6 +7,7 @@ let REMOTE_API_URL;
 let loader = '';
 
 function showLoader() {
+  console.log('showLoader', loader);
   try {
     loader.style.display = 'block';
   } catch (error) {}
