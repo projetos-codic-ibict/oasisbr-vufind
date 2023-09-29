@@ -38,13 +38,10 @@ function obterRegiaoPorUF(uf) {
 
 async function getAllNetworks() {
   try {
-    showLoader();
     const response = await axios.get(`${REMOTE_API_URL}/networks`);
-    hideLoader();
     const networks = response.data;
     return networks;
   } catch (errors) {
-    hideLoader();
     showMessageError('#networks-page');
     console.error(errors);
   }
@@ -378,14 +375,19 @@ function fillIndicatorsSidebar(allNetworks) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  allNetworks = await getAllNetworks();
-  fillIndicatorsSidebar(allNetworks);
-  showTotal(allNetworks.length);
-  fillDatanetworks(allNetworks);
-  sortDatanetworks();
-  watchingUpdateOnList();
-  listenerListAllNetworks();
-  exportsCSV(allNetworks);
-  // activeSelectedItem();
-  collapseFilter();
+  try {
+    showLoader();
+    allNetworks = await getAllNetworks();
+    fillIndicatorsSidebar(allNetworks);
+    showTotal(allNetworks.length);
+    fillDatanetworks(allNetworks);
+    sortDatanetworks();
+    watchingUpdateOnList();
+    listenerListAllNetworks();
+    exportsCSV(allNetworks);
+    // activeSelectedItem();
+    collapseFilter();
+  } finally {
+    hideLoader();
+  }
 });
