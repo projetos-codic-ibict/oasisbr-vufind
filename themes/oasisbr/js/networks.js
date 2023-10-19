@@ -226,39 +226,40 @@ function fillIndicators(indicators, querySelector, indicatorType) {
 }
 
 function filterNetworks(filter, filterType) {
-  try {
-    showLoader();
-    if (filters.get(filterType) == filter) {
-      filters.delete(filterType);
-    } else {
-      filters.set(filterType, filter);
-    }
-    let foud = 0;
-    const { sourceType, institution, uf, region } = getFiltersByType();
-    if (filters.size == 0) {
-      foud = networksList.size();
-      networksList.filter();
-    } else {
-      networksList.filter((item) => {
-        if (
-          (sourceType ? item.values().sourceType === sourceType : true) &&
-          (institution ? item.values().institution === institution : true) &&
-          (uf ? item.values().uf === uf : true) &&
-          (region ? obterRegiaoPorUF(item.values().uf) === region : true)
-        ) {
-          foud += 1;
-          return true;
-        } else {
-          return false;
-        }
-      });
-    }
+  showLoader();
+  if (filters.get(filterType) == filter) {
+    filters.delete(filterType);
+  } else {
+    filters.set(filterType, filter);
+  }
+  let foud = 0;
+  const { sourceType, institution, uf, region } = getFiltersByType();
+  if (filters.size == 0) {
+    foud = networksList.size();
+    networksList.filter();
+  } else {
+    networksList.filter((item) => {
+      if (
+        (sourceType ? item.values().sourceType === sourceType : true) &&
+        (institution ? item.values().institution === institution : true) &&
+        (uf ? item.values().uf === uf : true) &&
+        (region ? obterRegiaoPorUF(item.values().uf) === region : true)
+      ) {
+        foud += 1;
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  // foi adiconado este timeout pq a função fillIndicatorsSidebar estava travando a exibição do loader.
+  setTimeout(() => {
     fillIndicatorsSidebar(allNetworks);
     activeSelectedItem();
     showTotalFind(foud);
-  } finally {
     hideLoader();
-  }
+  }, 1);
 }
 
 function getFiltersByType() {
@@ -328,6 +329,7 @@ function ConvertToCSV(objArray) {
 function listenerListAllNetworks() {
   const listAll = document.querySelector('#list-all');
   listAll.addEventListener('click', () => {
+    showLoader();
     filterNetworks();
   });
 }
@@ -383,7 +385,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     fillDatanetworks(allNetworks);
     sortDatanetworks();
     watchingUpdateOnList();
-    listenerListAllNetworks();
+    // listenerListAllNetworks();
     exportsCSV(allNetworks);
     // activeSelectedItem();
     collapseFilter();
