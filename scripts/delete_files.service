@@ -1,0 +1,9 @@
+[Unit]
+Description=Apaga arquivos de sessão do Vufind diariamente
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/delete_files.sh
+
+[Install]
+WantedBy=multi-user.target
