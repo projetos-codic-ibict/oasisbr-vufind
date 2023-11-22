@@ -219,9 +219,21 @@ footer {
 }
 
 footer .footer {
-  background-color: #e6e6e6;
-  padding: 16px 32px 48px 32px;
+  padding: 16px 32px;
 }
+
+footer p {
+  color: #9a9a9a;
+}
+
+.nav-footer ul li a:hover {
+  text-decoration: underline;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
 
 .nav-footer ul {
   display: flex;
