@@ -38,12 +38,9 @@ if (window.location.hostname === 'oasisbr.ibict.br') {
 
 async function getIndicatorsBy(filter) {
   try {
-    showLoader();
     const response = await axios.get(`${API_BASE_URL}/${filter}`);
-    hideLoader();
     return response.data;
   } catch (errors) {
-    hideLoader();
     console.error(errors);
   }
 }
@@ -57,12 +54,9 @@ async function getIndicatorsFromVufindApi(lookfor, type) {
     if (type) {
       URL = URL + `&type=${type}`;
     }
-    showLoader();
     const response = await axios.get(URL);
-    hideLoader();
     return response.data;
   } catch (errors) {
-    hideLoader();
     console.error(errors);
   }
 }
