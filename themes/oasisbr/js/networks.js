@@ -378,7 +378,6 @@ function fillIndicatorsSidebar(allNetworks) {
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     showLoader();
-    console.log('show loader');
     allNetworks = await getAllNetworks();
     // foi adiconado este timeout pq a função fillIndicatorsSidebar estava travando a exibição do loader.
     setTimeout(() => {
@@ -389,12 +388,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       watchingUpdateOnList();
       exportsCSV(allNetworks);
       collapseFilter();
-      console.log('hide loader');
       hideLoader();
     }, 1);
   } catch (error) {
-    console.log(error);
-    console.log('hide loader');
+    console.error(error);
     hideLoader();
   }
 });

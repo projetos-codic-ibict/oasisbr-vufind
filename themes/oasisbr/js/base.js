@@ -5,18 +5,17 @@ let API_BASE_URL;
 let REMOTE_API_URL;
 
 let loader = '';
-let networksOl = '';
 
 function showLoader() {
   try {
     loader.style.display = 'block';
-    // networksOl ? (networksOl.style.display = 'none') : '';
+    console.log('show loader');
   } catch (error) {}
 }
 function hideLoader() {
   try {
     loader.style.display = 'none';
-    // networksOl ? (networksOl.style.display = 'block') : '';
+    console.log('hide loader');
   } catch (error) {}
 }
 
@@ -85,6 +84,6 @@ function setPlaceholderInputSearch(totalDocuments) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   getTotalOfDocuments();
-  loader = document.querySelector('.loader ');
-  networksOl = document.querySelector('.list ');
+  console.log('loader');
+  loader = document.querySelector('.loader');
 });
