@@ -10,13 +10,13 @@ let networksOl = '';
 function showLoader() {
   try {
     loader.style.display = 'block';
-    networksOl ? (networksOl.style.display = 'none') : '';
+    // networksOl ? (networksOl.style.display = 'none') : '';
   } catch (error) {}
 }
 function hideLoader() {
   try {
     loader.style.display = 'none';
-    networksOl ? (networksOl.style.display = 'block') : '';
+    // networksOl ? (networksOl.style.display = 'block') : '';
   } catch (error) {}
 }
 
