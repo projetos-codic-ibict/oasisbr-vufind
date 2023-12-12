@@ -252,7 +252,6 @@ function filterNetworks(filter, filterType) {
       }
     });
   }
-
   // foi adiconado este timeout pq a função fillIndicatorsSidebar estava travando a exibição do loader.
   setTimeout(() => {
     fillIndicatorsSidebar(allNetworks);
@@ -380,16 +379,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     showLoader();
     allNetworks = await getAllNetworks();
-    fillIndicatorsSidebar(allNetworks);
-    showTotal(allNetworks.length);
-    fillDatanetworks(allNetworks);
-    sortDatanetworks();
-    watchingUpdateOnList();
-    // listenerListAllNetworks();
-    exportsCSV(allNetworks);
-    // activeSelectedItem();
-    collapseFilter();
-  } finally {
+    // foi adiconado este timeout pq a função fillIndicatorsSidebar estava travando a exibição do loader.
+    setTimeout(() => {
+      fillIndicatorsSidebar(allNetworks);
+      showTotal(allNetworks.length);
+      fillDatanetworks(allNetworks);
+      sortDatanetworks();
+      watchingUpdateOnList();
+      exportsCSV(allNetworks);
+      collapseFilter();
+      hideLoader();
+    }, 1);
+  } catch (error) {
+    console.log(error);
     hideLoader();
   }
 });
