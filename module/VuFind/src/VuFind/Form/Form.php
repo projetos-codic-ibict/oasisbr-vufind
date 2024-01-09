@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configurable form.
  *
@@ -25,6 +26,7 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org/wiki/development:plugins:controllers Wiki
  */
+
 namespace VuFind\Form;
 
 use Laminas\InputFilter\InputFilter;
@@ -112,7 +114,8 @@ class Form extends \Laminas\Form\Form implements
      * @throws \Exception
      */
     public function __construct(
-        YamlReader $yamlReader, HelperPluginManager $viewHelperManager,
+        YamlReader $yamlReader,
+        HelperPluginManager $viewHelperManager,
         array $defaultConfig = null
     ) {
         parent::__construct();
@@ -214,8 +217,8 @@ class Form extends \Laminas\Form\Form implements
     protected function parseConfig($formId, $config, $params)
     {
         $formConfig = [
-           'id' => $formId,
-           'title' => !empty($config['name']) ?: $formId
+            'id' => $formId,
+            'title' => !empty($config['name']) ?: $formId
         ];
 
         foreach ($this->getFormSettingFields() as $key) {
@@ -256,8 +259,7 @@ class Form extends \Laminas\Form\Form implements
 
             $required = ['type', 'name'];
             $optional = $this->getFormElementSettingFields();
-            foreach (array_merge($required, $optional) as $field
-            ) {
+            foreach (array_merge($required, $optional) as $field) {
                 if (!isset($el[$field])) {
                     continue;
                 }
@@ -265,8 +267,9 @@ class Form extends \Laminas\Form\Form implements
                 $element[$field] = $value;
             }
 
-            if (in_array($element['type'], ['checkbox', 'radio'])
-                && ! isset($element['group'])
+            if (
+                in_array($element['type'], ['checkbox', 'radio'])
+                && !isset($element['group'])
             ) {
                 $element['group'] = $element['name'];
             }
@@ -340,7 +343,8 @@ class Form extends \Laminas\Form\Form implements
                 $element['settings'] = $settings;
             }
 
-            if (in_array($elementType, ['text', 'url', 'email'])
+            if (
+                in_array($elementType, ['text', 'url', 'email'])
                 && !isset($element['settings']['size'])
             ) {
                 $element['settings']['size'] = 50;
@@ -368,7 +372,7 @@ class Form extends \Laminas\Form\Form implements
             }
         }
 
-        $elements[]= [
+        $elements[] = [
             'type' => 'submit',
             'name' => 'submit',
             'label' => $this->translate('Send')
@@ -465,52 +469,52 @@ class Form extends \Laminas\Form\Form implements
         }
 
         switch ($type) {
-        case 'checkbox':
-            $options = [];
-            if (isset($el['options'])) {
-                $options = $el['options'];
-            }
-            $optionElements = [];
-            foreach ($options as $key => $val) {
-                $optionElements[] = [
-                    'label' => $val,
-                    'value' => $key,
-                    'attributes' => ['id' => $val]
-                ];
-            }
-            $conf['options'] = ['value_options' => $optionElements];
-            break;
-        case 'radio':
-            $options = [];
-            if (isset($el['options'])) {
-                $options = $el['options'];
-            }
-            $optionElements = [];
-            $first = true;
-            foreach ($options as $key => $val) {
-                $optionElements[] = [
-                    'label' => $val,
-                    'value' => $key,
-                    'label_attributes' => ['for' => $val],
-                    'attributes' => ['id' => $val],
-                    'selected' => $first
-                ];
-                $first = false;
-            }
-            $conf['options'] = ['value_options' => $optionElements];
-            break;
-        case 'select':
-            if (isset($el['options'])) {
-                $conf['options'] = ['value_options' => $el['options']];
-            } elseif (isset($el['optionGroups'])) {
-                $conf['options'] = ['value_options' => $el['optionGroups']];
-            }
-            break;
-        case 'submit':
-            $attributes['value'] = $el['label'];
-            $attributes['class'][] = 'btn';
-            $attributes['class'][] = 'btn-primary';
-            break;
+            case 'checkbox':
+                $options = [];
+                if (isset($el['options'])) {
+                    $options = $el['options'];
+                }
+                $optionElements = [];
+                foreach ($options as $key => $val) {
+                    $optionElements[] = [
+                        'label' => $val,
+                        'value' => $key,
+                        'attributes' => ['id' => $val]
+                    ];
+                }
+                $conf['options'] = ['value_options' => $optionElements];
+                break;
+            case 'radio':
+                $options = [];
+                if (isset($el['options'])) {
+                    $options = $el['options'];
+                }
+                $optionElements = [];
+                $first = true;
+                foreach ($options as $key => $val) {
+                    $optionElements[] = [
+                        'label' => $val,
+                        'value' => $key,
+                        'label_attributes' => ['for' => $val],
+                        'attributes' => ['id' => $val],
+                        'selected' => $first
+                    ];
+                    $first = false;
+                }
+                $conf['options'] = ['value_options' => $optionElements];
+                break;
+            case 'select':
+                if (isset($el['options'])) {
+                    $conf['options'] = ['value_options' => $el['options']];
+                } elseif (isset($el['optionGroups'])) {
+                    $conf['options'] = ['value_options' => $el['optionGroups']];
+                }
+                break;
+            case 'submit':
+                $attributes['value'] = $el['label'];
+                $attributes['class'][] = 'btn';
+                $attributes['class'][] = 'btn-primary';
+                break;
         }
 
         $attributes['class'] = trim(implode(' ', $attributes['class']));
@@ -658,15 +662,11 @@ class Form extends \Laminas\Form\Form implements
             $subject = $this->defaultFormConfig['email_subject'];
         }
 
-        $translated = [];
-        foreach ($postParams as $key => $val) {
-            $translatedVals = array_map([$this, 'translate'], (array)$val);
-            $translated["%%{$key}%%"] = implode(', ', $translatedVals);
-        }
 
-        return str_replace(
-            array_keys($translated), array_values($translated), $subject
-        );
+        $formSubject =  $postParams['subject'] ?? $subject;
+        $formName =  $postParams['name'] ?? '';
+
+        return $formSubject . ' - ' . $formName;
     }
 
     /**
@@ -776,14 +776,12 @@ class Form extends \Laminas\Form\Form implements
                         'options' => [
                             'callback' => function ($value, $context) use ($el) {
                                 return
-                                    !empty(
-                                        array_intersect(
-                                            array_keys($el['options']),
-                                            $value
-                                        )
-                                    );
+                                    !empty(array_intersect(
+                                        array_keys($el['options']),
+                                        $value
+                                    ));
                             }
-                         ]
+                        ]
                     ];
                 } elseif ($required) {
                     $fieldValidators[] = [
