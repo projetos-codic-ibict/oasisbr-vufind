@@ -26,7 +26,9 @@ body {
   max-width: 200px;
   margin: 0 auto;
 }
-
+.form-control{
+  font-size: 1rem;
+}
 .page-title-bar {
   background-color: #f0f0f0;
   padding: 1rem 0;
@@ -855,7 +857,7 @@ a.link-simple {
 
 .btn,
 .search-filter-toggle {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .active-filters .filters .filter-value {
