@@ -21,6 +21,10 @@ body {
   padding: 0 32px;
 }
 
+a.btn{
+  text-decoration: none;
+}
+
 /* Logo Finep */
 .finep {
   max-width: 200px;
