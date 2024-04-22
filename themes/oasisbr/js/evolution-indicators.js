@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return new Date(year, month, 0).getDate();
   }
 
-  vega.expressionFunction('formatGetInitials', function (datum, params) {
+  vega.expressionFunction('formatGetInitials',  (datum, params) => {
     return sourceTypeNamesAndAbbreviationMap.get(datum);
   });
 
