@@ -46,9 +46,18 @@ if ($this->params->getOptions()->getListViewOption() !== 'full') {
 <div class="<?= $this->layoutClass('mainbody') ?>">
   <?php if (($recordTotal = $this->results->getResultTotal()) > 0) : // only display these at very top if we have results 
   ?>
-    <a style="float: right; margin-top: -40px; margin-right: 16px;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>" data-lightbox>
-      <i class="fa fa-file-excel-o" aria-hidden="true"></i> <?= $this->transEsc('Export CSV') ?>
-    </a>
+    <div class="dropdown" style="float: right; margin-top: -40px; margin-right: 16px; max-width: fit-content;">
+    <button class="dropdown-toggle" style="border: solid 3px #12538B; color:#12538B; border-radius: 4px; width: 158px;" type="button" data-toggle="dropdown">Exportação
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li> <a style="text-decoration: none;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>?type=ris" data-lightbox>
+      <i class="fa fa-file-excel-o" aria-hidden="true"></i> <?= $this->transEsc('Exportar RIS') ?>
+    </a></li>
+      <li><a style="text-decoration: none;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>" data-lightbox>
+      <i class="fa fa-file-excel-o" aria-hidden="true"></i> <?= $this->transEsc('Exportar CSV') ?>
+    </a></li>
+    </ul>
+  </div>
     <?php foreach ($this->results->getRecommendations('top') as $index => $current) : ?>
       <?= $this->recommend($current, 'top', $index) ?>
     <?php endforeach; ?>
@@ -107,6 +116,7 @@ if ($this->params->getOptions()->getListViewOption() !== 'full') {
     <!-- <?= $this->context($this)->renderInContext('search/controls/results-tools.phtml', ['results' => $this->results]) ?> -->
     <?php /* New link for CSV export */ ?>
     <a href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>" data-lightbox><i class="fa fa-external-link" aria-hidden="true"></i> <?= $this->transEsc('Export CSV') ?></a>
+    <a href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>?type=ris" data-lightbox><i class="fa fa-external-link" aria-hidden="true"></i> <?= $this->transEsc('Export RIS') ?></a>
     <?php /* End new link */ ?>
   <?php endif; ?>
 </div>
