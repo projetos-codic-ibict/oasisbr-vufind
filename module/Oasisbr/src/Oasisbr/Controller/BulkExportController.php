@@ -121,19 +121,25 @@ class BulkExportController extends \VuFind\Controller\AbstractBase
 			$paramString = $this->getParamString();
 			$paramString .= '&fl=' . implode(',', $fullFieldList);
 			$paramString .= '&encoding=' . $encoding;
+			
 
 			// Checks whether an export file generated from this query already exists
-			$fileExists = $this->callExportService($auxServUrl, $paramString, null, null, null, null);
-
+			
 			$maxTotal = $exportConfig->Query->maxDownload;
+			$paramStringType = $this->params()->fromQuery('total');
+			//$formato = $this->params()->fromQuery('type');
+			$paramString .= '&paramStringType='. $paramStringType;
+			$fileExists = $this->callExportService($auxServUrl, $paramString, null, null, null, null);
 			$queryLimit = $exportConfig->Query->rows;
-			$totalRecords = $this->params()->fromQuery('total');
+			//$totalRecords = $totalRecordsl < $queryLimit ? $totalRecordsl : $queryLimit;
+			$totalRecordsArray = explode('?', $paramStringType);
+			$totalRecordsString = $totalRecordsArray[0];
+			$totalRecords = intval($totalRecordsString);
 			$totalRecords = $totalRecords < $queryLimit ? $totalRecords : $queryLimit;
 
 			if (($totalRecords <= $maxTotal) or ($fileExists == 'true')) {
 				// Immediate file download
 				$response = $this->callExportService($serviceUrl, $paramString, $totalRecords, $hasAbstract, $encoding, $email);
-
 				// After export file is ready, show download window
 				$downloadUrl = $serverUrlHelper($urlHelper('bulkexport-download')) . '?url=' . $response;
 				$params = ['exportType' => 'link', 'url' => $downloadUrl, 'file' => $response];
@@ -218,6 +224,10 @@ class BulkExportController extends \VuFind\Controller\AbstractBase
 		//Build query params string
 		$builder = $this->getQueryBuilder();
 		$params->mergeWith($builder->build($query));
+
+		/*$type = $this->params()->fromQuery('type');
+		$params['type'] = $type;*/
+
 		$paramString = implode('&', $params->request());
 
 		return $paramString;

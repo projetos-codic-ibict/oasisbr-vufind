@@ -8,7 +8,6 @@ class ExecuteBulkExport
 	protected $totalRecords;
 	protected $hasAbstract;
 	protected $encoding;
-	//protected $type;
 	
 	public function __construct ($params)
 	{
@@ -20,7 +19,6 @@ class ExecuteBulkExport
 		$this->totalRecords = intval($paramsArray[3]);
 		$this->hasAbstract = filter_var($paramsArray[4], FILTER_VALIDATE_BOOLEAN);
 		$this->encoding = $paramsArray[5];
-		$this->type =  $paramsArray[6];
 	}
 	
 	public function execute()
@@ -31,8 +29,7 @@ class ExecuteBulkExport
 				   'totalRecords' => $this->totalRecords,
 				   'hasAbstract' => $this->hasAbstract,
 				   'encoding' => $this->encoding, 
-				   'userEmail' => $this->email,
-				   'type' => 'ris'];
+				   'userEmail' => $this->email];
 		$options = [
 			'http' => [
 				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
