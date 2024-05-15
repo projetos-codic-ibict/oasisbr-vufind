@@ -47,7 +47,7 @@ if ($this->params->getOptions()->getListViewOption() !== 'full') {
   <?php if (($recordTotal = $this->results->getResultTotal()) > 0) : // only display these at very top if we have results 
   ?>
     <div class="dropdown" style="float: right; margin-top: -40px; margin-right: 16px; max-width: fit-content;">
-    <button class="dropdown-toggle" style="border: solid 3px #12538B; color:#12538B; border-radius: 4px; width: 158px;" type="button" data-toggle="dropdown">Exportação
+    <button class="dropdown-toggle" style="border: solid 1px #12538B; color:#12538B; border-radius: 4px; width: 158px;" type="button" data-toggle="dropdown">Exportação
     <span class="caret"></span></button>
     <ul class="dropdown-menu">
       <li> <a style="text-decoration: none;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>?type=ris" data-lightbox>
