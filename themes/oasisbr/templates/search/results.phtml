@@ -50,7 +50,7 @@ if ($this->params->getOptions()->getListViewOption() !== 'full') {
     <button class="dropdown-toggle" style="border: solid 1px #12538B; color:#12538B; border-radius: 4px; width: 158px;" type="button" data-toggle="dropdown">Exportação
     <span class="caret"></span></button>
     <ul class="dropdown-menu">
-      <li> <a style="text-decoration: none;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>?type=ris" data-lightbox>
+      <li> <a style="text-decoration: none;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal . '?type=ris' ?>" data-lightbox>
       <i class="fa fa-file-excel-o" aria-hidden="true"></i> <?= $this->transEsc('Exportar RIS') ?>
     </a></li>
       <li><a style="text-decoration: none;" href="<?= $this->url('bulkexport-home') . '?total=' . $recordTotal ?>" data-lightbox>
