@@ -52,6 +52,58 @@ a.btn{
   border-color: #eee;
 }
 
+.facet-group [data-toggle="collapse"]::after {
+  font-family: FontAwesome;
+  content: "\f106";
+}
+
+.facet-group .collapsed::after {
+  font-family: FontAwesome;
+  content: "\f107";
+}
+
+.export{
+  float: right; 
+  margin-top: -43px; 
+  margin-right: 16px; 
+  max-width: fit-content;
+}
+
+.export button{
+  border: solid 1px #12538B; color:#12538B; border-radius: 4px; width: 158px;
+  padding: 4px 0;
+}
+
+.export button::after {
+  font-family: FontAwesome;
+  content: "\f107";
+}
+
+.export.open button::after {
+font-family: FontAwesome;
+content: "\f106";
+}
+
+.export ul{
+  max-width: 100px;
+}
+
+
+.export ul li{
+  padding: 4px 0;
+}
+
+.export li a{
+  text-align: left;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.export ul li:first-child {
+  border-bottom: 1px solid #ccc;
+}
+
 .facet-group .title {
   background-color: #76B865;
   color: #fff;
