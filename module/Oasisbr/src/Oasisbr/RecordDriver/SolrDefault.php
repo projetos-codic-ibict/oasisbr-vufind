@@ -134,7 +134,8 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
    */
   public function getSource()
   {
-    return $this->fields['reponame_str'];
+    // Add essa verificação pq estava dando erro para exibir itens removidos do solr (esses itens vem da api de persistência de ids)
+    return isset($this->fields['reponame_str']) ? $this->fields['reponame_str'] : '';
   }
 
   /**
