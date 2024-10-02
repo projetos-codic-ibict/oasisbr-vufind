@@ -183,7 +183,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'link-source.phtml'
         );
 
-        $spec->setTemplateLine('dARK ID', 'getDarkID', 'dark-id.phtml');
+        // $spec->setTemplateLine('dARK ID', 'getDarkID', 'dark-id.phtml');
 
         $spec->setTemplateLine(
             'Program',
