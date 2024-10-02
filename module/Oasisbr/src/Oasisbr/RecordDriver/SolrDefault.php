@@ -139,6 +139,17 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
   }
 
   /**
+   * Get the item's dark id.
+   *
+   * @return string
+   */
+  public function getDarkID()
+  {
+    // Add essa verificação pq estava dando erro para exibir itens removidos do solr (esses itens vem da api de persistência de ids)
+    return isset($this->fields['dc.identifier.dark.fl_str_mv']) ? $this->fields['dc.identifier.dark.fl_str_mv'][0] : '';
+  }
+
+  /**
    * Referee
    */
   public function getRefereeAuthors()

@@ -183,6 +183,8 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'link-source.phtml'
         );
 
+        $spec->setTemplateLine('dARK ID', 'getDarkID', 'dark-id.phtml');
+
         $spec->setTemplateLine(
             'Program',
             'getProgramPublishers',
@@ -235,6 +237,7 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             ['allowZero' => false]
         );
         $spec->setTemplateLine('Download full', true, 'data-onlineAccess.phtml');
+
 
         $spec->setTemplateLine(
             'Related Items',
