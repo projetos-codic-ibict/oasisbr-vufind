@@ -10,13 +10,13 @@ function showLoader() {
   try {
     loader.style.display = 'block';
     console.log('show loader');
-  } catch (error) {}
+  } catch (error) { }
 }
 function hideLoader() {
   try {
     loader.style.display = 'none';
     console.log('hide loader');
-  } catch (error) {}
+  } catch (error) { }
 }
 
 function showMessageError(element) {
@@ -28,7 +28,7 @@ function showMessageError(element) {
   }
 }
 
-if (window.location.hostname === 'oasisbr.ibict.br') {
+if (window.location.hostname === 'oasisbr.ibict.br' || window.location.hostname === 'oasisbrhm.ibict.br') {
   API_BASE_URL = `https://${window.location.host}/vufind/api/v1`;
   REMOTE_API_URL = `https://api-${window.location.host}/api/v1`;
 } else {
