@@ -66,6 +66,11 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'Publication Date',
             'getPublicationDates'
         );
+        // $spec->setLine(
+        //     'Publication Date',
+        //     'getUniqueID'
+        // );
+
 
 
 
@@ -244,8 +249,10 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
             'getAllRecordLinks',
             'data-allRecordLinks.phtml'
         );
+
         // $spec->setTemplateLine('Tags', true, 'data-tags.phtml');
         return $spec->getArray();
+        
     }
 
     /**

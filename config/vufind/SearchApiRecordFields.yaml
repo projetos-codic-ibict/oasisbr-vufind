@@ -19,7 +19,7 @@ authors:
     authors
   type: array
   items:
-    $ref: '#/definitions/Authors'
+    $ref: "#/definitions/Authors"
 awards:
   vufind.method: getAwards
   description: Award notes
@@ -290,7 +290,7 @@ recordLinks:
   description: Links to other related records
   type: array
   items:
-    $ref: '#/definitions/RecordLink'
+    $ref: "#/definitions/RecordLink"
 recordPage:
   vufind.method: "Formatter::getRecordPage"
   description: Link to the record page in the UI
@@ -333,7 +333,7 @@ subjectsExtended:
   description: Subject headings with type and source information
   type: array
   items:
-    $ref: '#/definitions/Subject'
+    $ref: "#/definitions/Subject"
 subTitle:
   vufind.method: getSubTitle
   description: Subtitle
@@ -381,4 +381,144 @@ urls:
   description: URLs contained in the record
   type: array
   items:
-    $ref: '#/definitions/Url'
+    $ref: "#/definitions/Url"
+oai_identifier_st:
+  vufind.method: getOai_identifier_st
+  description: Identificador único no padrão OAI-PMH
+  type: string
+network_acronym_str:
+  vufind.method: getNetwork_acronym_str
+  description: Acrônimo da rede
+  type: string
+network_name_str:
+  vufind.method: getNetwork_name_str
+  description: Nome completo da rede
+  type: string
+repository_id_str:
+  vufind.method: getRepository_id_str
+  description: Identificador único do repositório
+  type: string
+spelling:
+  vufind.method: getSpelling
+  description: Dados de indexação para busca textual
+  type: array
+  items:
+    type: string
+dc.title.none.fl_str_mv:
+  vufind.method: getTitle_none
+  description: Títulos alternativos do item
+  type: array
+  items:
+    type: string
+spellingShingle:
+  vufind.method: getSpellingShingle
+  description: Dados para busca incremental
+  type: array
+  items:
+    type: string
+title_short:
+  vufind.method: getTitle_short
+  description: Título abreviado do item
+  type: string
+title_full:
+  vufind.method: getTitle_full
+  description: Título completo do item
+  type: string
+title_fullStr:
+  vufind.method: getTitle_fullStr
+  description: Título completo no formato string
+  type: string
+title_full_unstemmed:
+  vufind.method: getTitle_full_unstemmed
+  description: Título completo sem processamento de stemming
+  type: string
+author_facet:
+  vufind.method: getAuthor_facet
+  description: Autores destacados para agrupamento
+  type: array
+  items:
+    type: string
+author_role:
+  vufind.method: getAuthor_role
+  description: Papel dos autores no documento
+  type: array
+  items:
+    type: string
+author2_role:
+  vufind.method: getAuthor2_role
+  description: Papel de coautores ou colaboradores
+  type: array
+  items:
+    type: string
+dc.contributor.none.fl_str_mv:
+  vufind.method: getDc.contributor.none.fl_str_mv
+  description: Contribuidores do item
+  type: array
+  items:
+    type: string
+dc.contributor.author.fl_str_mv:
+  vufind.method: getDc.contributor.author.fl_str_mv
+  description: Autores principais do item
+  type: array
+  items:
+    type: string
+dc.subject.none.fl_str_mv:
+  vufind.method: getDc.subject.none.fl_str_mv
+  description: Assuntos principais do item
+  type: string
+dc.description.none.fl_txt_mv:
+  vufind.method: getDc.description.none.fl_txt_mv
+  description: Descrição ou resumo do item
+  type: string
+dc.date.none.fl_str_mv:
+  vufind.method: getDc.date.none.fl_str_mv
+  description: Datas relacionadas ao item
+  type: array
+  items:
+    type: string
+dc.type.none.fl_str_mv:
+  vufind.method: getDc.type.none.fl_str_mv
+  description: Tipos gerais do documento
+  type: array
+  items:
+    type: string
+dc.type.driver.fl_str_mv:
+  vufind.method: getDc.type.driver.fl_str_mv
+  description: Tipos específicos do driver
+  type: array
+  items:
+    type: string
+format:
+  vufind.method: getFormat
+  description: Formato do documento
+  type: array
+  items:
+    type: string
+status_str:
+  vufind.method: getStatus_str
+  description: Status do item
+  type: string
+dc.identifier.uri.fl_str_mv:
+  vufind.method: getDc.identifier.uri.fl_str_mv
+  description: URIs associadas ao item
+  type: array
+  items:
+    type: string
+identifier_str_mv:
+  vufind.method: getIdentifier_str_mv
+  description: Identificadores adicionais do item
+  type: array
+  items:
+    type: string
+dc.language.iso.fl_str_mv:
+  vufind.method: getDc.language.iso.fl_str_mv
+  description: Idiomas do item
+  type: array
+  items:
+    type: string
+dc.relation.none.fl_str_mv:
+  vufind.method: getDc.relation.none.fl_str_mv
+  description: Relações com outros itens
+  type: array
+  items: 
+    type: string
