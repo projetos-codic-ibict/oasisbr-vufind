@@ -71,6 +71,9 @@ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataForm
         //     'getUniqueID'
         // );
 
+        $spec->setLine("Identificador", "getOai_identifier_st");
+        $spec->setLine("Acrônimo da rede", "getNetwork_acronym_str");
+        $spec->setLine("Nome completo da rede", "getNetwork_name_str");
 
 
 

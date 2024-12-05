@@ -326,9 +326,18 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
   {
     return $this->getFieldValue("repository_id_str");
   }
-  // public function getUniqueID()
-  // {
-  //   return $this->getFieldValue("id");
-  // }
+
+  // adicionando novos métodos 
+
+  public function getOai_identifier_st(){
+    return $this->getFieldValue("oai_identifier_st");
+  }
+  public function  getNetwork_acronym_str(){
+    return $this->getFieldValue("network_acronym_str");
+  }
+  public function  getNetwork_name_str(){
+    return $this->getFieldValue("network_name_str");
+  }
+  
 }
 

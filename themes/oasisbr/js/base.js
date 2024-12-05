@@ -1,10 +1,5 @@
-const INDICATORS_FACETS =
-  'search?type=AllFields&page=0&limit=0&sort=relevance&facet[]=author_facet&facet[]=dc.subject.por.fl_str_mv&facet[]=eu_rights_str_mv&facet[]=dc.publisher.program.fl_str_mv&facet[]=dc.subject.cnpq.fl_str_mv&facet[]=publishDate&facet[]=language&facet[]=format&facet[]=institution&facet[]=dc.contributor.advisor1.fl_str_mv&facet[]=oai_identifier_st&facet[]=network_acronym_str&facet[]=network_name_str&facet[]=repository_id_str&facet[]=spelling&facet[]=dc.title.none.fl_str_mv&facet[]=spellingShingle&facet[]=title_short&facet[]=title_full&facet[]=title_fullStr&facet[]=title_full_unstemmed&facet[]=author_facet&facet[]=author_role&facet[]=author2_role&facet[]=dc.contributor.none.fl_str_mv&facet[]=dc.contributor.author.fl_str_mv&facet[]=dc.subject.none.fl_str_mv&facet[]=dc.description.none.fl_txt_mv&facet[]=dc.date.none.fl_str_mv&facet[]=dc.type.none.fl_str_mv&facet[]=dc.type.driver.fl_str_mv&facet[]=format&facet[]=status_str&facet[]=dc.identifier.uri.fl_str_mv&facet[]=identifier_str_mv&facet[]=dc.language.iso.fl_str_mv&facet[]=dc.relation.none.fl_str_mv&facet[]=dc.rights.driver.fl_str_mv&facet[]=rights_invalid_str_mv&facet[]=eu_rights_str_mv&facet[]=dc.format.none.fl_str_mv&facet[]=dc.publisher.none.fl_str_mv&facet[]=publisher.none.fl_str_mv&facet[]=dc.source.none.fl_str_mv&facet[]=reponame_str&facet[]=collection&facet[]=instname_str&facet[]=instacron_str&facet[]=institution&facet[]=repository.name.fl_str_mv&facet[]=repository.mail.fl_str_mv&facet[]=version';
-
-
-
-  // const INDICATORS_FACETS =
-  // 'search?type=AllFields&page=0&limit=0&sort=relevance&facet[]=author_facet&facet[]=dc.subject.por.fl_str_mv&facet[]=eu_rights_str_mv&facet[]=dc.publisher.program.fl_str_mv&facet[]=dc.subject.cnpq.fl_str_mv&facet[]=publishDate&facet[]=language&facet[]=format&facet[]=institution&facet[]=dc.contributor.advisor1.fl_str_mv';
+  const INDICATORS_FACETS =
+  'search?type=AllFields&page=0&limit=0&sort=relevance&facet[]=author_facet&facet[]=dc.subject.por.fl_str_mv&facet[]=eu_rights_str_mv&facet[]=dc.publisher.program.fl_str_mv&facet[]=dc.subject.cnpq.fl_str_mv&facet[]=publishDate&facet[]=language&facet[]=format&facet[]=institution&facet[]=dc.contributor.advisor1.fl_str_mv';
   
 
 let API_BASE_URL;
