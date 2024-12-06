@@ -326,4 +326,46 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
   {
     return $this->getFieldValue("repository_id_str");
   }
+
+  // Campos adicionados para export na API para CAPES
+  public function getNetworkName()
+  {
+    return $this->getFieldValue("network_name_str");
+  }
+  public function getNetworkAcronym()
+  {
+    return $this->getFieldValue("network_acronym_str");
+  }
+  public function getDescription()
+  {
+    return $this->getFieldValue("description");
+  }
+  public function getPublishDate()
+  {
+    return $this->getFieldValue("publishDate");
+  }
+  public function getTopic()
+  {
+    return $this->getFieldValue("topic");
+  }
+  public function getInstitution()
+  {
+    return $this->getFieldValue("institution");
+  }
+  public function getInstName()
+  {
+    return $this->getFieldValue("instname_str");
+  }
+  public function getPublisherProgram()
+  {
+    return $this->getFieldValue("dc.publisher.program.fl_str_mv");
+  }
+  public function getAdvisor()
+  {
+    return $this->getFieldValue("dc.contributor.advisor1.fl_str_mv");
+  }
+  public function getRights()
+  {
+    return $this->getFieldValue("eu_rights_str_mv");
+  }
 }

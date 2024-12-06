@@ -19,7 +19,7 @@ authors:
     authors
   type: array
   items:
-    $ref: '#/definitions/Authors'
+    $ref: "#/definitions/Authors"
 awards:
   vufind.method: getAwards
   description: Award notes
@@ -290,7 +290,7 @@ recordLinks:
   description: Links to other related records
   type: array
   items:
-    $ref: '#/definitions/RecordLink'
+    $ref: "#/definitions/RecordLink"
 recordPage:
   vufind.method: "Formatter::getRecordPage"
   description: Link to the record page in the UI
@@ -333,7 +333,7 @@ subjectsExtended:
   description: Subject headings with type and source information
   type: array
   items:
-    $ref: '#/definitions/Subject'
+    $ref: "#/definitions/Subject"
 subTitle:
   vufind.method: getSubTitle
   description: Subtitle
@@ -381,4 +381,57 @@ urls:
   description: URLs contained in the record
   type: array
   items:
-    $ref: '#/definitions/Url'
+    $ref: "#/definitions/Url"
+oai_identifier_st:
+  vufind.method: getIdentifierOAI
+  vufind.default: true
+  description: OAI-PMH identifier
+  type: string
+network_acronym_str:
+  vufind.method: getNetworkAcronym
+  description: Source acronym
+  type: string
+network_name_str:
+  vufind.method: getNetworkName
+  description: Source name
+  type: string
+description:
+  vufind.method: getDescription
+  description: Summary/Description
+  type: string
+publishDate:
+  vufind.method: getPublishDate
+  description: Publication year
+  type: integer
+topic:
+  vufind.method: getTopic
+  description: Keywords
+  type: array
+  items:
+    type: string
+institution:
+  vufind.method: getInstitution
+  description: Institution acronym
+  type: string
+instname_str:
+  vufind.method: getInstName
+  description: Institution name
+  type: string
+dc.publisher.program.fl_str_mv:
+  vufind.method: getPublisherProgram
+  description: Publisher program
+  type: string
+dc.contributor.advisor1.fl_str_mv:
+  vufind.method: getAdvisor
+  description: Advisor
+  type: string
+dc.subject.cnpq.fl_str_mv:
+  vufind.method: getCNPQSubjects
+  description: CNPQ subject
+  type: array
+  items:
+    type: string
+eu_rights_str_mv:
+  vufind.method: getRights
+  description: Access type
+  type: string
