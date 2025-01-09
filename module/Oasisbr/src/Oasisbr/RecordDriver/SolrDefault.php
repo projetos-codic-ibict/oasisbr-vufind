@@ -368,4 +368,52 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
   {
     return $this->getFieldValue("eu_rights_str_mv");
   }
+  public function getAuthorLattes()
+  {
+    return $this->getFieldValue("dc.contributor.authorLattes.none.fl_str_mv");
+  }
+  public function getAdvisorLattes()
+  {
+    return $this->getFieldValue("dc.contributor.advisorLattes.none.fl_str_mv");
+  }
+  public function getReferees1()
+  {
+    return $this->getFieldValue("dc.contributor.referees1.none.fl_str_mv");
+  }
+  public function getReferees1Lattes()
+  {
+    return $this->getFieldValue("dc.contributor.referees1Lattes.none.fl_str_mv");
+  }
+  public function getReferees2()
+  {
+    return $this->getFieldValue("dc.contributor.referees2.none.fl_str_mv");
+  }
+  public function getReferees2Lattes()
+  {
+    return $this->getFieldValue("dc.contributor.referees2Lattes.none.fl_str_mv");
+  }
+  public function getReferees3()
+  {
+    return $this->getFieldValue("dc.contributor.referees3.none.fl_str_mv");
+  }
+  public function getReferees3Lattes()
+  {
+    return $this->getFieldValue("dc.contributor.referees3Lattes.none.fl_str_mv");
+  }
+  public function getReferees4()
+  {
+    return $this->getFieldValue("dc.contributor.referees4.none.fl_str_mv");
+  }
+  public function getReferees4Lattes()
+  {
+    return $this->getFieldValue("dc.contributor.referees4Lattes.none.fl_str_mv");
+  }
+  public function getReferees5()
+  {
+    return $this->getFieldValue("dc.contributor.referees5.none.fl_str_mv");
+  }
+  public function getReferees5Lattes()
+  {
+    return $this->getFieldValue("dc.contributor.referees5Lattes.none.fl_str_mv");
+  }
 }
