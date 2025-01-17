@@ -416,4 +416,12 @@ class SolrDefault extends \VuFind\RecordDriver\SolrDefault
   {
     return $this->getFieldValue("dc.contributor.referees5Lattes.none.fl_str_mv");
   }
+  public function getISSN()
+  {
+    return $this->getFieldValue("dc.identifier.issn.none.fl_str_mv");
+  }
+  public function getDOI()
+  {
+    return $this->getFieldValue("dc.identifier.doi.none.fl_str_mv");
+  }
 }

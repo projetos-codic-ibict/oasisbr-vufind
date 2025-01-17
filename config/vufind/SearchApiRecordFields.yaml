@@ -483,3 +483,11 @@ dc.contributor.referees5Lattes:
   vufind.method: getReferees5Lattes
   description: Referees 5 Lattes
   type: string
+dc.identifier.issn:
+  vufind.method: getISSN
+  description: ISSN
+  type: string
+dc.identifier.doi:
+  vufind.method: getDOI
+  description: DOI
+  type: string
