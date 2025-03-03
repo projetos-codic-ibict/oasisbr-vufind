@@ -17,3 +17,5 @@ Disallow: /vufind/EdsRecord/
 Disallow: /vufind/Search/Results/
 Disallow: /vufind/Summon/
 Disallow: /vufind/SummonRecord/
+User-agent: PetalBot
+Disallow: /
