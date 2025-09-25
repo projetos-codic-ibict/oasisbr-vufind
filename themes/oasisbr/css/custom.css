@@ -21,7 +21,7 @@ body {
   padding: 0 32px;
 }
 
-a.btn{
+a.btn {
   text-decoration: none;
 }
 
@@ -30,9 +30,11 @@ a.btn{
   max-width: 200px;
   margin: 0 auto;
 }
-.form-control{
+
+.form-control {
   font-size: 1rem;
 }
+
 .page-title-bar {
   background-color: #f0f0f0;
   padding: 1rem 0;
@@ -62,15 +64,18 @@ a.btn{
   content: "\f107";
 }
 
-.export{
-  float: right; 
-  margin-top: -43px; 
-  margin-right: 16px; 
+.export {
+  float: right;
+  margin-top: -43px;
+  margin-right: 16px;
   max-width: fit-content;
 }
 
-.export button{
-  border: solid 1px #12538B; color:#12538B; border-radius: 4px; width: 158px;
+.export button {
+  border: solid 1px #12538B;
+  color: #12538B;
+  border-radius: 4px;
+  width: 158px;
   padding: 4px 0;
 }
 
@@ -80,20 +85,20 @@ a.btn{
 }
 
 .export.open button::after {
-font-family: FontAwesome;
-content: "\f106";
+  font-family: FontAwesome;
+  content: "\f106";
 }
 
-.export ul{
+.export ul {
   max-width: 100px;
 }
 
 
-.export ul li{
+.export ul li {
   padding: 4px 0;
 }
 
-.export li a{
+.export li a {
   text-align: left;
   display: flex;
   gap: 8px;
@@ -126,7 +131,8 @@ header.hidden-print {
 }
 
 .logo-img {
-  max-height: 50px;
+  /* max-height: 50px; */
+  max-width: 60%;
   margin-top: 5px;
 }
 
@@ -375,6 +381,14 @@ footer p {
 .section-partners-icons .img-responsive-width {
   max-width: 100px;
   max-height: 50px;
+}
+
+.image-footer {
+  max-width: 75%;
+  display: block;
+}
+.small-image {
+  display: none;
 }
 
 figure {
@@ -885,6 +899,17 @@ a.link-simple {
   .icon-gov-links:first-child {
     border-top: none;
   }
+
+  .image-footer {
+    display: none;
+  }
+
+  .small-image {
+    display: block;
+    max-width: 95%;
+  }
+
+
 }
 
 .indicators label {
