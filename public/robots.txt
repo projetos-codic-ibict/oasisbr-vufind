@@ -18,8 +18,21 @@ Disallow: /vufind/Search/Results/
 Disallow: /vufind/Summon/
 Disallow: /vufind/SummonRecord/
 
-User-agent: PetalBot
-Disallow: /
-
+# Block major AI and Scraper Bots
 User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: Google-Extended
+User-agent: CCBot
+User-agent: PerplexityBot
+User-agent: YouBot
+User-agent: Omgilibot
+User-agent: Omgili
+User-agent: FacebookBot
+User-agent: Diffbot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: Anthropic-AI
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: PetalBot
 Disallow: /
