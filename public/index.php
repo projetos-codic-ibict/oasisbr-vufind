@@ -71,6 +71,7 @@ if (!isset($_COOKIE[$cookieName]) && !$isAllowed) {
 
 // 3. Se chegou aqui, o acesso é legítimo. Carrega o VuFind.
 // (O restante do código original do index.php continua abaixo)
+
 // If the profiler is enabled, set it up now:
 $vufindProfiler = getenv('VUFIND_PROFILER_XHPROF');
 if (!empty($vufindProfiler)) {
