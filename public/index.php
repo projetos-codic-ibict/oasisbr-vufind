@@ -2,18 +2,21 @@
 
 /**
  * ANTIBOT JS CHALLENGE - OASISBR / IBICT
- * Bloqueia scrapers e bots distribuídos que não processam JavaScript.
+ * Bloqueia scrapers e bots que não processam JavaScript.
+ * Ajustado para permitir chamadas de API (Shiny/R/AJAX).
  */
 
 $cookieName  = 'OasisbrVerify';
 $cookieValue = 'verified_human';
 $userAgent   = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$requestUri  = $_SERVER['REQUEST_URI'] ?? '';
 
-// 1. Definir exceções (Bots legítimos e AJAX)
-$allowedAgents = ['Googlebot', 'Bingbot'];
-$isAllowed     = false;
+// 1. Definir exceções
+$isAllowed = false;
 
-// Verifica se o User-Agent é um bot conhecido e permitido
+// Lista de bots legítimos e ferramentas de integração (Shiny usa libcurl/R)
+$allowedAgents = ['Googlebot', 'Bingbot', 'libcurl', 'RStudio', 'Shiny'];
+
 foreach ($allowedAgents as $agent) {
     if (stripos($userAgent, $agent) !== false) {
         $isAllowed = true;
@@ -21,12 +24,23 @@ foreach ($allowedAgents as $agent) {
     }
 }
 
-// Verifica se é uma requisição AJAX (VuFind usa muito para carregar resultados/filtros)
+// Verifica se é uma requisição para a API do VuFind (Ex: /vufind/api/v1/...)
+if (strpos($requestUri, '/api/') !== false) {
+    $isAllowed = true;
+}
+
+// Verifica se é AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
     $isAllowed = true;
 }
 
-// 2. Iniciar o desafio se o cookie não existir e não for uma exceção
+// Verifica se a requisição espera um JSON (comum em APIS)
+$headers = getallheaders();
+if (isset($headers['Accept']) && strpos($headers['Accept'], 'application/json') !== false) {
+    $isAllowed = true;
+}
+
+// 2. Iniciar o desafio apenas se necessário
 if (!isset($_COOKIE[$cookieName]) && !$isAllowed) {
     ?>
     <!DOCTYPE html>
@@ -52,12 +66,10 @@ if (!isset($_COOKIE[$cookieName]) && !$isAllowed) {
         </div>
         <script>
             (function() {
-                // Define o cookie de validação por 24 horas
                 var expires = new Date();
                 expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
                 document.cookie = "<?php echo $cookieName; ?>=<?php echo $cookieValue; ?>; expires=" + expires.toUTCString() + "; path=/; SameSite=Lax";
                 
-                // Recarrega a página após definir o cookie
                 setTimeout(function(){
                     window.location.reload();
                 }, 800);
