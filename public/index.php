@@ -6,7 +6,7 @@
  * Ajustado para permitir chamadas de API (Shiny/R/AJAX).
  */
 
-/**
+
 $cookieName  = 'OasisbrVerify';
 $cookieValue = 'verified_human';
 $userAgent   = $_SERVER['HTTP_USER_AGENT'] ?? '';
@@ -81,7 +81,7 @@ if (!isset($_COOKIE[$cookieName]) && !$isAllowed) {
     <?php
     exit;
 }
-**/
+
 
 // 3. Se chegou aqui, o acesso é legítimo. Carrega o VuFind.
 // (O restante do código original do index.php continua abaixo)
